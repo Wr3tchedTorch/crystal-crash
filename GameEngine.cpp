@@ -3,6 +3,7 @@
 #include <SFML/System/Clock.hpp>
 #include <SFML/System/Time.hpp>
 #include <cassert>
+#include "GameScreen.h"
 
 bool GameEngine::Instantiated = false;
 
@@ -13,6 +14,8 @@ GameEngine::GameEngine() : m_EventHandler(m_Window)
 
 	m_Window.create(sf::VideoMode::getDesktopMode(), "Crystal Crash by Eric");
 	m_Window.setFramerateLimit(60);
+
+	m_CurrentScreen = new GameScreen;
 }
 
 GameEngine::~GameEngine()
@@ -30,6 +33,11 @@ void GameEngine::run()
 		sf::Time deltaTime = clock.restart();
 
 		m_Window.clear();
+
+		if (m_CurrentScreen)
+		{
+			m_CurrentScreen->render(m_Window);
+		}
 
 		m_Window.display();
 	}
