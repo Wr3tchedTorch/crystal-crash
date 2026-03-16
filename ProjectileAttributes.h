@@ -3,7 +3,7 @@
 struct ProjectileAttributes
 {	
 	std::string Name;
-	std::string GraphicsFilepath;
+	std::string GraphicsId;
 	float MaxSpeed;
 	float Damage;
 };

@@ -3,6 +3,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include "GraphicsComponent.h"
 #include "ProjectileAttributes.h"
+#include "BitmapStore.h"
 
 class Projectile : public PhysicsObject
 {
@@ -14,7 +15,7 @@ public:
 	//VelocityComponent m_VelocityComponent;
 
 private:
-	Projectile();
+	Projectile(BitmapStore& store, ProjectileAttributes attributes);
 	void update(float delta) override;
 	void render(sf::RenderTarget& target) override;
 };

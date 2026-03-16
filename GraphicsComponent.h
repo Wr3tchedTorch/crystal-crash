@@ -2,17 +2,20 @@
 #include "Component.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/Rect.hpp>
+#include <string>
+#include "BitmapStore.h"
 
 class GraphicsComponent : public Component
 {
 private:
 	sf::Sprite m_Sprite;
 
+	BitmapStore& m_BitmapStore;
+
 public:
-	GraphicsComponent(sf::Texture& texture, sf::IntRect textureRect);
+	GraphicsComponent(BitmapStore& bitmapStore, const std::string& textureId, sf::IntRect textureRect);
 
 	void setPosition(sf::Vector2f position);
 	sf::Vector2f getPosition(sf::Vector2f position);
@@ -26,3 +29,4 @@ public:
 	void render(sf::RenderTarget& target) override;
 };
 
+ 

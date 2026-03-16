@@ -1,10 +1,14 @@
 #include "GraphicsComponent.h"
 #include <SFML/Graphics/RenderTarget.hpp>
-#include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/System/Vector2.hpp>
+#include <string>
+#include <format>
+#include "BitmapStore.h"
 
-GraphicsComponent::GraphicsComponent(sf::Texture& texture, sf::IntRect textureRect) : m_Sprite(texture, textureRect)
+GraphicsComponent::GraphicsComponent(BitmapStore& bitmapStore, const std::string& textureId, sf::IntRect textureRect) :
+	m_BitmapStore(bitmapStore),
+	m_Sprite(m_BitmapStore.getTexture(std::format("graphics/{}", textureId)), textureRect)
 {
 }
 
