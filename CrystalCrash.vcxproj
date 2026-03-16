@@ -132,21 +132,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="BitmapStore.cpp" />
+    <ClCompile Include="Component.cpp" />
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameScreen.cpp" />
+    <ClCompile Include="GraphicsComponent.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="PhysicsObject.cpp" />
+    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Button.h" />
+    <ClInclude Include="BitmapStore.h" />
+    <ClInclude Include="Component.h" />
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameScreen.h" />
+    <ClInclude Include="GraphicsComponent.h" />
+    <ClInclude Include="PhysicsObject.h" />
+    <ClInclude Include="Projectile.h" />
+    <ClInclude Include="ProjectileAttributes.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="UI.h" />
   </ItemGroup>
