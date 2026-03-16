@@ -16,6 +16,9 @@ private:
 
 public:
 	GraphicsComponent(BitmapStore& bitmapStore, const std::string& textureId, sf::IntRect textureRect);
+	GraphicsComponent(BitmapStore& bitmapStore);
+
+	void setTexture(const std::string& textureId, sf::IntRect textureRect);
 
 	void setPosition(sf::Vector2f position);
 	sf::Vector2f getPosition(sf::Vector2f position);

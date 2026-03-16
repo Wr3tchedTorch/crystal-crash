@@ -6,6 +6,7 @@
 #include <format>
 
 bool BitmapStore::Instantiated = false;
+const std::string BitmapStore::PlaceholderGraphicsFilepath = "graphics/placeholder.png";
 
 BitmapStore::BitmapStore()
 {

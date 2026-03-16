@@ -3,6 +3,7 @@
 #include "EventHandler.h"
 #include "Screen.h"
 #include "BitmapStore.h"
+#include "Projectile.h"
 
 class GameEngine
 {
@@ -12,6 +13,8 @@ private:
 	BitmapStore	 m_BitmapStore;
 
 	Screen* m_CurrentScreen;
+
+	Projectile m_Projectile;
 
 	static bool Instantiated;
 

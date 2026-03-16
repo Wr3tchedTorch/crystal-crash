@@ -132,6 +132,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimatedGraphicsAttributes.h" />
     <ClCompile Include="BitmapStore.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="EventHandler.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameScreen.h" />
+    <ClInclude Include="GraphicsAttributes.h" />
     <ClInclude Include="GraphicsComponent.h" />
     <ClInclude Include="PhysicsObject.h" />
     <ClInclude Include="Projectile.h" />

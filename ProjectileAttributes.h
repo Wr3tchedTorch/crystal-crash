@@ -1,10 +1,12 @@
 #pragma once
 #include <string>
+#include "GraphicsAttributes.h"
+
 struct ProjectileAttributes
 {	
 	std::string Name;
-	std::string GraphicsId;
 	float MaxSpeed;
 	float Damage;
+	GraphicsAttributes GraphicsAttributes;
 };
 

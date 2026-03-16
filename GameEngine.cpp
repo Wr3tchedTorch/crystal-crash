@@ -7,7 +7,8 @@
 
 bool GameEngine::Instantiated = false;
 
-GameEngine::GameEngine() : m_EventHandler(m_Window)
+GameEngine::GameEngine() : 
+	m_EventHandler(m_Window)
 {
 	assert(!Instantiated);
 	Instantiated = true;

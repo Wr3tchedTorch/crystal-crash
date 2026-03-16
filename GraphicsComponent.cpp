@@ -12,6 +12,16 @@ GraphicsComponent::GraphicsComponent(BitmapStore& bitmapStore, const std::string
 {
 }
 
+GraphicsComponent::GraphicsComponent(BitmapStore& bitmapStore) : m_BitmapStore(bitmapStore), m_Sprite(m_BitmapStore.getTexture(BitmapStore::PlaceholderGraphicsFilepath))
+{
+}
+
+void GraphicsComponent::setTexture(const std::string& textureId, sf::IntRect textureRect)
+{
+	m_Sprite.setTexture(m_BitmapStore.getTexture(std::format("graphics/{}", textureId)));
+	m_Sprite.setTextureRect(textureRect);
+}
+
 void GraphicsComponent::setPosition(sf::Vector2f position)
 {
 	m_Sprite.setPosition(position);

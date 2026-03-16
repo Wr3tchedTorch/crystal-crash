@@ -11,7 +11,8 @@ private:
 	static bool Instantiated;
 
 public:
+	static const std::string PlaceholderGraphicsFilepath;
+
 	BitmapStore();
 	sf::Texture& getTexture(const std::string& filepath);
 };
-

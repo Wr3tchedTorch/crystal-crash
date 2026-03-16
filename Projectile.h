@@ -16,6 +16,9 @@ public:
 
 private:
 	Projectile(BitmapStore& store, ProjectileAttributes attributes);
+	Projectile(BitmapStore& store);
+
+	void init(ProjectileAttributes attributes);
 	void update(float delta) override;
 	void render(sf::RenderTarget& target) override;
 };
