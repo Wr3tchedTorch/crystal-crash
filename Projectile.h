@@ -7,14 +7,14 @@
 
 class Projectile : public PhysicsObject
 {
-public:	
+private:	
 	ProjectileAttributes m_ProjectileAttributes;
 
 	GraphicsComponent m_GraphicsComponent;
 	//SoundEngine& m_SoundEngine;
 	//VelocityComponent m_VelocityComponent;
 
-private:
+public:
 	Projectile(BitmapStore& store, ProjectileAttributes attributes);
 	Projectile(BitmapStore& store);
 

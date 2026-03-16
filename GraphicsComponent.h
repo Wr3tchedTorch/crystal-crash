@@ -10,9 +10,9 @@
 class GraphicsComponent : public Component
 {
 private:
-	sf::Sprite m_Sprite;
-
 	BitmapStore& m_BitmapStore;
+
+	sf::Sprite m_Sprite;
 
 public:
 	GraphicsComponent(BitmapStore& bitmapStore, const std::string& textureId, sf::IntRect textureRect);

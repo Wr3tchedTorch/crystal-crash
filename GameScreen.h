@@ -4,8 +4,6 @@
 
 class GameScreen : public Screen
 {
-
-
 public:
 	GameScreen();
 	void update(float delta) override;

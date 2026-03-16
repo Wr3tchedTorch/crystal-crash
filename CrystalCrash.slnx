@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="CrystalCrash.vcxproj" />
+  <Project Path="CrystalCrash.vcxproj" Id="e6ff1652-0b83-47f9-a99d-84e6482252c2" />
 </Solution>

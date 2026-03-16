@@ -24,6 +24,8 @@ void Projectile::init(ProjectileAttributes attributes)
 void Projectile::update(float delta)
 {
 	m_GraphicsComponent.update(delta);
+
+	m_GraphicsComponent.setPosition({ 40, 40 });
 }
 
 void Projectile::render(sf::RenderTarget& target)

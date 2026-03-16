@@ -11,7 +11,7 @@ const std::string BitmapStore::PlaceholderGraphicsFilepath = "graphics/placehold
 BitmapStore::BitmapStore()
 {
     assert(!Instantiated);
-    Instantiated = true;
+    Instantiated = true;    
 }
 
 sf::Texture& BitmapStore::getTexture(const std::string& filepath)

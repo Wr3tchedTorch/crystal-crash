@@ -4,11 +4,13 @@
 #include <SFML/System/Time.hpp>
 #include <cassert>
 #include "GameScreen.h"
+#include "ProjectileAttributes.h"
 
 bool GameEngine::Instantiated = false;
 
 GameEngine::GameEngine() : 
-	m_EventHandler(m_Window)
+	m_EventHandler(m_Window),
+	m_Projectile(m_BitmapStore)
 {
 	assert(!Instantiated);
 	Instantiated = true;
@@ -17,6 +19,12 @@ GameEngine::GameEngine() :
 	m_Window.setFramerateLimit(60);
 
 	m_CurrentScreen = new GameScreen;
+
+	ProjectileAttributes attr;
+	attr.GraphicsAttributes.GraphicsId  = "GEM 2 - LIGHT GREEN.png";
+	attr.GraphicsAttributes.TextureRect = { {0, 0}, {23, 27} };
+
+	m_Projectile.init(attr);
 }
 
 GameEngine::~GameEngine()
@@ -32,13 +40,16 @@ void GameEngine::run()
 		m_Window.handleEvents(m_EventHandler);
 
 		sf::Time deltaTime = clock.restart();
+		m_Projectile.update(deltaTime.asSeconds());
 
 		m_Window.clear();
 
-		if (m_CurrentScreen)
-		{
-			m_CurrentScreen->render(m_Window);
-		}
+		m_Projectile.render(m_Window);
+
+		//if (m_CurrentScreen)
+		//{
+		//	m_CurrentScreen->render(m_Window);
+		//}
 
 		m_Window.display();
 	}
