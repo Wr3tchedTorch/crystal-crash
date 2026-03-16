@@ -133,6 +133,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AnimatedGraphicsAttributes.h" />
+    <ClCompile Include="AnimatedGraphicsComponent.cpp" />
     <ClCompile Include="BitmapStore.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="EventHandler.cpp" />
@@ -147,6 +148,7 @@
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimatedGraphicsComponent.h" />
     <ClInclude Include="BitmapStore.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="EventHandler.h" />

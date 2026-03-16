@@ -81,6 +81,9 @@
     <ClCompile Include="AnimatedGraphicsAttributes.h">
       <Filter>Header Files\Data</Filter>
     </ClCompile>
+    <ClCompile Include="AnimatedGraphicsComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine.h">
@@ -121,6 +124,9 @@
     </ClInclude>
     <ClInclude Include="GraphicsAttributes.h">
       <Filter>Header Files\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedGraphicsComponent.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

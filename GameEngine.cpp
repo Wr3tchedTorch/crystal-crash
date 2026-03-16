@@ -5,8 +5,10 @@
 #include <cassert>
 #include "GameScreen.h"
 #include "ProjectileAttributes.h"
+#include "AnimatedGraphicsAttributes.h"
 
 bool GameEngine::Instantiated = false;
+sf::Time GameEngine::GameTimeTotal = sf::Time();
 
 GameEngine::GameEngine() : 
 	m_EventHandler(m_Window),
@@ -20,11 +22,18 @@ GameEngine::GameEngine() :
 
 	m_CurrentScreen = new GameScreen;
 
+	AnimatedGraphicsAttributes anAttr;
+	anAttr.AnimationCount = 1;
+	anAttr.DelayBetweenFrames = .100f;
+	anAttr.DelayBeforeAnimationStart = 1;
+	anAttr.FrameCount = 10;
+	anAttr.Loop = true;
+	anAttr.SpriteSize = { 23, 27 };
+
 	ProjectileAttributes attr;
 	attr.GraphicsAttributes.GraphicsId  = "GEM 2 - LIGHT GREEN.png";
-	attr.GraphicsAttributes.TextureRect = { {0, 0}, {23, 27} };
 
-	m_Projectile.init(attr);
+	m_Projectile.init(attr, anAttr);
 }
 
 GameEngine::~GameEngine()
@@ -40,6 +49,8 @@ void GameEngine::run()
 		m_Window.handleEvents(m_EventHandler);
 
 		sf::Time deltaTime = clock.restart();
+		GameTimeTotal += deltaTime;
+
 		m_Projectile.update(deltaTime.asSeconds());
 
 		m_Window.clear();

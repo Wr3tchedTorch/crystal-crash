@@ -9,9 +9,11 @@
 
 class GraphicsComponent : public Component
 {
+
 private:
 	BitmapStore& m_BitmapStore;
 
+protected:
 	sf::Sprite m_Sprite;
 
 public:
@@ -28,8 +30,8 @@ public:
 
 	sf::FloatRect getGlobalBounds();
 
-	void update(float delta) override;
-	void render(sf::RenderTarget& target) override;
+	virtual void update(float delta) override;
+	virtual void render(sf::RenderTarget& target) override;
 };
 
  

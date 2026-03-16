@@ -4,6 +4,7 @@
 #include "Screen.h"
 #include "BitmapStore.h"
 #include "Projectile.h"
+#include <SFML/System/Time.hpp>
 
 class GameEngine
 {
@@ -19,6 +20,8 @@ private:
 	static bool Instantiated;
 
 public:
+	static sf::Time GameTimeTotal;
+
 	GameEngine();
 	~GameEngine();
 	
