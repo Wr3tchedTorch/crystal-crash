@@ -19,7 +19,7 @@ bool GameEngine::Instantiated = false;
 sf::Time GameEngine::GameTimeTotal = sf::Time();
 
 GameEngine::GameEngine() : 
-	m_EventHandler(m_Window),
+	m_EventHandler(m_Window, m_MouseDragHandler),
 	m_Projectile(m_BitmapStore, m_PhysicsEngine.getWorldId())
 {
 	assert(!Instantiated);

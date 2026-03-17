@@ -15,12 +15,14 @@ private:
 
 protected:
 	sf::Sprite m_Sprite;
+	
+	bool isTextureRectInvalids(sf::IntRect textureRect);
 
 public:
-	GraphicsComponent(BitmapStore& bitmapStore, const std::string& textureId, sf::IntRect textureRect);
+	GraphicsComponent(BitmapStore& bitmapStore, const std::string& textureId, sf::IntRect textureRect = { {0, 0}, {0, 0} });
 	GraphicsComponent(BitmapStore& bitmapStore);
 
-	void setTexture(const std::string& textureId, sf::IntRect textureRect);
+	void setTexture(const std::string& textureId, sf::IntRect textureRect = { {0, 0}, {0, 0} });
 
 	void setPosition(sf::Vector2f position);
 	sf::Vector2f getPosition(sf::Vector2f position);

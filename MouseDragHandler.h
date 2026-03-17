@@ -27,6 +27,7 @@ public:
 	sf::Vector2f getDragStartPosition() override;
 	sf::Vector2f getDragEndPosition() override;
 	float getDragDistance() override;
+	bool isDragging() override;
 
 };
 

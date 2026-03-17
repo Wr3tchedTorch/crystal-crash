@@ -146,6 +146,7 @@
     <ClCompile Include="PhysicsEngine.cpp" />
     <ClCompile Include="IPhysicsObject.cpp" />
     <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="Slingshot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedGraphicsComponent.h" />
@@ -165,6 +166,7 @@
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="ProjectileAttributes.h" />
     <ClInclude Include="IScreen.h" />
+    <ClInclude Include="Slingshot.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

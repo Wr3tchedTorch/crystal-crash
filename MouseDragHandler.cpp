@@ -56,3 +56,8 @@ float MouseDragHandler::getDragDistance()
 {
 	return m_DragDistance;
 }
+
+bool MouseDragHandler::isDragging()
+{
+	return m_IsDragging;
+}
