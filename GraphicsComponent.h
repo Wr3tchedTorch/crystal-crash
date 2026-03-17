@@ -16,7 +16,7 @@ private:
 protected:
 	sf::Sprite m_Sprite;
 	
-	bool isTextureRectInvalids(sf::IntRect textureRect);
+	bool isTextureRectValid(sf::IntRect textureRect);
 
 public:
 	GraphicsComponent(BitmapStore& bitmapStore, const std::string& textureId, sf::IntRect textureRect = { {0, 0}, {0, 0} });

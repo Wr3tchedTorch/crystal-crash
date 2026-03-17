@@ -20,7 +20,8 @@ sf::Time GameEngine::GameTimeTotal = sf::Time();
 
 GameEngine::GameEngine() : 
 	m_EventHandler(m_Window, m_MouseDragHandler),
-	m_Projectile(m_BitmapStore, m_PhysicsEngine.getWorldId())
+	m_Projectile(m_BitmapStore, m_PhysicsEngine.getWorldId()),
+	m_Slingshot(m_BitmapStore, {100, 500})
 {
 	assert(!Instantiated);
 	Instantiated = true;
@@ -67,11 +68,13 @@ void GameEngine::run()
 
 		m_PhysicsEngine.update(delta);
 		m_Projectile.update(delta);
+		m_Slingshot.update(delta);
 
 		m_Window.clear();
 
 		m_Projectile.render(m_Window);
-		m_Window.draw(m_DebugGround);
+		m_Slingshot.render(m_Window);
+		m_Window.draw(m_DebugGround);		
 
 		//if (m_CurrentScreen)
 		//{

@@ -8,6 +8,7 @@
 #include "PhysicsEngine.h"
 #include <SFML/Graphics/RectangleShape.hpp>
 #include "MouseDragHandler.h"
+#include "Slingshot.h"
 
 class GameEngine
 {
@@ -22,6 +23,7 @@ private:
 	IScreen* m_CurrentScreen;
 
 	Projectile m_Projectile;
+	Slingshot  m_Slingshot;
 
 	static bool Instantiated;
 
