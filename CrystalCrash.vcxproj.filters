@@ -40,6 +40,12 @@
     <Filter Include="Header Files\Data">
       <UniqueIdentifier>{41e9a265-6edf-4025-9e54-b6fdb21d5650}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{c800c51b-089e-4a33-a244-b46681cd8dfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Input">
+      <UniqueIdentifier>{76ff91b5-0d5a-45e9-86ae-d5f06131d7cf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -51,26 +57,14 @@
     <ClCompile Include="EventHandler.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="UI.cpp">
-      <Filter>Source Files\UI</Filter>
-    </ClCompile>
     <ClCompile Include="GameScreen.cpp">
       <Filter>Source Files\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Screen.cpp">
-      <Filter>Source Files\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Source Files\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="PhysicsObject.cpp">
+    <ClCompile Include="IPhysicsObject.cpp">
       <Filter>Source Files\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="Projectile.cpp">
       <Filter>Source Files\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Component.cpp">
-      <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="BitmapStore.cpp">
       <Filter>Source Files\Engine</Filter>
@@ -82,7 +76,19 @@
       <Filter>Header Files\Data</Filter>
     </ClCompile>
     <ClCompile Include="AnimatedGraphicsComponent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsEngine.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseDragHandler.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="IDragState.h">
+      <Filter>Header Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="DragSystem.cpp">
+      <Filter>Source Files\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -92,16 +98,13 @@
     <ClInclude Include="EventHandler.h">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="UI.h">
-      <Filter>Header Files\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Screen.h">
+    <ClInclude Include="IScreen.h">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
     <ClInclude Include="GameScreen.h">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
+    <ClInclude Include="IGameObject.h">
       <Filter>Header Files\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="PhysicsObject.h">
@@ -110,7 +113,7 @@
     <ClInclude Include="Projectile.h">
       <Filter>Header Files\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Component.h">
+    <ClInclude Include="IComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="BitmapStore.h">
@@ -126,7 +129,19 @@
       <Filter>Header Files\Data</Filter>
     </ClInclude>
     <ClInclude Include="AnimatedGraphicsComponent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsEngine.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Converter.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="DragSystem.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseDragHandler.h">
+      <Filter>Header Files\Input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

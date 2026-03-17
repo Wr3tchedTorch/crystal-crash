@@ -4,10 +4,10 @@
 #include "ProjectileAttributes.h"
 #include "BitmapStore.h"
 #include "AnimatedGraphicsAttributes.h"
-#include "GraphicsComponent.h"
 #include "AnimatedGraphicsComponent.h"
+#include <id.h>
 
-class Projectile : public PhysicsObject
+class Projectile : public IPhysicsObject
 {
 private:	
 	ProjectileAttributes m_ProjectileAttributes;
@@ -16,8 +16,10 @@ private:
 	//SoundEngine& m_SoundEngine;
 	//VelocityComponent m_VelocityComponent;
 
+	void createPhysicsBody();
+
 public:
-	Projectile(BitmapStore& store);
+	Projectile(BitmapStore& store, b2WorldId worldId);
 
 	void init(ProjectileAttributes attributes, AnimatedGraphicsAttributes animationAttributes);
 

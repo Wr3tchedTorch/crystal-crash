@@ -3,7 +3,7 @@
 #include <SFML/Graphics/View.hpp>
 #include <vector>
 
-class Screen
+class IScreen
 {
 protected:
 	std::vector<sf::View> m_Views;	

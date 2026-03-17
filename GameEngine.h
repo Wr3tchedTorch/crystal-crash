@@ -1,23 +1,31 @@
 #pragma once
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "EventHandler.h"
-#include "Screen.h"
+#include "IScreen.h"
 #include "BitmapStore.h"
 #include "Projectile.h"
 #include <SFML/System/Time.hpp>
+#include "PhysicsEngine.h"
+#include <SFML/Graphics/RectangleShape.hpp>
+#include "MouseDragHandler.h"
 
 class GameEngine
 {
 private:
 	sf::RenderWindow m_Window;
-	EventHandler m_EventHandler;
-	BitmapStore	 m_BitmapStore;
+	EventHandler	 m_EventHandler;
+	MouseDragHandler m_MouseDragHandler;
 
-	Screen* m_CurrentScreen;
+	BitmapStore	  m_BitmapStore;
+	PhysicsEngine m_PhysicsEngine;
+
+	IScreen* m_CurrentScreen;
 
 	Projectile m_Projectile;
 
 	static bool Instantiated;
+
+	sf::RectangleShape m_DebugGround;
 
 public:
 	static sf::Time GameTimeTotal;
@@ -26,5 +34,7 @@ public:
 	~GameEngine();
 	
 	void run();	
+
+	void spawnGround();
 };
 

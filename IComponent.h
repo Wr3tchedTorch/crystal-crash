@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics/RenderTarget.hpp>
 
-class UI
+class IComponent
 {
 public:
 	virtual void update(float delta) = 0;

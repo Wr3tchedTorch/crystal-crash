@@ -11,6 +11,4 @@ struct AnimatedGraphicsAttributes : GraphicsAttributes
 
 	float DelayBetweenFrames = 0.0f;
 	float DelayBeforeAnimationStart = 0.0f;
-
-	sf::Vector2i SpriteSize;
 };

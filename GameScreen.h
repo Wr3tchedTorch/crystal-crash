@@ -1,8 +1,8 @@
 #pragma once
-#include "Screen.h"
+#include "IScreen.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 
-class GameScreen : public Screen
+class GameScreen : public IScreen
 {
 public:
 	GameScreen();

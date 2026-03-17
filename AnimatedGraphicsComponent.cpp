@@ -24,13 +24,13 @@ void AnimatedGraphicsComponent::nextFrame()
 	sf::IntRect toRect;
 	toRect.position =
 	{
-		m_Attributes.SpriteSize.x * m_CurrentFrame,
-		m_Attributes.SpriteSize.y * m_CurrentAnimation
+		m_Attributes.TextureRect.size.x * m_CurrentFrame,
+		m_Attributes.TextureRect.size.y * m_CurrentAnimation
 	};
 	toRect.size =
 	{
-		m_Attributes.SpriteSize.x,
-		m_Attributes.SpriteSize.y
+		m_Attributes.TextureRect.size.x,
+		m_Attributes.TextureRect.size.y
 	};
 
 	m_Sprite.setTextureRect(toRect);

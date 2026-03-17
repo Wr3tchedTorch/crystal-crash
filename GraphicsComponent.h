@@ -1,5 +1,5 @@
 #pragma once
-#include "Component.h"
+#include "IComponent.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/System/Vector2.hpp>
@@ -7,7 +7,7 @@
 #include <string>
 #include "BitmapStore.h"
 
-class GraphicsComponent : public Component
+class GraphicsComponent : public IComponent
 {
 
 private:
@@ -28,7 +28,7 @@ public:
 	void setScale(sf::Vector2f position);
 	sf::Vector2f getScale(sf::Vector2f position);
 
-	sf::FloatRect getGlobalBounds();
+	sf::IntRect getTextureRect();
 
 	virtual void update(float delta) override;
 	virtual void render(sf::RenderTarget& target) override;
