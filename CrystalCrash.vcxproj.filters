@@ -102,6 +102,9 @@
     <ClCompile Include="StateProjectileLoaded.cpp">
       <Filter>Source Files\States</Filter>
     </ClCompile>
+    <ClCompile Include="StateProjectileLaunched.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine.h">
@@ -158,10 +161,13 @@
     <ClInclude Include="Slingshot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IState.h">
+    <ClInclude Include="IProjectileState.h">
       <Filter>Header Files\States</Filter>
     </ClInclude>
     <ClInclude Include="StateProjectileLoaded.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="StateProjectileLaunched.h">
       <Filter>Header Files\States</Filter>
     </ClInclude>
   </ItemGroup>

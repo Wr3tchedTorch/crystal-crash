@@ -1,33 +1,22 @@
-#include <id.h>
 #include <SFML/System/Vector2.hpp>
 #include "StateProjectileLoaded.h"
 #include <box2d.h>
+#include "Projectile.h"
 
-StateProjectileLoaded::StateProjectileLoaded(b2BodyId body, sf::Vector2f& parentPosition, sf::Vector2f& slingshotPosition)
+void StateProjectileLoaded::enter(Projectile& projectile)
 {
-	m_ParentBodyId   = body;
-	m_ParentPosition = &parentPosition;
-	m_SlingshotBeakPosition = &slingshotPosition;
-}
-
-void StateProjectileLoaded::enter()
-{
-	if (!b2Body_IsValid(m_ParentBodyId))
+	if (!b2Body_IsValid(projectile.m_BodyId))
 	{
 		return;
 	}
-	b2Body_Disable(m_ParentBodyId);
+	b2Body_Disable(projectile.m_BodyId);
 }
 
-void StateProjectileLoaded::exit()
+void StateProjectileLoaded::exit(Projectile& projectile)
 {
 }
 
-void StateProjectileLoaded::update(float delta)
+void StateProjectileLoaded::update(Projectile& projectile, float delta)
 {
-	if (!m_ParentPosition || !m_SlingshotBeakPosition)
-	{
-		return;
-	}
-	*m_ParentPosition = *m_SlingshotBeakPosition;
+	projectile.getPosition() = projectile.m_SlingshotBeakPosition;
 }

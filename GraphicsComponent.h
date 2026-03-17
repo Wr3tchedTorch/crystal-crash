@@ -33,7 +33,7 @@ public:
 	void setPosition(sf::Vector2f position);
 	sf::Vector2f getPosition();
 
-	void setScale(sf::Vector2f position);
+	void setScale(sf::Vector2f scale);
 	sf::Vector2f getScale();
 
 	sf::IntRect getTextureRect();

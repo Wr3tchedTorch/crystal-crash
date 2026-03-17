@@ -42,10 +42,10 @@ GameEngine::GameEngine() :
 	anAttr.DelayBeforeAnimationStart = 1;
 	anAttr.FrameCount = 10;
 	anAttr.Loop = true;
-	anAttr.TextureRect = { {0, 0}, {23, 27} };
+	anAttr.TextureRect = { {0, 0}, {18, 30} };
 
 	ProjectileAttributes attr;
-	attr.GraphicsAttributes.GraphicsId  = "GEM 2 - LIGHT GREEN.png";
+	attr.GraphicsAttributes.GraphicsId  = "GEM 1 - LIGHT GREEN.png";
 
 	m_Projectile.init(attr, anAttr, m_Slingshot.getBeakPosition());
 
@@ -72,10 +72,10 @@ void GameEngine::run()
 		MousePositionInGameCoords = m_Window.mapPixelToCoords(sf::Mouse::getPosition());
 
 		m_PhysicsEngine.update(delta);
-		m_Projectile.update(delta);
 		m_Slingshot.update(delta);
+		m_Projectile.update(delta);
 
-		m_Window.clear();
+		m_Window.clear(sf::Color::White);
 
 		m_Slingshot.render(m_Window);
 		m_Projectile.render(m_Window);

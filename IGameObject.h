@@ -10,5 +10,7 @@ protected:
 public:
 	virtual void update(float delta) = 0;
 	virtual void render(sf::RenderTarget& target) = 0;
+
+	sf::Vector2f& getPosition() { return m_Position; };
 };
 

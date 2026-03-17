@@ -11,7 +11,8 @@
 #include <SFML/System/Vector2.hpp>
 #include <id.h>
 #include "PhysicsObject.h"
-#include "StateProjectileLoaded.h"
+#include "IProjectileState.h"
+#include "StateProjectileLaunched.h"
 
 void Projectile::createPhysicsBody()
 {
@@ -44,25 +45,40 @@ Projectile::Projectile(BitmapStore& store, b2WorldId worldId) :
 {	
 }
 
+const ProjectileAttributes& Projectile::getAttributes() const
+{
+	return m_ProjectileAttributes;
+}
+
 void Projectile::init(ProjectileAttributes attributes, AnimatedGraphicsAttributes animationAttributes, sf::Vector2f& slingshotBeakPosition)
 {
+	m_SlingshotBeakPosition = &slingshotBeakPosition;
+
 	m_ProjectileAttributes = attributes;
 
 	m_GraphicsComponent.init(animationAttributes);
 	m_GraphicsComponent.setTexture(attributes.GraphicsAttributes.GraphicsId);
 	m_GraphicsComponent.setTextureRect(animationAttributes.TextureRect);
+	m_GraphicsComponent.setScale({ 1.0f, 1.0f });
+	m_GraphicsComponent.setOriginToCenter();
 
 	createPhysicsBody();
 
-	m_CurrentState = new StateProjectileLoaded(m_BodyId, m_Position, slingshotBeakPosition);
+	m_CurrentState = &IProjectileState::StateProjectileLoaded;
 
-	m_CurrentState->enter();
+	m_CurrentState->enter(*this);
+}
+
+void Projectile::launch(float slingShotImpulse)
+{
+	m_CurrentState = new StateProjectileLaunched(slingShotImpulse);
+	m_CurrentState->enter(*this);
 }
 
 void Projectile::update(float delta)
 {
+	m_CurrentState->update(*this, delta);
 	m_GraphicsComponent.update(delta);
-	m_CurrentState->update(delta);
 
 	if (b2Body_IsEnabled(m_BodyId))
 	{
