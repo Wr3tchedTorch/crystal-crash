@@ -2,15 +2,13 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <string>
-#include "BitmapStore.h"
-#include "DragSystem.h"
-#include "GameEngine.h"
 #include <algorithm>
 #include <cstdlib>
 #include <SFML/System/Angle.hpp>
 #include <SFML/Graphics/Rect.hpp>
-#include <iostream>
-#include <format>
+#include "BitmapStore.h"
+#include "DragSystem.h"
+#include "GameEngine.h"
 #include "Projectile.h"
 
 const std::string Slingshot::BaseGraphicsId  = "Lamp Post 1 TALL - Silver.png";
@@ -32,15 +30,15 @@ Slingshot::Slingshot(BitmapStore& store, sf::Vector2f position) :
 	m_ChainGraphicsComponent.setOriginToTopCenter();
 }
 
-sf::Vector2f Slingshot::getBeakPosition()
+sf::Vector2f& Slingshot::getBeakPosition()
 {
 	float length = std::min(DragSystem::get().getDragDistance(), MaxDragDistance);
 	length = std::abs(length);
 
-	sf::Vector2f beakPosition(m_ChainGraphicsComponent.getPosition());
-	beakPosition += DragSystem::get().getDragDirection() * length;
+	m_BeakPosition  = m_ChainGraphicsComponent.getPosition();
+	m_BeakPosition += DragSystem::get().getDragDirection() * length;
 
-	return beakPosition;
+	return m_BeakPosition;
 }
 
 void Slingshot::loadProjectile(Projectile* projectile)

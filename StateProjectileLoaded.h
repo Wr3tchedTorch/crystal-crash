@@ -2,13 +2,19 @@
 #include "IState.h"
 #include "Slingshot.h"
 #include <SFML/System/Vector2.hpp>
+#include <id.h>
 
 class StateProjectileLoaded : public IState
 {
 private:
-	sf::Vector2f& m_Position;
-	Slingshot&	  m_SlingShot;
+	b2BodyId m_ParentBodyId;
+	sf::Vector2f* m_ParentPosition;
+	sf::Vector2f* m_SlingshotBeakPosition;
 
 public:
-	void init(sf::Vector2f& position, Slingshot& slingShot);
+	void init(b2BodyId body, sf::Vector2f& parentPosition, sf::Vector2f& slingshotPosition);
+
+	void enter() override;
+	void exit() override;
+	void update(float delta) override;
 };

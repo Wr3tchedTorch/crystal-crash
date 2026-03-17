@@ -16,6 +16,11 @@ private:
 
 	std::queue<Projectile*> m_LoadedProjectiles;
 
+	sf::Vector2f m_BeakPosition;
+
+	void updateChainLength();
+	void updateChainRotation();
+
 public:
 	static const std::string  BaseGraphicsId;
 	static const std::string  ChainGraphicsId;
@@ -24,12 +29,9 @@ public:
 
 	Slingshot(BitmapStore& store, sf::Vector2f position);
 
-	sf::Vector2f getBeakPosition();
+	sf::Vector2f& getBeakPosition();
 	
 	void loadProjectile(Projectile* projectile);
-
-	void updateChainLength();
-	void updateChainRotation();
 
 	void update(float delta) override;
 	void render(sf::RenderTarget& target) override;
