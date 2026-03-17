@@ -5,12 +5,16 @@
 #include "BitmapStore.h"
 #include <SFML/System/Vector2.hpp>
 #include <string>
+#include <queue>
+#include "Projectile.h"
 
 class Slingshot : public IGameObject
 {
 private:
 	GraphicsComponent m_BaseGraphicsComponent;
 	GraphicsComponent m_ChainGraphicsComponent;
+
+	std::queue<Projectile*> m_LoadedProjectiles;
 
 public:
 	static const std::string  BaseGraphicsId;
@@ -19,7 +23,11 @@ public:
 	static const float MaxDragDistance;
 
 	Slingshot(BitmapStore& store, sf::Vector2f position);
+
+	sf::Vector2f getBeakPosition();
 	
+	void loadProjectile(Projectile* projectile);
+
 	void updateChainLength();
 	void updateChainRotation();
 

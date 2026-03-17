@@ -46,6 +46,12 @@
     <Filter Include="Header Files\Input">
       <UniqueIdentifier>{76ff91b5-0d5a-45e9-86ae-d5f06131d7cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\States">
+      <UniqueIdentifier>{6d93b5dc-3160-4519-a877-efe09da567aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\States">
+      <UniqueIdentifier>{494ee28c-ac9b-49f2-8081-cade743a87a1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -91,6 +97,9 @@
       <Filter>Source Files\Input</Filter>
     </ClCompile>
     <ClCompile Include="Slingshot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StateProjectileLoaded.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -147,6 +156,12 @@
       <Filter>Header Files\Input</Filter>
     </ClInclude>
     <ClInclude Include="Slingshot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IState.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="StateProjectileLoaded.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

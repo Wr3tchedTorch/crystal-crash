@@ -11,6 +11,7 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <iostream>
 #include <format>
+#include "Projectile.h"
 
 const std::string Slingshot::BaseGraphicsId  = "Lamp Post 1 TALL - Silver.png";
 const std::string Slingshot::ChainGraphicsId = "Chain - Bronze.png";
@@ -31,15 +32,26 @@ Slingshot::Slingshot(BitmapStore& store, sf::Vector2f position) :
 	m_ChainGraphicsComponent.setOriginToTopCenter();
 }
 
-void Slingshot::updateChainLength()
+sf::Vector2f Slingshot::getBeakPosition()
 {
 	float length = std::min(DragSystem::get().getDragDistance(), MaxDragDistance);
 	length = std::abs(length);
 
-#ifdef _DEBUG
-	std::cout << std::format("\nlength: {}, drag distance: {}", length, DragSystem::get().getDragDistance());
-#endif // _DEBUG
+	sf::Vector2f beakPosition(m_ChainGraphicsComponent.getPosition());
+	beakPosition += DragSystem::get().getDragDirection() * length;
 
+	return beakPosition;
+}
+
+void Slingshot::loadProjectile(Projectile* projectile)
+{
+	m_LoadedProjectiles.push(projectile);
+}
+
+void Slingshot::updateChainLength()
+{
+	float length = std::min(DragSystem::get().getDragDistance(), MaxDragDistance);
+	length = std::abs(length);
 
 	sf::IntRect textureRect;
 	textureRect.position = { 0, 0 };

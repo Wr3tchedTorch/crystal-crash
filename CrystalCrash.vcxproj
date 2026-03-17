@@ -147,6 +147,7 @@
     <ClCompile Include="IPhysicsObject.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Slingshot.cpp" />
+    <ClCompile Include="StateProjectileLoaded.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedGraphicsComponent.h" />
@@ -160,6 +161,7 @@
     <ClInclude Include="GameScreen.h" />
     <ClInclude Include="GraphicsAttributes.h" />
     <ClInclude Include="GraphicsComponent.h" />
+    <ClInclude Include="IState.h" />
     <ClInclude Include="MouseDragHandler.h" />
     <ClInclude Include="PhysicsEngine.h" />
     <ClInclude Include="PhysicsObject.h" />
@@ -167,6 +169,7 @@
     <ClInclude Include="ProjectileAttributes.h" />
     <ClInclude Include="IScreen.h" />
     <ClInclude Include="Slingshot.h" />
+    <ClInclude Include="StateProjectileLoaded.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
