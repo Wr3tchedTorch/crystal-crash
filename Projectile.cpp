@@ -48,7 +48,8 @@ void Projectile::init(ProjectileAttributes attributes, AnimatedGraphicsAttribute
 	m_ProjectileAttributes = attributes;
 
 	m_GraphicsComponent.init(animationAttributes);
-	m_GraphicsComponent.setTexture(attributes.GraphicsAttributes.GraphicsId, animationAttributes.TextureRect);
+	m_GraphicsComponent.setTexture(attributes.GraphicsAttributes.GraphicsId);
+	m_GraphicsComponent.setTextureRect(animationAttributes.TextureRect);
 
 	createPhysicsBody();
 

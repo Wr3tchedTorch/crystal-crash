@@ -93,9 +93,6 @@
     <ClCompile Include="Slingshot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TiledGraphicsComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine.h">
@@ -150,9 +147,6 @@
       <Filter>Header Files\Input</Filter>
     </ClInclude>
     <ClInclude Include="Slingshot.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TiledGraphicsComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,6 +6,7 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <string>
 #include "BitmapStore.h"
+#include <SFML/System/Angle.hpp>
 
 class GraphicsComponent : public IComponent
 {
@@ -17,12 +18,15 @@ protected:
 	sf::Sprite m_Sprite;
 	
 	bool isTextureRectValid(sf::IntRect textureRect);
+	void setOriginToCenter();
 
 public:
-	GraphicsComponent(BitmapStore& bitmapStore, const std::string& textureId, sf::IntRect textureRect = { {0, 0}, {0, 0} });
+	GraphicsComponent(BitmapStore& bitmapStore, const std::string& textureId, sf::IntRect textureRect);
+	GraphicsComponent(BitmapStore& bitmapStore, const std::string& textureId, bool tiled = false);
 	GraphicsComponent(BitmapStore& bitmapStore);
 
-	void setTexture(const std::string& textureId, sf::IntRect textureRect = { {0, 0}, {0, 0} });
+	void setTexture(const std::string& textureId);
+	void setTextureRect(sf::IntRect textureRect);
 
 	void setPosition(sf::Vector2f position);
 	sf::Vector2f getPosition(sf::Vector2f position);
@@ -31,6 +35,9 @@ public:
 	sf::Vector2f getScale(sf::Vector2f position);
 
 	sf::IntRect getTextureRect();
+
+	void setRotation(sf::Angle angle);
+	sf::Angle getRotation();
 
 	virtual void update(float delta) override;
 	virtual void render(sf::RenderTarget& target) override;

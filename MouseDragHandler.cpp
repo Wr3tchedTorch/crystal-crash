@@ -28,7 +28,7 @@ void MouseDragHandler::endDrag()
 void MouseDragHandler::update(sf::Vector2f mousePosition)
 {
 	m_CurrentMousePosition = mousePosition;
-	if (m_IsDragging)
+	if (m_IsDragging && m_DragStartPosition != m_DragEndPosition)
 	{
 		m_DragEndPosition = m_CurrentMousePosition;
 		m_DragDirection   = m_DragEndPosition - m_DragStartPosition;

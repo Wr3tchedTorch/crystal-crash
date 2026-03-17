@@ -9,10 +9,12 @@ const std::string Slingshot::ChainGraphicsId = "Chain - Bronze.png";
 
 Slingshot::Slingshot(BitmapStore& store, sf::Vector2f position) :
 	m_BaseGraphicsComponent(store, BaseGraphicsId),
-	m_ChainGraphicsComponent(store, ChainGraphicsId)
+	m_ChainGraphicsComponent(store, ChainGraphicsId, true)
 {
 	m_BaseGraphicsComponent.setPosition(position);
 	m_ChainGraphicsComponent.setPosition({ 600, 200 });
+
+	m_ChainGraphicsComponent.setTextureRect({{0, 0}, {7, 53*8}});
 }
 
 void Slingshot::update(float delta)

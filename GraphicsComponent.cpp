@@ -5,6 +5,8 @@
 #include <string>
 #include <format>
 #include "BitmapStore.h"
+#include <SFML/System/Angle.hpp>
+#include <SFML/Graphics/Texture.hpp>
 
 bool GraphicsComponent::isTextureRectValid(sf::IntRect textureRect)
 {
@@ -12,36 +14,48 @@ bool GraphicsComponent::isTextureRectValid(sf::IntRect textureRect)
 		   textureRect.size.y != 0;
 }
 
+void GraphicsComponent::setOriginToCenter()
+{
+	sf::Vector2f size = sf::Vector2f(m_Sprite.getTextureRect().size);
+
+	m_Sprite.setOrigin({ size.x / 2.0f, size.y / 2.0f });
+}
+
 GraphicsComponent::GraphicsComponent(BitmapStore& bitmapStore, const std::string& textureId, sf::IntRect textureRect) :
 	m_BitmapStore(bitmapStore),
 	m_Sprite(m_BitmapStore.getTexture(std::format("graphics/{}", textureId)))
 {
-	sf::Vector2f size = sf::Vector2f(m_BitmapStore.getTexture(std::format("graphics/{}", textureId)).getSize());
-
 	if (isTextureRectValid(textureRect))
 	{
 		m_Sprite.setTextureRect(textureRect);
-		size = sf::Vector2f(textureRect.size);
 	}
-	m_Sprite.setOrigin({ size.x / 2.0f, size.y / 2.0f });
+	setOriginToCenter();
+}
+
+GraphicsComponent::GraphicsComponent(BitmapStore& bitmapStore, const std::string& textureId, bool tiled) : m_BitmapStore(bitmapStore), m_Sprite(m_BitmapStore.getTexture(BitmapStore::PlaceholderGraphicsFilepath))
+{
+	sf::Texture& texture = m_BitmapStore.getTexture(std::format("graphics/{}", textureId));
+	texture.setRepeated(tiled);	
+	setTexture(textureId);
 }
 
 GraphicsComponent::GraphicsComponent(BitmapStore& bitmapStore) : m_BitmapStore(bitmapStore), m_Sprite(m_BitmapStore.getTexture(BitmapStore::PlaceholderGraphicsFilepath))
 {
 }
 
-void GraphicsComponent::setTexture(const std::string& textureId, sf::IntRect textureRect)
+void GraphicsComponent::setTexture(const std::string& textureId)
 {
-	m_Sprite.setTexture(m_BitmapStore.getTexture(std::format("graphics/{}", textureId)));	
+	m_Sprite.setTexture(m_BitmapStore.getTexture(std::format("graphics/{}", textureId)), true);
+	setOriginToCenter();
+}
 
-	sf::Vector2f size = sf::Vector2f(m_BitmapStore.getTexture(std::format("graphics/{}", textureId)).getSize());
-
+void GraphicsComponent::setTextureRect(sf::IntRect textureRect)
+{
 	if (isTextureRectValid(textureRect))
 	{
 		m_Sprite.setTextureRect(textureRect);
-		size = sf::Vector2f(textureRect.size);
+		setOriginToCenter();
 	}
-	m_Sprite.setOrigin({ size.x / 2.0f, size.y / 2.0f });
 }
 
 void GraphicsComponent::setPosition(sf::Vector2f position)
@@ -67,6 +81,16 @@ sf::Vector2f GraphicsComponent::getScale(sf::Vector2f position)
 sf::IntRect GraphicsComponent::getTextureRect()
 {
 	return m_Sprite.getTextureRect();
+}
+
+void GraphicsComponent::setRotation(sf::Angle angle)
+{
+	m_Sprite.setRotation(angle);
+}
+
+sf::Angle GraphicsComponent::getRotation()
+{
+	return m_Sprite.getRotation();
 }
 
 void GraphicsComponent::update(float delta)

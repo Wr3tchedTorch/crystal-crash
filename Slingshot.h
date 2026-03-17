@@ -5,13 +5,12 @@
 #include "BitmapStore.h"
 #include <SFML/System/Vector2.hpp>
 #include <string>
-#include "TiledGraphicsComponent.h"
 
 class Slingshot : public IGameObject
 {
 private:
-	GraphicsComponent	   m_BaseGraphicsComponent;
-	TiledGraphicsComponent m_ChainGraphicsComponent;
+	GraphicsComponent m_BaseGraphicsComponent;
+	GraphicsComponent m_ChainGraphicsComponent;
 
 public:
 	static const std::string BaseGraphicsId;
