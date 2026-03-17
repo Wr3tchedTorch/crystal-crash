@@ -14,14 +14,17 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <math_functions.h>
 #include "DragSystem.h"
+#include <SFML/System/Vector2.hpp>
+#include <SFML/Window/Mouse.hpp>
 
 bool GameEngine::Instantiated = false;
 sf::Time GameEngine::GameTimeTotal = sf::Time();
+sf::Vector2f GameEngine::MousePositionInGameCoords = sf::Vector2f();
 
 GameEngine::GameEngine() : 
 	m_EventHandler(m_Window, m_MouseDragHandler),
 	m_Projectile(m_BitmapStore, m_PhysicsEngine.getWorldId()),
-	m_Slingshot(m_BitmapStore, {100, 500})
+	m_Slingshot(m_BitmapStore, {400, 500})
 {
 	assert(!Instantiated);
 	Instantiated = true;
@@ -65,6 +68,8 @@ void GameEngine::run()
 		GameTimeTotal += deltaTime;
 
 		float delta = deltaTime.asSeconds();
+
+		MousePositionInGameCoords = m_Window.mapPixelToCoords(sf::Mouse::getPosition());
 
 		m_PhysicsEngine.update(delta);
 		m_Projectile.update(delta);

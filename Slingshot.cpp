@@ -3,22 +3,74 @@
 #include <SFML/System/Vector2.hpp>
 #include <string>
 #include "BitmapStore.h"
+#include "DragSystem.h"
+#include "GameEngine.h"
+#include <algorithm>
+#include <cstdlib>
+#include <SFML/System/Angle.hpp>
+#include <SFML/Graphics/Rect.hpp>
+#include <iostream>
+#include <format>
 
 const std::string Slingshot::BaseGraphicsId  = "Lamp Post 1 TALL - Silver.png";
 const std::string Slingshot::ChainGraphicsId = "Chain - Bronze.png";
+const sf::Vector2f Slingshot::ChainGraphicsSize = { 7.0f, 53.0f };
+const float Slingshot::MaxDragDistance = 200;
 
 Slingshot::Slingshot(BitmapStore& store, sf::Vector2f position) :
 	m_BaseGraphicsComponent(store, BaseGraphicsId),
 	m_ChainGraphicsComponent(store, ChainGraphicsId, true)
 {
+	m_BaseGraphicsComponent.setOriginToCenter();
 	m_BaseGraphicsComponent.setPosition(position);
-	m_ChainGraphicsComponent.setPosition({ 600, 200 });
 
-	m_ChainGraphicsComponent.setTextureRect({{0, 0}, {7, 53*8}});
+	sf::Vector2f chainPosition(position);
+	chainPosition.y -= m_BaseGraphicsComponent.getTextureRect().size.y/2.0f;
+
+	m_ChainGraphicsComponent.setPosition(chainPosition);
+	m_ChainGraphicsComponent.setOriginToTopCenter();
+}
+
+void Slingshot::updateChainLength()
+{
+	float length = std::min(DragSystem::get().getDragDistance(), MaxDragDistance);
+	length = std::abs(length);
+
+#ifdef _DEBUG
+	std::cout << std::format("\nlength: {}, drag distance: {}", length, DragSystem::get().getDragDistance());
+#endif // _DEBUG
+
+
+	sf::IntRect textureRect;
+	textureRect.position = { 0, 0 };
+	textureRect.size = {
+		static_cast<int>(ChainGraphicsSize.x), 
+		static_cast<int>(length)
+	};
+	m_ChainGraphicsComponent.setTextureRect(textureRect);
+}
+
+void Slingshot::updateChainRotation()
+{
+	sf::Angle rot = (GameEngine::MousePositionInGameCoords - DragSystem::get().getDragStartPosition()).angle();
+	rot -= sf::degrees(90);
+
+	m_ChainGraphicsComponent.setRotation(rot);
 }
 
 void Slingshot::update(float delta)
 {	
+	if (!DragSystem::get().isDragging())
+	{
+		m_ChainGraphicsComponent.setTextureRect({ {0, 0}, {0, 0} });
+		return;
+	}	
+	if (m_ChainGraphicsComponent.getPosition().x < GameEngine::MousePositionInGameCoords.x)
+	{
+		return;
+	}
+	updateChainLength();
+	updateChainRotation();
 }
 
 void Slingshot::render(sf::RenderTarget& target)

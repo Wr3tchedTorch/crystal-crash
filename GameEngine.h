@@ -9,6 +9,7 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include "MouseDragHandler.h"
 #include "Slingshot.h"
+#include <SFML/System/Vector2.hpp>
 
 class GameEngine
 {
@@ -31,6 +32,7 @@ private:
 
 public:
 	static sf::Time GameTimeTotal;
+	static sf::Vector2f MousePositionInGameCoords;
 
 	GameEngine();
 	~GameEngine();

@@ -18,7 +18,6 @@ protected:
 	sf::Sprite m_Sprite;
 	
 	bool isTextureRectValid(sf::IntRect textureRect);
-	void setOriginToCenter();
 
 public:
 	GraphicsComponent(BitmapStore& bitmapStore, const std::string& textureId, sf::IntRect textureRect);
@@ -28,11 +27,14 @@ public:
 	void setTexture(const std::string& textureId);
 	void setTextureRect(sf::IntRect textureRect);
 
+	void setOriginToCenter();
+	void setOriginToTopCenter();
+
 	void setPosition(sf::Vector2f position);
-	sf::Vector2f getPosition(sf::Vector2f position);
+	sf::Vector2f getPosition();
 
 	void setScale(sf::Vector2f position);
-	sf::Vector2f getScale(sf::Vector2f position);
+	sf::Vector2f getScale();
 
 	sf::IntRect getTextureRect();
 

@@ -13,10 +13,16 @@ private:
 	GraphicsComponent m_ChainGraphicsComponent;
 
 public:
-	static const std::string BaseGraphicsId;
-	static const std::string ChainGraphicsId;
+	static const std::string  BaseGraphicsId;
+	static const std::string  ChainGraphicsId;
+	static const sf::Vector2f ChainGraphicsSize;
+	static const float MaxDragDistance;
 
 	Slingshot(BitmapStore& store, sf::Vector2f position);
+	
+	void updateChainLength();
+	void updateChainRotation();
+
 	void update(float delta) override;
 	void render(sf::RenderTarget& target) override;
 };
