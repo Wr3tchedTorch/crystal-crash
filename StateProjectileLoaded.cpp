@@ -3,7 +3,7 @@
 #include "StateProjectileLoaded.h"
 #include <box2d.h>
 
-void StateProjectileLoaded::init(b2BodyId body, sf::Vector2f& parentPosition, sf::Vector2f& slingshotPosition)
+StateProjectileLoaded::StateProjectileLoaded(b2BodyId body, sf::Vector2f& parentPosition, sf::Vector2f& slingshotPosition)
 {
 	m_ParentBodyId   = body;
 	m_ParentPosition = &parentPosition;
@@ -21,7 +21,6 @@ void StateProjectileLoaded::enter()
 
 void StateProjectileLoaded::exit()
 {
-	b2Body_Enable(m_ParentBodyId);
 }
 
 void StateProjectileLoaded::update(float delta)

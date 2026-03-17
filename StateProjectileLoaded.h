@@ -1,6 +1,5 @@
 #pragma once
 #include "IState.h"
-#include "Slingshot.h"
 #include <SFML/System/Vector2.hpp>
 #include <id.h>
 
@@ -12,7 +11,7 @@ private:
 	sf::Vector2f* m_SlingshotBeakPosition;
 
 public:
-	void init(b2BodyId body, sf::Vector2f& parentPosition, sf::Vector2f& slingshotPosition);
+	StateProjectileLoaded(b2BodyId body, sf::Vector2f& parentPosition, sf::Vector2f& slingshotPosition);
 
 	void enter() override;
 	void exit() override;

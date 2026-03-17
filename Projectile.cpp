@@ -11,6 +11,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <id.h>
 #include "PhysicsObject.h"
+#include "StateProjectileLoaded.h"
 
 void Projectile::createPhysicsBody()
 {
@@ -40,10 +41,10 @@ void Projectile::createPhysicsBody()
 Projectile::Projectile(BitmapStore& store, b2WorldId worldId) :
 	IPhysicsObject(worldId),
 	m_GraphicsComponent(store)
-{
+{	
 }
 
-void Projectile::init(ProjectileAttributes attributes, AnimatedGraphicsAttributes animationAttributes)
+void Projectile::init(ProjectileAttributes attributes, AnimatedGraphicsAttributes animationAttributes, sf::Vector2f& slingshotBeakPosition)
 {
 	m_ProjectileAttributes = attributes;
 
@@ -53,16 +54,22 @@ void Projectile::init(ProjectileAttributes attributes, AnimatedGraphicsAttribute
 
 	createPhysicsBody();
 
-	b2Body_SetLinearVelocity(m_BodyId, {4, -2});
+	m_CurrentState = new StateProjectileLoaded(m_BodyId, m_Position, slingshotBeakPosition);
+
+	m_CurrentState->enter();
 }
 
 void Projectile::update(float delta)
 {
 	m_GraphicsComponent.update(delta);
+	m_CurrentState->update(delta);
 
-	sf::Vector2f position = converter::metersToPixels(b2Body_GetPosition(m_BodyId));
+	if (b2Body_IsEnabled(m_BodyId))
+	{
+		m_Position = converter::metersToPixels(b2Body_GetPosition(m_BodyId));
+	}
 
-	m_GraphicsComponent.setPosition(position);
+	m_GraphicsComponent.setPosition(m_Position);
 }
 
 void Projectile::render(sf::RenderTarget& target)

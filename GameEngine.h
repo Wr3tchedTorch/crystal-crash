@@ -23,8 +23,8 @@ private:
 
 	IScreen* m_CurrentScreen;
 
-	Projectile m_Projectile;
 	Slingshot  m_Slingshot;
+	Projectile m_Projectile;
 
 	static bool Instantiated;
 

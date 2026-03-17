@@ -4,7 +4,7 @@
 
 class IGameObject
 {
-private:
+protected:
 	sf::Vector2f m_Position;
 
 public:

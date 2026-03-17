@@ -6,6 +6,8 @@
 #include "AnimatedGraphicsAttributes.h"
 #include "AnimatedGraphicsComponent.h"
 #include <id.h>
+#include <SFML/System/Vector2.hpp>
+#include "IState.h"
 
 class Projectile : public IPhysicsObject
 {
@@ -16,12 +18,14 @@ private:
 	//SoundEngine& m_SoundEngine;
 	//VelocityComponent m_VelocityComponent;
 
+	IState* m_CurrentState;
+
 	void createPhysicsBody();
 
 public:
 	Projectile(BitmapStore& store, b2WorldId worldId);
 
-	void init(ProjectileAttributes attributes, AnimatedGraphicsAttributes animationAttributes);
+	void init(ProjectileAttributes attributes, AnimatedGraphicsAttributes animationAttributes, sf::Vector2f& slingshotBeakPosition);
 
 	void update(float delta) override;
 	void render(sf::RenderTarget& target) override;

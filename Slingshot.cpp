@@ -32,13 +32,16 @@ Slingshot::Slingshot(BitmapStore& store, sf::Vector2f position) :
 
 sf::Vector2f& Slingshot::getBeakPosition()
 {
+	return m_BeakPosition;
+}
+
+void Slingshot::updateBeakPosition()
+{
 	float length = std::min(DragSystem::get().getDragDistance(), MaxDragDistance);
 	length = std::abs(length);
 
-	m_BeakPosition  = m_ChainGraphicsComponent.getPosition();
+	m_BeakPosition = m_ChainGraphicsComponent.getPosition();
 	m_BeakPosition += DragSystem::get().getDragDirection() * length;
-
-	return m_BeakPosition;
 }
 
 void Slingshot::loadProjectile(Projectile* projectile)
@@ -81,6 +84,7 @@ void Slingshot::update(float delta)
 	}
 	updateChainLength();
 	updateChainRotation();
+	updateBeakPosition();
 }
 
 void Slingshot::render(sf::RenderTarget& target)

@@ -21,13 +21,15 @@ bool GameEngine::Instantiated = false;
 sf::Time GameEngine::GameTimeTotal = sf::Time();
 sf::Vector2f GameEngine::MousePositionInGameCoords = sf::Vector2f();
 
-GameEngine::GameEngine() : 
+GameEngine::GameEngine() : 	
 	m_EventHandler(m_Window, m_MouseDragHandler),
-	m_Projectile(m_BitmapStore, m_PhysicsEngine.getWorldId()),
-	m_Slingshot(m_BitmapStore, {400, 500})
+	m_Slingshot(m_BitmapStore, {400, 500}),
+	m_Projectile(m_BitmapStore, m_PhysicsEngine.getWorldId())
 {
 	assert(!Instantiated);
 	Instantiated = true;
+
+	DragSystem::initialize(m_MouseDragHandler);
 
 	m_Window.create(sf::VideoMode::getDesktopMode(), "Crystal Crash by Eric");
 	m_Window.setFramerateLimit(60);
@@ -45,11 +47,9 @@ GameEngine::GameEngine() :
 	ProjectileAttributes attr;
 	attr.GraphicsAttributes.GraphicsId  = "GEM 2 - LIGHT GREEN.png";
 
-	m_Projectile.init(attr, anAttr);
+	m_Projectile.init(attr, anAttr, m_Slingshot.getBeakPosition());
 
 	spawnGround();
-
-	DragSystem::initialize(m_MouseDragHandler);
 }
 
 GameEngine::~GameEngine()
@@ -77,8 +77,8 @@ void GameEngine::run()
 
 		m_Window.clear();
 
-		m_Projectile.render(m_Window);
 		m_Slingshot.render(m_Window);
+		m_Projectile.render(m_Window);
 		m_Window.draw(m_DebugGround);		
 
 		//if (m_CurrentScreen)

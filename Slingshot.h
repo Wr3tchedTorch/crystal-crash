@@ -30,6 +30,7 @@ public:
 	Slingshot(BitmapStore& store, sf::Vector2f position);
 
 	sf::Vector2f& getBeakPosition();
+	void updateBeakPosition();
 	
 	void loadProjectile(Projectile* projectile);
 
