@@ -1,12 +1,10 @@
 #pragma once
-#include "Projectile.h"
-#include "StateProjectileLoaded.h"
+
+class Projectile;
 
 class IProjectileState
 {
 public:
-	static StateProjectileLoaded   StateProjectileLoaded;
-
 	virtual void enter(Projectile& projectile) = 0;
 	virtual void exit(Projectile& projectile)  = 0;
 

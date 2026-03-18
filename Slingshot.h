@@ -18,6 +18,8 @@ private:
 
 	sf::Vector2f m_BeakPosition;
 
+	bool m_IsAiming = false;
+
 	void updateChainLength();
 	void updateChainRotation();
 

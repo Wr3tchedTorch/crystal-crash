@@ -33,7 +33,7 @@ public:
 
 	void init(ProjectileAttributes attributes, AnimatedGraphicsAttributes animationAttributes, sf::Vector2f& slingshotBeakPosition);
 
-	void launch(float slingShotImpulse);
+	void launch(float slingShotImpulseRatio, sf::Vector2f normalizedDirection);
 
 	void update(float delta) override;
 	void render(sf::RenderTarget& target) override;

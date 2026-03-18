@@ -169,6 +169,7 @@
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="ProjectileAttributes.h" />
     <ClInclude Include="IScreen.h" />
+    <ClInclude Include="ProjectileStates.h" />
     <ClInclude Include="Slingshot.h" />
     <ClInclude Include="StateProjectileLaunched.h" />
     <ClInclude Include="StateProjectileLoaded.h" />

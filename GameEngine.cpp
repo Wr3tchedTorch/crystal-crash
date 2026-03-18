@@ -46,8 +46,10 @@ GameEngine::GameEngine() :
 
 	ProjectileAttributes attr;
 	attr.GraphicsAttributes.GraphicsId  = "GEM 1 - LIGHT GREEN.png";
+	attr.MaxSpeed = 40;
 
 	m_Projectile.init(attr, anAttr, m_Slingshot.getBeakPosition());
+	m_Slingshot.loadProjectile(&m_Projectile);
 
 	spawnGround();
 }

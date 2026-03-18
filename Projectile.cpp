@@ -11,8 +11,10 @@
 #include <SFML/System/Vector2.hpp>
 #include <id.h>
 #include "PhysicsObject.h"
-#include "IProjectileState.h"
 #include "StateProjectileLaunched.h"
+#include "ProjectileStates.h"
+#include <iostream>
+#include <format>
 
 void Projectile::createPhysicsBody()
 {
@@ -64,14 +66,22 @@ void Projectile::init(ProjectileAttributes attributes, AnimatedGraphicsAttribute
 
 	createPhysicsBody();
 
-	m_CurrentState = &IProjectileState::StateProjectileLoaded;
+	m_CurrentState = &ProjectileStates::Loaded;
 
 	m_CurrentState->enter(*this);
 }
 
-void Projectile::launch(float slingShotImpulse)
+void Projectile::launch(float slingShotImpulseRatio, sf::Vector2f normalizedDirection)
 {
-	m_CurrentState = new StateProjectileLaunched(slingShotImpulse);
+#ifdef _DEBUG
+	std::cout << std::format("Launching projectile: impulse ratio [{}], direction [{}, {}]", slingShotImpulseRatio, normalizedDirection.x, normalizedDirection.y);
+#endif // _DEBUG
+
+	b2Body_SetTransform(m_BodyId, converter::pixelsToMeters(m_Position), b2Rot_identity);
+
+	normalizedDirection *= -1.0f;
+
+	m_CurrentState = new StateProjectileLaunched(slingShotImpulseRatio, normalizedDirection, m_BodyId);
 	m_CurrentState->enter(*this);
 }
 

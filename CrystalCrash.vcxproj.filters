@@ -170,5 +170,8 @@
     <ClInclude Include="StateProjectileLaunched.h">
       <Filter>Header Files\States</Filter>
     </ClInclude>
+    <ClInclude Include="ProjectileStates.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

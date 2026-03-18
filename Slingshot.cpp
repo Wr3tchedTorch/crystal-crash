@@ -10,11 +10,12 @@
 #include "DragSystem.h"
 #include "GameEngine.h"
 #include "Projectile.h"
+#include <cmath>
 
 const std::string Slingshot::BaseGraphicsId  = "Lamp Post 1 SHORT - Silver.png";
 const std::string Slingshot::ChainGraphicsId = "Chain - Bronze.png";
 const sf::Vector2f Slingshot::ChainGraphicsSize = { 7.0f, 53.0f };
-const float Slingshot::MaxDragDistance = 200;
+const float Slingshot::MaxDragDistance = 150;
 
 Slingshot::Slingshot(BitmapStore& store, sf::Vector2f position) :
 	m_BaseGraphicsComponent(store, BaseGraphicsId),
@@ -78,19 +79,34 @@ void Slingshot::updateChainRotation()
 
 void Slingshot::update(float delta)
 {	
-	updateBeakPosition();
 	if (!DragSystem::get().isDragging())
 	{
 		m_ChainGraphicsComponent.setTextureRect({ {0, 0}, {1, 1} });
 		m_BeakPosition = m_ChainGraphicsComponent.getPosition();
-		return;
-	}	
-	if (m_ChainGraphicsComponent.getPosition().x < GameEngine::MousePositionInGameCoords.x)
-	{
+
+		if (m_IsAiming)
+		{
+			m_IsAiming = false;
+			
+			float length = std::min(DragSystem::get().getDragDistance(), MaxDragDistance);
+			float impulseRatio = std::sqrt(length / MaxDragDistance);
+
+			m_LoadedProjectiles.front()->launch(impulseRatio, DragSystem::get().getDragDirection());
+			m_LoadedProjectiles.pop();
+		}
+
 		return;
 	}
+	if (m_ChainGraphicsComponent.getPosition().x < GameEngine::MousePositionInGameCoords.x || m_LoadedProjectiles.size() == 0)
+	{
+		return;
+	}	
+
+	m_IsAiming = true;
+
 	updateChainLength();
 	updateChainRotation();
+	updateBeakPosition();
 }
 
 void Slingshot::render(sf::RenderTarget& target)

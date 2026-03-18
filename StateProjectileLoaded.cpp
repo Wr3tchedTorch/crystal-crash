@@ -18,5 +18,5 @@ void StateProjectileLoaded::exit(Projectile& projectile)
 
 void StateProjectileLoaded::update(Projectile& projectile, float delta)
 {
-	projectile.getPosition() = projectile.m_SlingshotBeakPosition;
+	projectile.getPosition() = *projectile.m_SlingshotBeakPosition;
 }

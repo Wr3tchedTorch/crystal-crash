@@ -1,6 +1,7 @@
 #pragma once
 #include "IProjectileState.h"
-#include "Projectile.h"
+
+class Projectile;
 
 class StateProjectileLoaded : public IProjectileState
 {
