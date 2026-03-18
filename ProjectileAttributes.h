@@ -10,8 +10,9 @@ struct ProjectileAttributes
 	std::string Name;
 	float MaxSpeed;
 	float Damage;
+	int Order;
 
-	std::unique_ptr<ShapeAttributes> Shape;
+	std::shared_ptr<ShapeAttributes> Shape;
 
 	GraphicsAttributes	  Graphics;
 	PhysicsBodyAttributes Physics;

@@ -1,8 +1,9 @@
 #pragma once
 #include <types.h>
+#include <memory>
 
 struct PhysicsBodyAttributes
 {
-	b2BodyDef  BodyDefinition;
-	b2ShapeDef ShapeDefinition;	
+	std::shared_ptr<b2BodyDef>  BodyDefinition;
+	std::shared_ptr<b2ShapeDef> ShapeDefinition;
 };

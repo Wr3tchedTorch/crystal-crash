@@ -28,10 +28,11 @@ public:
 	static const std::string  ChainGraphicsId;
 	static const sf::Vector2f ChainGraphicsSize;
 	static const float MaxDragDistance;
+	static const float SpaceBetweenIdleProjectiles;
 
 	Slingshot(BitmapStore& store, sf::Vector2f position);
 
-	sf::Vector2f& getBeakPosition();
+	sf::Vector2f getNextIdlePosition(int order) const;
 	void updateBeakPosition();
 	
 	void loadProjectile(Projectile* projectile);

@@ -2,10 +2,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include "BitmapStore.h"
 #include "ProjectileAttributes.h"
-#include "AnimatedGraphicsAttributes.h"
 #include <box2d.h>
-#include <types.h>
-#include <collision.h>
 #include "Converter.h"
 #include <math_functions.h>
 #include <SFML/System/Vector2.hpp>
@@ -15,40 +12,28 @@
 #include "ProjectileStates.h"
 #include <iostream>
 #include <format>
-#include "GraphicsAttributes.h"
-#include <utility>
 #include <memory>
+#include <utility>
+#include <types.h>
 
-Projectile::Projectile(BitmapStore& store, b2WorldId worldId) :
+Projectile::Projectile(BitmapStore& store, b2WorldId worldId, b2BodyId body, std::shared_ptr<ProjectileAttributes> attributes) :
 	IPhysicsObject(worldId),
-	m_GraphicsComponent(store)
-{	
-	m_CurrentState = nullptr;
-	m_SlingshotBeakPosition = nullptr;
-}
-
-const std::shared_ptr<ProjectileAttributes> Projectile::getAttributes() const
+	m_GraphicsComponent(store, attributes->Graphics),
+	m_ProjectileAttributes(attributes),
+	m_BitmapStore(store)
 {
-	return m_ProjectileAttributes;
-}
+	m_BodyId = body;	
 
-void Projectile::init(std::shared_ptr<ProjectileAttributes> attributes, std::shared_ptr<GraphicsAttributes> animationAttributes, sf::Vector2f& slingshotBeakPosition, b2BodyId body)
-{
-	m_BodyId = body;
-
-	m_SlingshotBeakPosition = &slingshotBeakPosition;
-
-	m_ProjectileAttributes = attributes;
-
-	m_GraphicsComponent.init(animationAttributes);
-	m_GraphicsComponent.setTexture(attributes->Graphics.GraphicsId);
-	m_GraphicsComponent.setTextureRect(animationAttributes->TextureRect);
-	m_GraphicsComponent.setScale({ 1.0f, 1.0f });
 	m_GraphicsComponent.setOriginToCenter();
 
 	m_CurrentState = &ProjectileStates::Loaded;
 
 	m_CurrentState->enter(*this);
+}
+
+const ProjectileAttributes* Projectile::getAttributes() const
+{
+	return m_ProjectileAttributes.get();
 }
 
 void Projectile::launch(float slingShotImpulseRatio, sf::Vector2f normalizedDirection)
@@ -63,6 +48,16 @@ void Projectile::launch(float slingShotImpulseRatio, sf::Vector2f normalizedDire
 
 	m_CurrentState = new StateProjectileLaunched(slingShotImpulseRatio, normalizedDirection, m_BodyId);
 	m_CurrentState->enter(*this);
+}
+
+sf::Vector2f Projectile::getSlingshotBeakPosition() const
+{
+	return m_SlingshotBeakPosition;
+}
+
+void Projectile::setSlingShotBeakPosition(sf::Vector2f toPosition)
+{
+	m_SlingshotBeakPosition = toPosition;
 }
 
 void Projectile::update(float delta)
@@ -83,4 +78,13 @@ void Projectile::update(float delta)
 void Projectile::render(sf::RenderTarget& target)
 {
 	m_GraphicsComponent.render(target);
+}
+
+std::unique_ptr<Projectile> Projectile::clone()
+{
+	b2BodyId bodyId = b2CreateBody(m_WorldId, m_ProjectileAttributes->Physics.BodyDefinition.get());
+
+	m_ProjectileAttributes->Shape->createShape(bodyId, *m_ProjectileAttributes->Physics.ShapeDefinition.get());
+
+	return std::make_unique<Projectile>(m_BitmapStore, m_WorldId, bodyId, m_ProjectileAttributes);
 }

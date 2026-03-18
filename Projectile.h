@@ -7,8 +7,8 @@
 #include <id.h>
 #include <SFML/System/Vector2.hpp>
 #include "IProjectileState.h"
-#include "GraphicsAttributes.h"
 #include <memory>
+#include <types.h>
 
 class Projectile : public IPhysicsObject
 {
@@ -20,19 +20,23 @@ private:
 	//VelocityComponent m_VelocityComponent;
 
 	IProjectileState* m_CurrentState;
+	BitmapStore&      m_BitmapStore;
+
+	sf::Vector2f m_SlingshotBeakPosition;
 
 public:
-	sf::Vector2f* m_SlingshotBeakPosition;
+	Projectile(BitmapStore& store, b2WorldId worldId, b2BodyId body, std::shared_ptr<ProjectileAttributes> attributes);
 
-	Projectile(BitmapStore& store, b2WorldId worldId);
-
-	const std::shared_ptr<ProjectileAttributes> getAttributes() const;
-
-	void init(std::shared_ptr<ProjectileAttributes> attributes, std::shared_ptr<GraphicsAttributes> animationAttributes, sf::Vector2f& slingshotBeakPosition, b2BodyId body);
+	const ProjectileAttributes* getAttributes() const;
 
 	void launch(float slingShotImpulseRatio, sf::Vector2f normalizedDirection);
 
+	sf::Vector2f getSlingshotBeakPosition() const;
+	void setSlingShotBeakPosition(sf::Vector2f toPosition);
+
 	void update(float delta) override;
 	void render(sf::RenderTarget& target) override;
+
+	std::unique_ptr<Projectile> clone();
 };
 

@@ -82,7 +82,7 @@ sf::Vector2f GraphicsComponent::getScale()
 	return m_Sprite.getScale();
 }
 
-sf::IntRect GraphicsComponent::getTextureRect()
+sf::IntRect GraphicsComponent::getTextureRect() const
 {
 	return m_Sprite.getTextureRect();
 }

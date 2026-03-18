@@ -52,6 +52,12 @@
     <Filter Include="Header Files\States">
       <UniqueIdentifier>{494ee28c-ac9b-49f2-8081-cade743a87a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Factories">
+      <UniqueIdentifier>{239e3672-a005-4b59-92ec-c9bd8e6db660}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Factories">
+      <UniqueIdentifier>{8799c236-65b5-4c15-b687-de58e0599e93}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -107,6 +113,9 @@
     </ClCompile>
     <ClCompile Include="PolygonShapeAttributes.h">
       <Filter>Header Files\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectilesFactory.cpp">
+      <Filter>Source Files\Factories</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +190,9 @@
     </ClInclude>
     <ClInclude Include="ShapeAttributes.h">
       <Filter>Header Files\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectilesFactory.h">
+      <Filter>Header Files\Factories</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

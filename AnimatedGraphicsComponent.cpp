@@ -16,7 +16,7 @@ void AnimatedGraphicsComponent::nextFrame()
 		return;
 	}
 
-	if (m_CurrentFrame >= m_Attributes->Animation->FrameCount)
+	if (m_CurrentFrame >= m_Attributes.Animation->FrameCount)
 	{
 		m_EndedAnimation = true;
 		return;
@@ -27,13 +27,13 @@ void AnimatedGraphicsComponent::nextFrame()
 	sf::IntRect toRect;
 	toRect.position =
 	{
-		m_Attributes->TextureRect.size.x * m_CurrentFrame,
-		m_Attributes->TextureRect.size.y * m_CurrentAnimation
+		m_Attributes.TextureRect.size.x * m_CurrentFrame,
+		m_Attributes.TextureRect.size.y * m_CurrentAnimation
 	};
 	toRect.size =
 	{
-		m_Attributes->TextureRect.size.x,
-		m_Attributes->TextureRect.size.y
+		m_Attributes.TextureRect.size.x,
+		m_Attributes.TextureRect.size.y
 	};
 
 	m_Sprite.setTextureRect(toRect);
@@ -41,27 +41,22 @@ void AnimatedGraphicsComponent::nextFrame()
 	m_CurrentFrame++;	
 }
 
-AnimatedGraphicsComponent::AnimatedGraphicsComponent(BitmapStore& bitmapStore, std::shared_ptr<GraphicsAttributes> attributes) :
+AnimatedGraphicsComponent::AnimatedGraphicsComponent(BitmapStore& bitmapStore, GraphicsAttributes& attributes) :
 	GraphicsComponent(bitmapStore),
-	m_Attributes(attributes)ROM 
+	m_Attributes(attributes)
 {
-}
-
-void AnimatedGraphicsComponent::init(std::shared_ptr<GraphicsAttributes> attributes)
-{
-	m_Attributes = attributes;
 }
 
 void AnimatedGraphicsComponent::update(float delta)
 {
-	if (m_Attributes->Animation->Loop && m_EndedAnimation && GameEngine::GameTimeTotal.asSeconds() - m_TimeSinceLastAnimation >= m_Attributes->Animation->DelayBeforeAnimationStart)
+	if (m_Attributes.Animation->Loop && m_EndedAnimation && GameEngine::GameTimeTotal.asSeconds() - m_TimeSinceLastAnimation >= m_Attributes.Animation->DelayBeforeAnimationStart)
 	{
 		m_EndedAnimation = false;
 
 		m_CurrentFrame = 0;
 	}
 
-	if (!m_EndedAnimation && GameEngine::GameTimeTotal.asSeconds() - m_TimeSinceLastFrameUpdate >= m_Attributes->Animation->DelayBetweenFrames)
+	if (!m_EndedAnimation && GameEngine::GameTimeTotal.asSeconds() - m_TimeSinceLastFrameUpdate >= m_Attributes.Animation->DelayBetweenFrames)
 	{
 		nextFrame();
 

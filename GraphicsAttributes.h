@@ -9,5 +9,5 @@ struct GraphicsAttributes
 	std::string GraphicsId;
 	sf::IntRect TextureRect;	
 
-	std::unique_ptr<AnimatedGraphicsAttributes> Animation;
+	std::shared_ptr<AnimatedGraphicsAttributes> Animation;
 };

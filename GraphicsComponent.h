@@ -36,7 +36,7 @@ public:
 	void setScale(sf::Vector2f scale);
 	sf::Vector2f getScale();
 
-	sf::IntRect getTextureRect();
+	sf::IntRect getTextureRect() const;
 
 	void setRotation(sf::Angle angle);
 	sf::Angle getRotation();

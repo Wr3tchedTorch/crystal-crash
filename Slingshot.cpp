@@ -16,6 +16,7 @@ const std::string Slingshot::BaseGraphicsId  = "Lamp Post 1 SHORT - Silver.png";
 const std::string Slingshot::ChainGraphicsId = "Chain - Bronze.png";
 const sf::Vector2f Slingshot::ChainGraphicsSize = { 7.0f, 53.0f };
 const float Slingshot::MaxDragDistance = 150;
+const float Slingshot::SpaceBetweenIdleProjectiles = 100;
 
 Slingshot::Slingshot(BitmapStore& store, sf::Vector2f position) :
 	m_BaseGraphicsComponent(store, BaseGraphicsId),
@@ -31,9 +32,14 @@ Slingshot::Slingshot(BitmapStore& store, sf::Vector2f position) :
 	m_ChainGraphicsComponent.setOriginToTopCenter();
 }
 
-sf::Vector2f& Slingshot::getBeakPosition()
+sf::Vector2f Slingshot::getNextIdlePosition(int order) const
 {
-	return m_BeakPosition;
+	sf::Vector2f idlePosition(m_Position);
+	idlePosition.y += m_BaseGraphicsComponent.getTextureRect().size.y / 2.0f;
+
+	idlePosition.x += order * SpaceBetweenIdleProjectiles;
+
+	return idlePosition;
 }
 
 void Slingshot::updateBeakPosition()
@@ -43,6 +49,8 @@ void Slingshot::updateBeakPosition()
 
 	m_BeakPosition = m_ChainGraphicsComponent.getPosition();
 	m_BeakPosition += DragSystem::get().getDragDirection() * length;
+
+	m_LoadedProjectiles.front()->setSlingShotBeakPosition(m_BeakPosition);
 }
 
 void Slingshot::loadProjectile(Projectile* projectile)

@@ -147,6 +147,7 @@
     <ClCompile Include="IPhysicsObject.cpp" />
     <ClCompile Include="PolygonShapeAttributes.h" />
     <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="ProjectilesFactory.cpp" />
     <ClCompile Include="Slingshot.cpp" />
     <ClCompile Include="StateProjectileLaunched.cpp" />
     <ClCompile Include="StateProjectileLoaded.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="ProjectileAttributes.h" />
     <ClInclude Include="IScreen.h" />
+    <ClInclude Include="ProjectilesFactory.h" />
     <ClInclude Include="ProjectileStates.h" />
     <ClInclude Include="ShapeAttributes.h" />
     <ClInclude Include="Slingshot.h" />
