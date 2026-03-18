@@ -16,39 +16,12 @@
 #include <iostream>
 #include <format>
 
-void Projectile::createPhysicsBody()
-{
-	b2BodyDef bodyDef = b2DefaultBodyDef();
-	bodyDef.type = b2_dynamicBody;
-	bodyDef.isBullet = true;
-	bodyDef.userData = this;
-	bodyDef.gravityScale = 2.0f;
-	bodyDef.linearDamping = 0.05f;
-	bodyDef.enableSleep	  = true;
-
-	m_BodyId = b2CreateBody(m_WorldId, &bodyDef);
-
-	b2ShapeDef shapeDef = b2DefaultShapeDef();
-	shapeDef.density = 1.0f;
-	shapeDef.material.restitution = 0.25f;
-	shapeDef.material.friction = 0.3f;
-	shapeDef.enableHitEvents = true;
-
-	b2Circle circle{};
-	circle.radius = converter::pixelsToMeters(m_GraphicsComponent.getTextureRect().size.y / 2.f);
-
-#ifdef _DEBUG
-	std::cout << "shape radius: " + std::to_string(circle.radius);
-#endif // _DEBUG
-
-
-	b2CreateCircleShape(m_BodyId, &shapeDef, &circle);
-}
-
 Projectile::Projectile(BitmapStore& store, b2WorldId worldId) :
 	IPhysicsObject(worldId),
 	m_GraphicsComponent(store)
 {	
+	m_CurrentState = nullptr;
+	m_SlingshotBeakPosition = nullptr;
 }
 
 const ProjectileAttributes& Projectile::getAttributes() const
@@ -56,19 +29,19 @@ const ProjectileAttributes& Projectile::getAttributes() const
 	return m_ProjectileAttributes;
 }
 
-void Projectile::init(ProjectileAttributes attributes, AnimatedGraphicsAttributes animationAttributes, sf::Vector2f& slingshotBeakPosition)
+void Projectile::init(ProjectileAttributes attributes, AnimatedGraphicsAttributes animationAttributes, sf::Vector2f& slingshotBeakPosition, b2BodyId body)
 {
+	m_BodyId = body;
+
 	m_SlingshotBeakPosition = &slingshotBeakPosition;
 
 	m_ProjectileAttributes = attributes;
 
 	m_GraphicsComponent.init(animationAttributes);
-	m_GraphicsComponent.setTexture(attributes.GraphicsAttributes.GraphicsId);
+	m_GraphicsComponent.setTexture(attributes.Graphics.GraphicsId);
 	m_GraphicsComponent.setTextureRect(animationAttributes.TextureRect);
 	m_GraphicsComponent.setScale({ 1.0f, 1.0f });
 	m_GraphicsComponent.setOriginToCenter();
-
-	createPhysicsBody();
 
 	m_CurrentState = &ProjectileStates::Loaded;
 

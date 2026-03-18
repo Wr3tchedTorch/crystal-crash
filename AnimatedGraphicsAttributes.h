@@ -1,8 +1,6 @@
 #pragma once
-#include "GraphicsAttributes.h"
-#include <SFML/System/Vector2.hpp>
 
-struct AnimatedGraphicsAttributes : GraphicsAttributes
+struct AnimatedGraphicsAttributes
 {
 	int FrameCount = 0;
 	int AnimationCount = 0;

@@ -145,6 +145,7 @@
     <ClCompile Include="MouseDragHandler.cpp" />
     <ClCompile Include="PhysicsEngine.cpp" />
     <ClCompile Include="IPhysicsObject.cpp" />
+    <ClCompile Include="PolygonShapeAttributes.h" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Slingshot.cpp" />
     <ClCompile Include="StateProjectileLaunched.cpp" />
@@ -164,12 +165,14 @@
     <ClInclude Include="GraphicsComponent.h" />
     <ClInclude Include="IProjectileState.h" />
     <ClInclude Include="MouseDragHandler.h" />
+    <ClInclude Include="PhysicsBodyAttributes.h" />
     <ClInclude Include="PhysicsEngine.h" />
     <ClInclude Include="PhysicsObject.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="ProjectileAttributes.h" />
     <ClInclude Include="IScreen.h" />
     <ClInclude Include="ProjectileStates.h" />
+    <ClInclude Include="ShapeAttributes.h" />
     <ClInclude Include="Slingshot.h" />
     <ClInclude Include="StateProjectileLaunched.h" />
     <ClInclude Include="StateProjectileLoaded.h" />

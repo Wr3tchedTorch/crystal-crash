@@ -47,7 +47,7 @@ GameEngine::GameEngine() :
 	anAttr.TextureRect = { {0, 0}, {18, 30} };
 
 	ProjectileAttributes attr;
-	attr.GraphicsAttributes.GraphicsId  = "GEM 1 - LIGHT GREEN.png";
+	attr.Graphics.GraphicsId  = "GEM 1 - LIGHT GREEN.png";
 	attr.MaxSpeed = 40;
 
 	m_Projectile.init(attr, anAttr, m_Slingshot.getBeakPosition());

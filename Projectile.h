@@ -21,9 +21,6 @@ private:
 
 	IProjectileState* m_CurrentState;
 
-
-	void createPhysicsBody();
-
 public:
 	sf::Vector2f* m_SlingshotBeakPosition;
 
@@ -31,7 +28,7 @@ public:
 
 	const ProjectileAttributes& getAttributes() const;
 
-	void init(ProjectileAttributes attributes, AnimatedGraphicsAttributes animationAttributes, sf::Vector2f& slingshotBeakPosition);
+	void init(ProjectileAttributes attributes, AnimatedGraphicsAttributes animationAttributes, sf::Vector2f& slingshotBeakPosition, b2BodyId body);
 
 	void launch(float slingShotImpulseRatio, sf::Vector2f normalizedDirection);
 

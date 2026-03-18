@@ -96,14 +96,17 @@
     <ClCompile Include="DragSystem.cpp">
       <Filter>Source Files\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Slingshot.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="StateProjectileLoaded.cpp">
       <Filter>Source Files\States</Filter>
     </ClCompile>
     <ClCompile Include="StateProjectileLaunched.cpp">
       <Filter>Source Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Slingshot.cpp">
+      <Filter>Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="PolygonShapeAttributes.h">
+      <Filter>Header Files\Data</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -158,9 +161,6 @@
     <ClInclude Include="MouseDragHandler.h">
       <Filter>Header Files\Input</Filter>
     </ClInclude>
-    <ClInclude Include="Slingshot.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="IProjectileState.h">
       <Filter>Header Files\States</Filter>
     </ClInclude>
@@ -172,6 +172,15 @@
     </ClInclude>
     <ClInclude Include="ProjectileStates.h">
       <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Slingshot.h">
+      <Filter>Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsBodyAttributes.h">
+      <Filter>Header Files\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="ShapeAttributes.h">
+      <Filter>Header Files\Data</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
