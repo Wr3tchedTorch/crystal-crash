@@ -1,6 +1,8 @@
 #pragma once
 #include <math_functions.h>
 #include <SFML/System/Vector2.hpp>
+#include <SFML/System/Angle.hpp>
+
 namespace converter
 {
 	constexpr double PIXELS_PER_METERS = 32.0;
@@ -26,5 +28,10 @@ namespace converter
 	inline b2Vec2 pixelsToMeters(const sf::Vector2f& v)
 	{
 		return b2Vec2(v.x / PIXELS_PER_METERS, v.y / PIXELS_PER_METERS);
+	}
+
+	inline sf::Angle rotToAngle(const b2Rot& v)
+	{
+		return sf::Angle(sf::radians(b2Rot_GetAngle(v)));
 	}
 }

@@ -10,6 +10,9 @@
 #include "MouseDragHandler.h"
 #include "Slingshot.h"
 #include <SFML/System/Vector2.hpp>
+#include <vector>
+#include <id.h>
+#include <SFML/Graphics/Rect.hpp>
 
 class GameEngine
 {
@@ -30,6 +33,9 @@ private:
 
 	sf::RectangleShape m_DebugGround;
 
+	std::vector<sf::RectangleShape> m_DebugBoxes;
+	std::vector<b2BodyId> m_DebugBoxesIds;
+
 public:
 	static sf::Time GameTimeTotal;
 	static sf::Vector2f MousePositionInGameCoords;
@@ -40,5 +46,7 @@ public:
 	void run();	
 
 	void spawnGround();
+	void spawnBox(sf::FloatRect transform);
+	void spawnBoxes();
 };
 

@@ -16,6 +16,8 @@
 #include "DragSystem.h"
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Mouse.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <random>
 
 bool GameEngine::Instantiated = false;
 sf::Time GameEngine::GameTimeTotal = sf::Time();
@@ -23,7 +25,7 @@ sf::Vector2f GameEngine::MousePositionInGameCoords = sf::Vector2f();
 
 GameEngine::GameEngine() : 	
 	m_EventHandler(m_Window, m_MouseDragHandler),
-	m_Slingshot(m_BitmapStore, {400, 500}),
+	m_Slingshot(m_BitmapStore, {300, 800-199/2}),
 	m_Projectile(m_BitmapStore, m_PhysicsEngine.getWorldId())
 {
 	assert(!Instantiated);
@@ -52,6 +54,7 @@ GameEngine::GameEngine() :
 	m_Slingshot.loadProjectile(&m_Projectile);
 
 	spawnGround();
+	spawnBoxes();
 }
 
 GameEngine::~GameEngine()
@@ -77,11 +80,25 @@ void GameEngine::run()
 		m_Slingshot.update(delta);
 		m_Projectile.update(delta);
 
-		m_Window.clear(sf::Color::White);
+		for (int i = 0; i < m_DebugBoxes.size(); i++)
+		{			
+			b2Vec2 position = b2Body_GetPosition(m_DebugBoxesIds.at(i));
+			b2Rot  rotation = b2Body_GetRotation(m_DebugBoxesIds.at(i));
+
+			m_DebugBoxes.at(i).setPosition(converter::metersToPixels(position));
+			m_DebugBoxes.at(i).setRotation(converter::rotToAngle(rotation));
+		}
+
+		m_Window.clear(sf::Color(135, 206, 250));
 
 		m_Slingshot.render(m_Window);
 		m_Projectile.render(m_Window);
 		m_Window.draw(m_DebugGround);		
+		
+		for (auto& box : m_DebugBoxes)
+		{
+			m_Window.draw(box);
+		}
 
 		//if (m_CurrentScreen)
 		//{
@@ -95,8 +112,8 @@ void GameEngine::run()
 void GameEngine::spawnGround()
 {
 	sf::FloatRect bounds({
-		{1920.0f/2.0f, 1000.0f},
-		{1920.0f, 100.0f}
+		{1920.0f/2.0f, 900.0f},
+		{1920.0f, 200.0f}
 	});
 	m_DebugGround.setOrigin({ bounds.size.x / 2.0f, bounds.size.y / 2.0f });
 	m_DebugGround.setPosition(bounds.position);
@@ -115,4 +132,55 @@ void GameEngine::spawnGround()
 	b2Polygon  polygon = b2MakeBox(sizeInMeters.x, sizeInMeters.y);
 
 	b2ShapeDef shapeDef = b2DefaultShapeDef();	
+
+	b2CreatePolygonShape(bodyId, &shapeDef, &polygon);
+}
+
+void GameEngine::spawnBox(sf::FloatRect transform)
+{	
+	m_DebugBoxes.push_back(sf::RectangleShape());
+	m_DebugBoxes.back().setOrigin({ transform.size.x / 2.0f, transform.size.y / 2.0f });
+	m_DebugBoxes.back().setPosition(transform.position);
+	m_DebugBoxes.back().setSize(transform.size);
+	m_DebugBoxes.back().setFillColor(sf::Color(199, 157, 122));
+
+	transform.size /= 2.0f;
+
+	b2BodyDef bodyDef = b2DefaultBodyDef();
+	bodyDef.type = b2_dynamicBody;
+	bodyDef.position = converter::pixelsToMeters(transform.position);
+
+	auto bodyId = b2CreateBody(m_PhysicsEngine.getWorldId(), &bodyDef);
+
+	b2Vec2 sizeInMeters = converter::pixelsToMeters(transform.size);
+	b2Polygon  polygon = b2MakeBox(sizeInMeters.x, sizeInMeters.y);
+
+	b2ShapeDef shapeDef = b2DefaultShapeDef();
+	shapeDef.density = 1.0f;
+	shapeDef.material.friction = .3f;
+
+	b2CreatePolygonShape(bodyId, &shapeDef, &polygon);
+
+	m_DebugBoxesIds.push_back(bodyId);
+}
+
+void GameEngine::spawnBoxes()
+{
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<> dist(30, 40);
+	std::uniform_int_distribution<> heightDist(-3, 3);
+	std::uniform_real_distribution<float> distSize(0.5f, 2.0f);
+
+	int boxCount = 5;
+	for (int i = 0; i < 35; i++)
+	{
+		int result = dist(gen);
+
+		sf::FloatRect transform;
+		transform.position = { static_cast<float>(converter::metersToPixels(dist(gen))), static_cast<float>(converter::metersToPixels(heightDist(gen))) };
+		transform.size = { converter::metersToPixels(distSize(gen)), converter::metersToPixels(distSize(gen)) };
+
+		spawnBox(transform);
+	}
 }

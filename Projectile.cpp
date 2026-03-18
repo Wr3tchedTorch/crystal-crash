@@ -20,12 +20,11 @@ void Projectile::createPhysicsBody()
 {
 	b2BodyDef bodyDef = b2DefaultBodyDef();
 	bodyDef.type = b2_dynamicBody;
-	bodyDef.position = {2, 2};
-	bodyDef.isBullet = false;
+	bodyDef.isBullet = true;
 	bodyDef.userData = this;
 	bodyDef.gravityScale = 2.0f;
 	bodyDef.linearDamping = 0.05f;
-	bodyDef.enableSleep = true;
+	bodyDef.enableSleep	  = true;
 
 	m_BodyId = b2CreateBody(m_WorldId, &bodyDef);
 
@@ -36,7 +35,12 @@ void Projectile::createPhysicsBody()
 	shapeDef.enableHitEvents = true;
 
 	b2Circle circle{};
-	circle.radius = converter::pixelsToMeters(m_GraphicsComponent.getTextureRect().size.x / 2.f);
+	circle.radius = converter::pixelsToMeters(m_GraphicsComponent.getTextureRect().size.y / 2.f);
+
+#ifdef _DEBUG
+	std::cout << "shape radius: " + std::to_string(circle.radius);
+#endif // _DEBUG
+
 
 	b2CreateCircleShape(m_BodyId, &shapeDef, &circle);
 }
@@ -93,6 +97,8 @@ void Projectile::update(float delta)
 	if (b2Body_IsEnabled(m_BodyId))
 	{
 		m_Position = converter::metersToPixels(b2Body_GetPosition(m_BodyId));
+
+		m_GraphicsComponent.setRotation(converter::rotToAngle(b2Body_GetRotation(m_BodyId)));
 	}
 
 	m_GraphicsComponent.setPosition(m_Position);
