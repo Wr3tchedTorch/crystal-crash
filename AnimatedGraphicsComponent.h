@@ -1,14 +1,14 @@
 #pragma once
 #include "GraphicsComponent.h"
-#include "AnimatedGraphicsAttributes.h"
-#include <SFML/System/Time.hpp>
 #include "BitmapStore.h"
 #include <SFML/Graphics/RenderTarget.hpp>
+#include "GraphicsAttributes.h"
+#include <memory>
 
 class AnimatedGraphicsComponent : public GraphicsComponent
 {
 private:
-	AnimatedGraphicsAttributes m_Attributes;
+	std::shared_ptr<GraphicsAttributes> m_Attributes;
 
 	int m_CurrentFrame	   = 0;
 	int m_CurrentAnimation = 0;
@@ -21,10 +21,10 @@ private:
 	void nextFrame();
 
 public:
-	AnimatedGraphicsComponent(BitmapStore& bitmapStore, AnimatedGraphicsAttributes attributes);	
+	AnimatedGraphicsComponent(BitmapStore& bitmapStore, std::shared_ptr<GraphicsAttributes> attributes);
 	AnimatedGraphicsComponent(BitmapStore& bitmapStore) : GraphicsComponent(bitmapStore) {};
 
-	void init(AnimatedGraphicsAttributes attributes);
+	void init(std::shared_ptr<GraphicsAttributes> attributes);
 
 	void update(float delta) override;
 	void render(sf::RenderTarget& target) override;

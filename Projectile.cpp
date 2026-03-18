@@ -15,6 +15,9 @@
 #include "ProjectileStates.h"
 #include <iostream>
 #include <format>
+#include "GraphicsAttributes.h"
+#include <utility>
+#include <memory>
 
 Projectile::Projectile(BitmapStore& store, b2WorldId worldId) :
 	IPhysicsObject(worldId),
@@ -24,12 +27,12 @@ Projectile::Projectile(BitmapStore& store, b2WorldId worldId) :
 	m_SlingshotBeakPosition = nullptr;
 }
 
-const ProjectileAttributes& Projectile::getAttributes() const
+const std::shared_ptr<ProjectileAttributes> Projectile::getAttributes() const
 {
 	return m_ProjectileAttributes;
 }
 
-void Projectile::init(ProjectileAttributes attributes, AnimatedGraphicsAttributes animationAttributes, sf::Vector2f& slingshotBeakPosition, b2BodyId body)
+void Projectile::init(std::shared_ptr<ProjectileAttributes> attributes, std::shared_ptr<GraphicsAttributes> animationAttributes, sf::Vector2f& slingshotBeakPosition, b2BodyId body)
 {
 	m_BodyId = body;
 
@@ -38,8 +41,8 @@ void Projectile::init(ProjectileAttributes attributes, AnimatedGraphicsAttribute
 	m_ProjectileAttributes = attributes;
 
 	m_GraphicsComponent.init(animationAttributes);
-	m_GraphicsComponent.setTexture(attributes.Graphics.GraphicsId);
-	m_GraphicsComponent.setTextureRect(animationAttributes.TextureRect);
+	m_GraphicsComponent.setTexture(attributes->Graphics.GraphicsId);
+	m_GraphicsComponent.setTextureRect(animationAttributes->TextureRect);
 	m_GraphicsComponent.setScale({ 1.0f, 1.0f });
 	m_GraphicsComponent.setOriginToCenter();
 

@@ -4,8 +4,6 @@
 #include <SFML/System/Time.hpp>
 #include <cassert>
 #include "GameScreen.h"
-#include "ProjectileAttributes.h"
-#include "AnimatedGraphicsAttributes.h"
 #include <box2d.h>
 #include <types.h>
 #include <collision.h>
@@ -25,8 +23,7 @@ sf::Vector2f GameEngine::MousePositionInGameCoords = sf::Vector2f();
 
 GameEngine::GameEngine() : 	
 	m_EventHandler(m_Window, m_MouseDragHandler),
-	m_Slingshot(m_BitmapStore, {300, 800-199/2}),
-	m_Projectile(m_BitmapStore, m_PhysicsEngine.getWorldId())
+	m_Slingshot(m_BitmapStore, {300, 800-199/2})
 {
 	assert(!Instantiated);
 	Instantiated = true;
@@ -37,21 +34,6 @@ GameEngine::GameEngine() :
 	m_Window.setFramerateLimit(60);
 
 	m_CurrentScreen = new GameScreen;
-
-	AnimatedGraphicsAttributes anAttr;
-	anAttr.AnimationCount = 1;
-	anAttr.DelayBetweenFrames = .100f;
-	anAttr.DelayBeforeAnimationStart = 1;
-	anAttr.FrameCount = 10;
-	anAttr.Loop = true;
-	anAttr.TextureRect = { {0, 0}, {18, 30} };
-
-	ProjectileAttributes attr;
-	attr.Graphics.GraphicsId  = "GEM 1 - LIGHT GREEN.png";
-	attr.MaxSpeed = 40;
-
-	m_Projectile.init(attr, anAttr, m_Slingshot.getBeakPosition());
-	m_Slingshot.loadProjectile(&m_Projectile);
 
 	spawnGround();
 	spawnBoxes();
@@ -78,7 +60,6 @@ void GameEngine::run()
 
 		m_PhysicsEngine.update(delta);
 		m_Slingshot.update(delta);
-		m_Projectile.update(delta);
 
 		for (int i = 0; i < m_DebugBoxes.size(); i++)
 		{			
@@ -92,7 +73,6 @@ void GameEngine::run()
 		m_Window.clear(sf::Color(135, 206, 250));
 
 		m_Slingshot.render(m_Window);
-		m_Projectile.render(m_Window);
 		m_Window.draw(m_DebugGround);		
 		
 		for (auto& box : m_DebugBoxes)

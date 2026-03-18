@@ -22,7 +22,7 @@ struct PolygonShapeAttributes : public ShapeAttributes
 #ifdef _DEBUG
 			std::cout << std::format("[PolygonShapeAttributes - 20] Invalid hull for polygon, number of points: {}", Points.size());
 #endif // _DEBUG
-			return;
+			return b2ShapeId();
 		}
 
 		b2Polygon polygon = b2MakePolygon(&hull, Radius);

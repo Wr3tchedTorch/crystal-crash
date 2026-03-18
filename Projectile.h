@@ -3,17 +3,17 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include "ProjectileAttributes.h"
 #include "BitmapStore.h"
-#include "AnimatedGraphicsAttributes.h"
 #include "AnimatedGraphicsComponent.h"
 #include <id.h>
 #include <SFML/System/Vector2.hpp>
 #include "IProjectileState.h"
+#include "GraphicsAttributes.h"
 #include <memory>
 
 class Projectile : public IPhysicsObject
 {
 private:	
-	ProjectileAttributes m_ProjectileAttributes;
+	std::shared_ptr<ProjectileAttributes> m_ProjectileAttributes;
 
 	AnimatedGraphicsComponent m_GraphicsComponent;
 	//SoundEngine& m_SoundEngine;
@@ -26,9 +26,9 @@ public:
 
 	Projectile(BitmapStore& store, b2WorldId worldId);
 
-	const ProjectileAttributes& getAttributes() const;
+	const std::shared_ptr<ProjectileAttributes> getAttributes() const;
 
-	void init(ProjectileAttributes attributes, AnimatedGraphicsAttributes animationAttributes, sf::Vector2f& slingshotBeakPosition, b2BodyId body);
+	void init(std::shared_ptr<ProjectileAttributes> attributes, std::shared_ptr<GraphicsAttributes> animationAttributes, sf::Vector2f& slingshotBeakPosition, b2BodyId body);
 
 	void launch(float slingShotImpulseRatio, sf::Vector2f normalizedDirection);
 

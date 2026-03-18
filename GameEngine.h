@@ -27,7 +27,6 @@ private:
 	IScreen* m_CurrentScreen;
 
 	Slingshot  m_Slingshot;
-	Projectile m_Projectile;
 
 	static bool Instantiated;
 

@@ -16,7 +16,7 @@ void StateProjectileLaunched::enter(Projectile& projectile)
 		m_NormalizedDirection.x,
 		m_NormalizedDirection.y
 	};
-	velocity *= projectile.getAttributes().MaxSpeed * m_ImpulseRatio;
+	velocity *= projectile.getAttributes()->MaxSpeed * m_ImpulseRatio;
 
 	b2Body_SetLinearVelocity(projectile.m_BodyId, velocity);
 }
