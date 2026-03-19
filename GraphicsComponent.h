@@ -26,6 +26,8 @@ public:
 	void setTextureRect(sf::IntRect textureRect);
 	void resetTextureRect();
 
+	sf::Vector2u getTextureSize() const;
+
 	void setOriginToCenter();
 	void setOriginToTopCenter();
 

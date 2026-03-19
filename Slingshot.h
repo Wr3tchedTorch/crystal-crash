@@ -1,22 +1,23 @@
 #pragma once
-#include "IGameObject.h"
 #include <SFML/Graphics/RenderTarget.hpp>
-#include "GraphicsComponent.h"
-#include "BitmapStore.h"
 #include <SFML/System/Vector2.hpp>
-#include <string>
-#include "Projectile.h"
 #include <memory>
 #include <vector>
 #include <deque>
+#include "IGameObject.h"
+#include "GraphicsComponent.h"
+#include "BitmapStore.h"
+#include "Projectile.h"
 
 class Slingshot : public IGameObject
 {
 private:
+	friend class ISlingshotState;
+
 	GraphicsComponent m_BaseGraphicsComponent;
 	GraphicsComponent m_ChainGraphicsComponent;
 
-	std::deque<std::unique_ptr<Projectile>> m_LoadedProjectiles;
+	std::deque<std::unique_ptr<Projectile>>  m_LoadedProjectiles;
 
 	std::vector<std::unique_ptr<Projectile>> m_LaunchedProjectiles;
 
@@ -24,23 +25,20 @@ private:
 
 	bool m_IsAiming = false;
 
+	std::unique_ptr<ISlingshotState> m_CurrentState;
+
 	void updateChainLength();
 	void updateChainRotation();
 
 	void updateProjectiles(float delta);
 	void renderProjectiles(sf::RenderTarget& target);
 
-public:
-	static const std::string  BaseGraphicsId;
-	static const std::string  ChainGraphicsId;
-	static const sf::Vector2f ChainGraphicsSize;
-	static const float MaxDragDistance;
-	static const float SpaceBetweenIdleProjectiles;
+	void updateBeakPosition();
 
+public:
 	Slingshot(BitmapStore& store, sf::Vector2f position);
 
 	sf::Vector2f getIdlePosition(int order) const;
-	void updateBeakPosition();
 	
 	void loadProjectile(std::unique_ptr<Projectile> projectile);
 

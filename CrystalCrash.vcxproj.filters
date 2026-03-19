@@ -58,6 +58,21 @@
     <Filter Include="Header Files\Attributes">
       <UniqueIdentifier>{41e9a265-6edf-4025-9e54-b6fdb21d5650}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Constants">
+      <UniqueIdentifier>{3be356e2-9aee-4f91-8673-ed1434709c0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\States\Projectile">
+      <UniqueIdentifier>{5bc0d530-ab59-465d-8953-8692c493a1ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\States\Projectile">
+      <UniqueIdentifier>{10d256d8-01e3-4e95-befd-5a13a1ae4441}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\States\Slingshot">
+      <UniqueIdentifier>{119834ed-2352-4893-a885-02f640139371}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\States\Slingshot">
+      <UniqueIdentifier>{8e5d223b-e695-4bd3-86ca-adf59745ca0f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -102,12 +117,6 @@
     <ClCompile Include="DragSystem.cpp">
       <Filter>Source Files\Input</Filter>
     </ClCompile>
-    <ClCompile Include="StateProjectileLoaded.cpp">
-      <Filter>Source Files\States</Filter>
-    </ClCompile>
-    <ClCompile Include="StateProjectileLaunched.cpp">
-      <Filter>Source Files\States</Filter>
-    </ClCompile>
     <ClCompile Include="Slingshot.cpp">
       <Filter>Source Files\GameObjects</Filter>
     </ClCompile>
@@ -122,6 +131,18 @@
     </ClCompile>
     <ClCompile Include="ProjectileData.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StateProjectileLoaded.cpp">
+      <Filter>Source Files\States\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="StateProjectileLaunched.cpp">
+      <Filter>Source Files\States\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="ISlingshotState.cpp">
+      <Filter>Source Files\States\Slingshot</Filter>
+    </ClCompile>
+    <ClCompile Include="ISlingshotStateOwner.h">
+      <Filter>Header Files\States\Slingshot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -176,18 +197,6 @@
     <ClInclude Include="MouseDragHandler.h">
       <Filter>Header Files\Input</Filter>
     </ClInclude>
-    <ClInclude Include="IProjectileState.h">
-      <Filter>Header Files\States</Filter>
-    </ClInclude>
-    <ClInclude Include="StateProjectileLoaded.h">
-      <Filter>Header Files\States</Filter>
-    </ClInclude>
-    <ClInclude Include="StateProjectileLaunched.h">
-      <Filter>Header Files\States</Filter>
-    </ClInclude>
-    <ClInclude Include="ProjectileStates.h">
-      <Filter>Header Files\States</Filter>
-    </ClInclude>
     <ClInclude Include="Slingshot.h">
       <Filter>Header Files\GameObjects</Filter>
     </ClInclude>
@@ -199,6 +208,21 @@
     </ClInclude>
     <ClInclude Include="ProjectilesFactory.h">
       <Filter>Header Files\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="SlingshotConstants.h">
+      <Filter>Header Files\Constants</Filter>
+    </ClInclude>
+    <ClInclude Include="StateProjectileLoaded.h">
+      <Filter>Header Files\States\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="IProjectileState.h">
+      <Filter>Header Files\States\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="StateProjectileLaunched.h">
+      <Filter>Header Files\States\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="ISlingshotState.h">
+      <Filter>Header Files\States\Slingshot</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -8,7 +8,7 @@
 #include <SFML/System/Vector2.hpp>
 #include "IProjectileState.h"
 #include <memory>
-#include <types.h>
+#include <SFML/System/Angle.hpp>
 
 class Projectile : public IPhysicsObject
 {
@@ -19,7 +19,7 @@ private:
 	//SoundEngine& m_SoundEngine;
 	//VelocityComponent m_VelocityComponent;
 
-	IProjectileState* m_CurrentState;
+	std::unique_ptr<IProjectileState> m_CurrentState;
 	BitmapStore&      m_BitmapStore;
 
 	sf::Vector2f m_SlingshotBeakPosition;
@@ -32,6 +32,8 @@ public:
 	void launch(float slingShotImpulseRatio, sf::Vector2f normalizedDirection);
 	void load();
 	bool isLoaded() const;
+
+	void setRotation(sf::Angle rotation);
 
 	sf::Vector2f getSlingshotBeakPosition() const;
 	void setSlingShotBeakPosition(sf::Vector2f toPosition);

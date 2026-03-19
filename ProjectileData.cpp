@@ -18,7 +18,7 @@ std::shared_ptr<ProjectileAttributes> ProjectileData::getDiamondAttributes()
     m_Diamond = std::make_shared<ProjectileAttributes>();
 
     m_Diamond->Name = "Diamante";
-    m_Diamond->MaxSpeed = 30;
+    m_Diamond->MaxSpeed = 40;
     m_Diamond->Damage   = 100;
 
     m_Diamond->Graphics.GraphicsId = "GEM 3 - DARK BLUE.png";
@@ -43,7 +43,7 @@ std::shared_ptr<ProjectileAttributes> ProjectileData::getDiamondAttributes()
     polygon->Points.push_back(b2Vec2(converter::pixelsToMeters({ 0, 15 })));
     polygon->Points.push_back(b2Vec2(converter::pixelsToMeters({ 0, 12 })));
 
-    const b2Vec2 center = converter::pixelsToMeters({ 13.5f, 13.5f });
+    const b2Vec2 center = converter::pixelsToMeters({ 14, 13 });
 
     for (auto& p : polygon->Points)
         p = b2Vec2(p.x - center.x, p.y - center.y);

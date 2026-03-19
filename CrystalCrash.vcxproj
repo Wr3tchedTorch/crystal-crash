@@ -141,6 +141,8 @@
     <ClCompile Include="GameScreen.cpp" />
     <ClCompile Include="GraphicsComponent.cpp" />
     <ClCompile Include="IDragState.h" />
+    <ClCompile Include="ISlingshotState.cpp" />
+    <ClCompile Include="ISlingshotStateOwner.h" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MouseDragHandler.cpp" />
     <ClCompile Include="PhysicsEngine.cpp" />
@@ -167,6 +169,7 @@
     <ClInclude Include="GraphicsAttributes.h" />
     <ClInclude Include="GraphicsComponent.h" />
     <ClInclude Include="IProjectileState.h" />
+    <ClInclude Include="ISlingshotState.h" />
     <ClInclude Include="MouseDragHandler.h" />
     <ClInclude Include="PhysicsBodyAttributes.h" />
     <ClInclude Include="PhysicsEngine.h" />
@@ -175,9 +178,9 @@
     <ClInclude Include="ProjectileAttributes.h" />
     <ClInclude Include="IScreen.h" />
     <ClInclude Include="ProjectilesFactory.h" />
-    <ClInclude Include="ProjectileStates.h" />
     <ClInclude Include="ShapeAttributes.h" />
     <ClInclude Include="Slingshot.h" />
+    <ClInclude Include="SlingshotConstants.h" />
     <ClInclude Include="StateProjectileLaunched.h" />
     <ClInclude Include="StateProjectileLoaded.h" />
   </ItemGroup>

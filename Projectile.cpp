@@ -13,6 +13,8 @@
 #include <iostream>
 #include <format>
 #include <memory>
+#include <SFML/System/Angle.hpp>
+#include "StateProjectileLoaded.h"
 
 Projectile::Projectile(BitmapStore& store, b2WorldId worldId, b2BodyId body, std::shared_ptr<ProjectileAttributes> attributes) :
 	IPhysicsObject(worldId),
@@ -41,19 +43,24 @@ void Projectile::launch(float slingShotImpulseRatio, sf::Vector2f normalizedDire
 
 	normalizedDirection *= -1.0f;
 
-	m_CurrentState = new StateProjectileLaunched(slingShotImpulseRatio, normalizedDirection, m_BodyId);
+	m_CurrentState = std::make_unique<StateProjectileLaunched>(slingShotImpulseRatio, normalizedDirection, m_BodyId);
 	m_CurrentState->enter(*this);
 }
 
 void Projectile::load()
 {
-	m_CurrentState = &ProjectileStates::Loaded;
+	m_CurrentState = std::make_unique<StateProjectileLoaded>();
 	m_CurrentState->enter(*this);
 }
 
 bool Projectile::isLoaded() const
 {
-	return m_CurrentState == &ProjectileStates::Loaded;
+	return m_CurrentState.get() == &ProjectileStates::Loaded;
+}
+
+void Projectile::setRotation(sf::Angle rotation)
+{
+	m_AnimatedGraphics.setRotation(rotation);
 }
 
 sf::Vector2f Projectile::getSlingshotBeakPosition() const

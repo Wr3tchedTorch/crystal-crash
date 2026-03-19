@@ -53,6 +53,11 @@ void GraphicsComponent::resetTextureRect()
 	m_Sprite.setTextureRect(sf::IntRect({ 0, 0 }, { (int)size.x, (int)size.y }));
 }
 
+sf::Vector2u GraphicsComponent::getTextureSize() const
+{
+	return m_Sprite.getTexture().getSize();
+}
+
 void GraphicsComponent::setPosition(sf::Vector2f position)
 {
 	m_Sprite.setPosition(position);

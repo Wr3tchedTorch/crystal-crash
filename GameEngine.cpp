@@ -16,11 +16,13 @@
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <random>
+#include <SFML/Graphics/Shader.hpp>
 #include "Slingshot.h"
 #include <memory>
 #include "ProjectileData.h"
 #include "Projectile.h"
 #include <utility>
+#include <SFML/Graphics/Sprite.hpp>
 
 bool GameEngine::Instantiated = false;
 sf::Time GameEngine::GameTimeTotal = sf::Time();
