@@ -32,7 +32,7 @@ public:
 	void setOriginToTopCenter();
 
 	void setPosition(sf::Vector2f position);
-	sf::Vector2f getPosition();
+	sf::Vector2f getPosition() const;
 
 	void setScale(sf::Vector2f scale);
 	sf::Vector2f getScale();

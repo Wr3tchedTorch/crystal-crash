@@ -141,8 +141,17 @@
     <ClCompile Include="ISlingshotState.cpp">
       <Filter>Source Files\States\Slingshot</Filter>
     </ClCompile>
-    <ClCompile Include="ISlingshotStateOwner.h">
-      <Filter>Header Files\States\Slingshot</Filter>
+    <ClCompile Include="StateSlingshotIdle.cpp">
+      <Filter>Source Files\States\Slingshot</Filter>
+    </ClCompile>
+    <ClCompile Include="StateSlingshotAiming.cpp">
+      <Filter>Source Files\States\Slingshot</Filter>
+    </ClCompile>
+    <ClCompile Include="StateSlingshotShooting.cpp">
+      <Filter>Source Files\States\Slingshot</Filter>
+    </ClCompile>
+    <ClCompile Include="StateSlingshotLoading.cpp">
+      <Filter>Source Files\States\Slingshot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -222,6 +231,18 @@
       <Filter>Header Files\States\Projectile</Filter>
     </ClInclude>
     <ClInclude Include="ISlingshotState.h">
+      <Filter>Header Files\States\Slingshot</Filter>
+    </ClInclude>
+    <ClInclude Include="StateSlingshotIdle.h">
+      <Filter>Header Files\States\Slingshot</Filter>
+    </ClInclude>
+    <ClInclude Include="StateSlingshotAiming.h">
+      <Filter>Header Files\States\Slingshot</Filter>
+    </ClInclude>
+    <ClInclude Include="StateSlingshotShooting.h">
+      <Filter>Header Files\States\Slingshot</Filter>
+    </ClInclude>
+    <ClInclude Include="StateSlingshotLoading.h">
       <Filter>Header Files\States\Slingshot</Filter>
     </ClInclude>
   </ItemGroup>

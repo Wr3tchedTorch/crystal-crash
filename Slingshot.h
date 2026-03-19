@@ -8,12 +8,15 @@
 #include "GraphicsComponent.h"
 #include "BitmapStore.h"
 #include "Projectile.h"
+#include "ISlingshotState.h"
 
 class Slingshot : public IGameObject
 {
-private:
-	friend class ISlingshotState;
+	friend class StateSlingshotAiming;
+	friend class StateSlingshotShooting;
+	friend class StateSlingshotLoading;
 
+private:
 	GraphicsComponent m_BaseGraphicsComponent;
 	GraphicsComponent m_ChainGraphicsComponent;
 
@@ -44,5 +47,8 @@ public:
 
 	void update(float delta) override;
 	void render(sf::RenderTarget& target) override;
+
+	bool isCurrentDragValid() const;
+	void reset();
 };
 

@@ -142,7 +142,6 @@
     <ClCompile Include="GraphicsComponent.cpp" />
     <ClCompile Include="IDragState.h" />
     <ClCompile Include="ISlingshotState.cpp" />
-    <ClCompile Include="ISlingshotStateOwner.h" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MouseDragHandler.cpp" />
     <ClCompile Include="PhysicsEngine.cpp" />
@@ -155,6 +154,10 @@
     <ClCompile Include="Slingshot.cpp" />
     <ClCompile Include="StateProjectileLaunched.cpp" />
     <ClCompile Include="StateProjectileLoaded.cpp" />
+    <ClCompile Include="StateSlingshotAiming.cpp" />
+    <ClCompile Include="StateSlingshotIdle.cpp" />
+    <ClCompile Include="StateSlingshotLoading.cpp" />
+    <ClCompile Include="StateSlingshotShooting.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedGraphicsComponent.h" />
@@ -183,6 +186,10 @@
     <ClInclude Include="SlingshotConstants.h" />
     <ClInclude Include="StateProjectileLaunched.h" />
     <ClInclude Include="StateProjectileLoaded.h" />
+    <ClInclude Include="StateSlingshotAiming.h" />
+    <ClInclude Include="StateSlingshotIdle.h" />
+    <ClInclude Include="StateSlingshotLoading.h" />
+    <ClInclude Include="StateSlingshotShooting.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

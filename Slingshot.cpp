@@ -11,6 +11,8 @@
 #include "GameEngine.h"
 #include "Projectile.h"
 #include "SlingshotConstants.h"
+#include "ISlingshotState.h"
+#include "StateSlingshotIdle.h"
 
 Slingshot::Slingshot(BitmapStore& store, sf::Vector2f position) :
 	m_BaseGraphicsComponent(store, SlingshotConstants::BaseGraphicsId),
@@ -31,6 +33,9 @@ Slingshot::Slingshot(BitmapStore& store, sf::Vector2f position) :
 
 	m_BeakPosition = m_ChainGraphicsComponent.getPosition();
 	m_BeakPosition.x += 2;
+
+	m_CurrentState = std::make_unique<StateSlingshotIdle>();
+	m_CurrentState->enter(*this);
 }
 
 sf::Vector2f Slingshot::getIdlePosition(int order) const
@@ -57,15 +62,24 @@ void Slingshot::updateBeakPosition()
 	}
 }
 
+bool Slingshot::isCurrentDragValid() const
+{
+	bool hasAmmo     = m_LoadedProjectiles.size() > 0;
+	bool isDragValid = m_ChainGraphicsComponent.getPosition().x > GameEngine::MousePositionInGameCoords.x;
+
+	return hasAmmo && isDragValid;
+}
+
+void Slingshot::reset()
+{
+	m_ChainGraphicsComponent.setTextureRect({ {0, 0}, {1, 1} });
+	m_BeakPosition = m_ChainGraphicsComponent.getPosition();
+}
+
 void Slingshot::loadProjectile(std::unique_ptr<Projectile> projectile)
 {
 	projectile->setSlingShotBeakPosition(m_BeakPosition);
 	m_LoadedProjectiles.push_back(std::move(projectile));
-
-	if (!m_LoadedProjectiles.front()->isLoaded())
-	{
-		m_LoadedProjectiles.front()->load();		
-	}
 }
 
 void Slingshot::updateChainLength()
@@ -123,42 +137,14 @@ void Slingshot::update(float delta)
 {	
 	updateProjectiles(delta);
 
-	if (!DragSystem::get().isDragging())
+	auto nextState = m_CurrentState->update(*this, delta);
+
+	if (nextState)
 	{
-		m_ChainGraphicsComponent.setTextureRect({ {0, 0}, {1, 1} });
-		m_BeakPosition = m_ChainGraphicsComponent.getPosition();
-
-		if (m_IsAiming)
-		{
-			m_IsAiming = false;
-			
-			float length = std::min(DragSystem::get().getDragDistance(), SlingshotConstants::MaxDragDistance);
-			float impulseRatio = std::sqrt(length / SlingshotConstants::MaxDragDistance);
-
-			m_LoadedProjectiles.front()->launch(impulseRatio, DragSystem::get().getDragDirection());
-
-			m_LaunchedProjectiles.push_back(std::move(m_LoadedProjectiles.front()));
-			m_LoadedProjectiles.pop_front();
-
-			if (!m_LoadedProjectiles.empty())
-			{
-				m_LoadedProjectiles.front()->load();
-				m_LoadedProjectiles.front()->setRotation(sf::degrees(0));
-			}
-		}
-
-		return;
+		m_CurrentState->exit(*this);
+		m_CurrentState = std::move(nextState);
+		m_CurrentState->enter(*this);
 	}
-	if (m_ChainGraphicsComponent.getPosition().x < GameEngine::MousePositionInGameCoords.x || m_LoadedProjectiles.size() == 0)
-	{
-		return;
-	}	
-
-	m_IsAiming = true;
-
-	updateChainLength();
-	updateChainRotation();
-	updateBeakPosition();
 }
 
 void Slingshot::render(sf::RenderTarget& target)

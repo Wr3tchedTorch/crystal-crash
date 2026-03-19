@@ -20,5 +20,4 @@ void StateProjectileLoaded::exit(Projectile& projectile)
 void StateProjectileLoaded::update(Projectile& projectile, float delta)
 {
 	projectile.getPosition() = projectile.getSlingshotBeakPosition();
-	std::cout << std::format("\nx {}, y {}", projectile.getSlingshotBeakPosition().x, projectile.getSlingshotBeakPosition().y);
 }

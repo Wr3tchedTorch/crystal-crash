@@ -30,6 +30,8 @@ public:
 	const ProjectileAttributes* getAttributes() const;
 
 	void launch(float slingShotImpulseRatio, sf::Vector2f normalizedDirection);
+
+	void disableBody();
 	void load();
 	bool isLoaded() const;
 

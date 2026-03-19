@@ -9,7 +9,6 @@
 #include <id.h>
 #include "PhysicsObject.h"
 #include "StateProjectileLaunched.h"
-#include "ProjectileStates.h"
 #include <iostream>
 #include <format>
 #include <memory>
@@ -47,6 +46,11 @@ void Projectile::launch(float slingShotImpulseRatio, sf::Vector2f normalizedDire
 	m_CurrentState->enter(*this);
 }
 
+void Projectile::disableBody()
+{
+	b2Body_Disable(m_BodyId);
+}
+
 void Projectile::load()
 {
 	m_CurrentState = std::make_unique<StateProjectileLoaded>();
@@ -55,7 +59,11 @@ void Projectile::load()
 
 bool Projectile::isLoaded() const
 {
-	return m_CurrentState.get() == &ProjectileStates::Loaded;
+	if (!m_CurrentState)
+	{
+		return false;
+	}
+	return typeid(*m_CurrentState) == typeid(StateProjectileLoaded);
 }
 
 void Projectile::setRotation(sf::Angle rotation)

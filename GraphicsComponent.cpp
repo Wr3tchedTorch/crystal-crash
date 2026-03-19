@@ -63,7 +63,7 @@ void GraphicsComponent::setPosition(sf::Vector2f position)
 	m_Sprite.setPosition(position);
 }
 
-sf::Vector2f GraphicsComponent::getPosition()
+sf::Vector2f GraphicsComponent::getPosition() const
 {
 	return m_Sprite.getPosition();
 }
