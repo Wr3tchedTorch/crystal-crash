@@ -37,9 +37,6 @@
     <Filter Include="Header Files\Components">
       <UniqueIdentifier>{c5b68e0a-afbe-4f40-bc0d-5a5dd4915724}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Data">
-      <UniqueIdentifier>{41e9a265-6edf-4025-9e54-b6fdb21d5650}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Input">
       <UniqueIdentifier>{c800c51b-089e-4a33-a244-b46681cd8dfe}</UniqueIdentifier>
     </Filter>
@@ -57,6 +54,9 @@
     </Filter>
     <Filter Include="Header Files\Factories">
       <UniqueIdentifier>{8799c236-65b5-4c15-b687-de58e0599e93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Attributes">
+      <UniqueIdentifier>{41e9a265-6edf-4025-9e54-b6fdb21d5650}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -85,7 +85,7 @@
       <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="AnimatedGraphicsAttributes.h">
-      <Filter>Header Files\Data</Filter>
+      <Filter>Header Files\Attributes</Filter>
     </ClCompile>
     <ClCompile Include="AnimatedGraphicsComponent.cpp">
       <Filter>Source Files\Components</Filter>
@@ -112,10 +112,16 @@
       <Filter>Source Files\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="PolygonShapeAttributes.h">
-      <Filter>Header Files\Data</Filter>
+      <Filter>Header Files\Attributes</Filter>
     </ClCompile>
     <ClCompile Include="ProjectilesFactory.cpp">
       <Filter>Source Files\Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectileData.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectileData.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -150,10 +156,10 @@
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="ProjectileAttributes.h">
-      <Filter>Header Files\Data</Filter>
+      <Filter>Header Files\Attributes</Filter>
     </ClInclude>
     <ClInclude Include="GraphicsAttributes.h">
-      <Filter>Header Files\Data</Filter>
+      <Filter>Header Files\Attributes</Filter>
     </ClInclude>
     <ClInclude Include="AnimatedGraphicsComponent.h">
       <Filter>Header Files\Components</Filter>
@@ -186,10 +192,10 @@
       <Filter>Header Files\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="PhysicsBodyAttributes.h">
-      <Filter>Header Files\Data</Filter>
+      <Filter>Header Files\Attributes</Filter>
     </ClInclude>
     <ClInclude Include="ShapeAttributes.h">
-      <Filter>Header Files\Data</Filter>
+      <Filter>Header Files\Attributes</Filter>
     </ClInclude>
     <ClInclude Include="ProjectilesFactory.h">
       <Filter>Header Files\Factories</Filter>

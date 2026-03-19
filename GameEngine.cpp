@@ -16,14 +16,20 @@
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <random>
+#include "Slingshot.h"
+#include <memory>
+#include "ProjectileData.h"
+#include "Projectile.h"
+#include <utility>
 
 bool GameEngine::Instantiated = false;
 sf::Time GameEngine::GameTimeTotal = sf::Time();
 sf::Vector2f GameEngine::MousePositionInGameCoords = sf::Vector2f();
 
 GameEngine::GameEngine() : 	
-	m_EventHandler(m_Window, m_MouseDragHandler),
-	m_Slingshot(m_BitmapStore, {300, 800-199/2})
+	m_EventHandler(m_Window, m_MouseDragHandler),	
+	m_Slingshot(std::make_shared<Slingshot>(m_BitmapStore, sf::Vector2f({ 300, 800 - 199 / 2 }))),
+	m_ProjectileFactory(m_BitmapStore, m_PhysicsEngine.getWorldId(), m_Slingshot)
 {
 	assert(!Instantiated);
 	Instantiated = true;
@@ -37,6 +43,17 @@ GameEngine::GameEngine() :
 
 	spawnGround();
 	spawnBoxes();
+
+	std::unique_ptr<Projectile> diamondProjectile = m_ProjectileFactory.createProjectile(ProjectileData::getDiamondAttributes(), 1);
+	std::unique_ptr<Projectile> diamondProjectile1 = m_ProjectileFactory.createProjectile(ProjectileData::getDiamondAttributes(), 2);
+	std::unique_ptr<Projectile> diamondProjectile2 = m_ProjectileFactory.createProjectile(ProjectileData::getDiamondAttributes(), 3);
+	
+	std::unique_ptr<Projectile> regularGem = m_ProjectileFactory.createProjectile(ProjectileData::getRegularGemAttributes(), 4);
+
+	m_Slingshot->loadProjectile(std::move(diamondProjectile));
+	m_Slingshot->loadProjectile(std::move(diamondProjectile1));
+	m_Slingshot->loadProjectile(std::move(diamondProjectile2));
+	m_Slingshot->loadProjectile(std::move(regularGem));
 }
 
 GameEngine::~GameEngine()
@@ -59,7 +76,7 @@ void GameEngine::run()
 		MousePositionInGameCoords = m_Window.mapPixelToCoords(sf::Mouse::getPosition());
 
 		m_PhysicsEngine.update(delta);
-		m_Slingshot.update(delta);
+		m_Slingshot->update(delta);
 
 		for (int i = 0; i < m_DebugBoxes.size(); i++)
 		{			
@@ -72,7 +89,7 @@ void GameEngine::run()
 
 		m_Window.clear(sf::Color(135, 206, 250));
 
-		m_Slingshot.render(m_Window);
+		m_Slingshot->render(m_Window);
 		m_Window.draw(m_DebugGround);		
 		
 		for (auto& box : m_DebugBoxes)

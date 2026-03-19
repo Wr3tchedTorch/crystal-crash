@@ -27,17 +27,6 @@ void GraphicsComponent::setOriginToTopCenter()
 
 	m_Sprite.setOrigin({ size.x / 2.0f, 0 });
 }
-
-GraphicsComponent::GraphicsComponent(BitmapStore& bitmapStore, const std::string& textureId, sf::IntRect textureRect) :
-	m_BitmapStore(bitmapStore),
-	m_Sprite(m_BitmapStore.getTexture(std::format("graphics/{}", textureId)))
-{
-	if (isTextureRectValid(textureRect))
-	{
-		m_Sprite.setTextureRect(textureRect);
-	}
-}
-
 GraphicsComponent::GraphicsComponent(BitmapStore& bitmapStore, const std::string& textureId, bool tiled) : m_BitmapStore(bitmapStore), m_Sprite(m_BitmapStore.getTexture(BitmapStore::PlaceholderGraphicsFilepath))
 {
 	sf::Texture& texture = m_BitmapStore.getTexture(std::format("graphics/{}", textureId));
@@ -45,13 +34,9 @@ GraphicsComponent::GraphicsComponent(BitmapStore& bitmapStore, const std::string
 	setTexture(textureId);
 }
 
-GraphicsComponent::GraphicsComponent(BitmapStore& bitmapStore) : m_BitmapStore(bitmapStore), m_Sprite(m_BitmapStore.getTexture(BitmapStore::PlaceholderGraphicsFilepath))
-{
-}
-
 void GraphicsComponent::setTexture(const std::string& textureId)
 {
-	m_Sprite.setTexture(m_BitmapStore.getTexture(std::format("graphics/{}", textureId)), true);
+	m_Sprite.setTexture(m_BitmapStore.getTexture(std::format("graphics/{}", textureId)));
 }
 
 void GraphicsComponent::setTextureRect(sf::IntRect textureRect)
@@ -60,6 +45,12 @@ void GraphicsComponent::setTextureRect(sf::IntRect textureRect)
 	{
 		m_Sprite.setTextureRect(textureRect);
 	}
+}
+
+void GraphicsComponent::resetTextureRect()
+{
+	sf::Vector2u size = m_Sprite.getTexture().getSize();
+	m_Sprite.setTextureRect(sf::IntRect({ 0, 0 }, { (int)size.x, (int)size.y }));
 }
 
 void GraphicsComponent::setPosition(sf::Vector2f position)

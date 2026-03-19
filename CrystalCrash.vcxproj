@@ -147,6 +147,8 @@
     <ClCompile Include="IPhysicsObject.cpp" />
     <ClCompile Include="PolygonShapeAttributes.h" />
     <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="ProjectileData.cpp" />
+    <ClCompile Include="ProjectileData.h" />
     <ClCompile Include="ProjectilesFactory.cpp" />
     <ClCompile Include="Slingshot.cpp" />
     <ClCompile Include="StateProjectileLaunched.cpp" />

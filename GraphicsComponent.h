@@ -20,12 +20,11 @@ protected:
 	bool isTextureRectValid(sf::IntRect textureRect);
 
 public:
-	GraphicsComponent(BitmapStore& bitmapStore, const std::string& textureId, sf::IntRect textureRect);
 	GraphicsComponent(BitmapStore& bitmapStore, const std::string& textureId, bool tiled = false);
-	GraphicsComponent(BitmapStore& bitmapStore);
 
 	void setTexture(const std::string& textureId);
 	void setTextureRect(sf::IntRect textureRect);
+	void resetTextureRect();
 
 	void setOriginToCenter();
 	void setOriginToTopCenter();

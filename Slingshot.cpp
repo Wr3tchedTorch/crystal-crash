@@ -11,33 +11,44 @@
 #include "GameEngine.h"
 #include "Projectile.h"
 #include <cmath>
+#include <memory>
+#include <utility>
 
 const std::string Slingshot::BaseGraphicsId  = "Lamp Post 1 SHORT - Silver.png";
 const std::string Slingshot::ChainGraphicsId = "Chain - Bronze.png";
 const sf::Vector2f Slingshot::ChainGraphicsSize = { 7.0f, 53.0f };
 const float Slingshot::MaxDragDistance = 150;
-const float Slingshot::SpaceBetweenIdleProjectiles = 100;
+const float Slingshot::SpaceBetweenIdleProjectiles = 20;
 
 Slingshot::Slingshot(BitmapStore& store, sf::Vector2f position) :
 	m_BaseGraphicsComponent(store, BaseGraphicsId),
 	m_ChainGraphicsComponent(store, ChainGraphicsId, true)
 {
-	m_BaseGraphicsComponent.setOriginToCenter();
-	m_BaseGraphicsComponent.setPosition(position);
+	m_Position = position;
 
-	sf::Vector2f chainPosition(position);
+	m_BaseGraphicsComponent.resetTextureRect();
+	m_BaseGraphicsComponent.setPosition(m_Position);
+	m_BaseGraphicsComponent.setOriginToCenter();
+
+	sf::Vector2f chainPosition(m_Position);
 	chainPosition.y -= m_BaseGraphicsComponent.getTextureRect().size.y/2.0f;
 
+	m_ChainGraphicsComponent.resetTextureRect();
 	m_ChainGraphicsComponent.setPosition(chainPosition);
 	m_ChainGraphicsComponent.setOriginToTopCenter();
+
+	m_BeakPosition = m_ChainGraphicsComponent.getPosition();
 }
 
-sf::Vector2f Slingshot::getNextIdlePosition(int order) const
+sf::Vector2f Slingshot::getIdlePosition(int order) const
 {
 	sf::Vector2f idlePosition(m_Position);
-	idlePosition.y += m_BaseGraphicsComponent.getTextureRect().size.y / 2.0f;
+	//idlePosition.y += m_BaseGraphicsComponent.getTextureRect().size.y / 2.0f;
 
-	idlePosition.x += order * SpaceBetweenIdleProjectiles;
+	int margin = 20;
+
+	idlePosition.x -= margin;
+	idlePosition.x -= order * SpaceBetweenIdleProjectiles;
 
 	return idlePosition;
 }
@@ -50,12 +61,21 @@ void Slingshot::updateBeakPosition()
 	m_BeakPosition = m_ChainGraphicsComponent.getPosition();
 	m_BeakPosition += DragSystem::get().getDragDirection() * length;
 
-	m_LoadedProjectiles.front()->setSlingShotBeakPosition(m_BeakPosition);
+	if (!m_LoadedProjectiles.empty())
+	{
+		m_LoadedProjectiles.front()->setSlingShotBeakPosition(m_BeakPosition);
+	}
 }
 
-void Slingshot::loadProjectile(Projectile* projectile)
+void Slingshot::loadProjectile(std::unique_ptr<Projectile> projectile)
 {
-	m_LoadedProjectiles.push(projectile);
+	projectile->setSlingShotBeakPosition(m_BeakPosition);
+	m_LoadedProjectiles.push_back(std::move(projectile));
+
+	if (!m_LoadedProjectiles.front()->isLoaded())
+	{
+		m_LoadedProjectiles.front()->load();
+	}
 }
 
 void Slingshot::updateChainLength()
@@ -85,8 +105,34 @@ void Slingshot::updateChainRotation()
 	m_ChainGraphicsComponent.setRotation(rot);
 }
 
+void Slingshot::updateProjectiles(float delta)
+{
+	for (auto& projectile : m_LaunchedProjectiles)
+	{
+		projectile->update(delta);
+	}
+	for (auto& projectile : m_LoadedProjectiles)
+	{
+		projectile->update(delta);
+	}
+}
+
+void Slingshot::renderProjectiles(sf::RenderTarget& target)
+{
+	for (auto& projectile : m_LaunchedProjectiles)
+	{
+		projectile->render(target);
+	}
+	for (auto& projectile : m_LoadedProjectiles)
+	{
+		projectile->render(target);
+	}
+}
+
 void Slingshot::update(float delta)
 {	
+	updateProjectiles(delta);
+
 	if (!DragSystem::get().isDragging())
 	{
 		m_ChainGraphicsComponent.setTextureRect({ {0, 0}, {1, 1} });
@@ -100,7 +146,14 @@ void Slingshot::update(float delta)
 			float impulseRatio = std::sqrt(length / MaxDragDistance);
 
 			m_LoadedProjectiles.front()->launch(impulseRatio, DragSystem::get().getDragDirection());
-			m_LoadedProjectiles.pop();
+
+			m_LaunchedProjectiles.push_back(std::move(m_LoadedProjectiles.front()));
+			m_LoadedProjectiles.pop_front();
+
+			if (!m_LoadedProjectiles.empty())
+			{
+				m_LoadedProjectiles.front()->load();
+			}
 		}
 
 		return;
@@ -120,5 +173,8 @@ void Slingshot::update(float delta)
 void Slingshot::render(sf::RenderTarget& target)
 {
 	m_BaseGraphicsComponent.render(target);
+
+	renderProjectiles(target);
+
 	m_ChainGraphicsComponent.render(target);
 }

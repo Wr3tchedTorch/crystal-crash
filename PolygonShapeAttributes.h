@@ -12,9 +12,9 @@
 struct PolygonShapeAttributes : public ShapeAttributes
 {
 	std::vector<b2Vec2> Points;
-	float  Radius;
+	float Radius = 0.0f;
 	
-	b2ShapeId createShape(b2BodyId body, b2ShapeDef& shapeDef) override
+	b2ShapeId createShape(b2BodyId body, const b2ShapeDef& shapeDef) override
 	{
 		b2Hull hull = b2ComputeHull(Points.data(), Points.size());
 		if (hull.count == 0)

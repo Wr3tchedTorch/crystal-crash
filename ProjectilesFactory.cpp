@@ -23,25 +23,22 @@ ProjectilesFactory::ProjectilesFactory(BitmapStore& store, b2WorldId worldId, st
 	m_ProjectileBodyDef->isBullet = true;
 	m_ProjectileBodyDef->gravityScale = 2.0f;
 	m_ProjectileBodyDef->linearDamping = 0.05f;
-	m_ProjectileBodyDef->enableSleep = true;
+	m_ProjectileBodyDef->enableSleep = true;	
 
 	m_ProjectileShapeDef = std::make_shared<b2ShapeDef>(b2DefaultShapeDef());
-	m_ProjectileShapeDef->density = 1.0f;
+	m_ProjectileShapeDef->density = 10.0f;	
 	m_ProjectileShapeDef->material.restitution = 0.25f;
 	m_ProjectileShapeDef->material.friction = 0.3f;
 	m_ProjectileShapeDef->enableHitEvents = true;
 }
 
-std::unique_ptr<Projectile> ProjectilesFactory::createProjectile(ProjectileAttributes attributes)
+std::unique_ptr<Projectile> ProjectilesFactory::createProjectile(std::shared_ptr<ProjectileAttributes> attributes, int projectileOrder)
 {	
-	m_ProjectileBodyDef->position = converter::pixelsToMeters(m_Slingshot->getNextIdlePosition());
+	m_ProjectileBodyDef->position = converter::pixelsToMeters(m_Slingshot->getIdlePosition(projectileOrder));
 
 	b2BodyId bodyId = b2CreateBody(m_WorldId, m_ProjectileBodyDef.get());
 
-	attributes.Shape->createShape(bodyId, *m_ProjectileShapeDef.get());
+	attributes->Shape->createShape(bodyId, *m_ProjectileShapeDef);
 
-	attributes.Physics.BodyDefinition  = m_ProjectileBodyDef;
-	attributes.Physics.ShapeDefinition = m_ProjectileShapeDef;
-
-	return std::make_unique<Projectile>(m_BitmapStore, m_WorldId, bodyId, std::make_shared<ProjectileAttributes>(attributes));
+	return std::make_unique<Projectile>(m_BitmapStore, m_WorldId, bodyId, attributes);
 }

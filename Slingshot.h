@@ -5,8 +5,10 @@
 #include "BitmapStore.h"
 #include <SFML/System/Vector2.hpp>
 #include <string>
-#include <queue>
 #include "Projectile.h"
+#include <memory>
+#include <vector>
+#include <deque>
 
 class Slingshot : public IGameObject
 {
@@ -14,7 +16,9 @@ private:
 	GraphicsComponent m_BaseGraphicsComponent;
 	GraphicsComponent m_ChainGraphicsComponent;
 
-	std::queue<Projectile*> m_LoadedProjectiles;
+	std::deque<std::unique_ptr<Projectile>> m_LoadedProjectiles;
+
+	std::vector<std::unique_ptr<Projectile>> m_LaunchedProjectiles;
 
 	sf::Vector2f m_BeakPosition;
 
@@ -22,6 +26,9 @@ private:
 
 	void updateChainLength();
 	void updateChainRotation();
+
+	void updateProjectiles(float delta);
+	void renderProjectiles(sf::RenderTarget& target);
 
 public:
 	static const std::string  BaseGraphicsId;
@@ -32,10 +39,10 @@ public:
 
 	Slingshot(BitmapStore& store, sf::Vector2f position);
 
-	sf::Vector2f getNextIdlePosition(int order) const;
+	sf::Vector2f getIdlePosition(int order) const;
 	void updateBeakPosition();
 	
-	void loadProjectile(Projectile* projectile);
+	void loadProjectile(std::unique_ptr<Projectile> projectile);
 
 	void update(float delta) override;
 	void render(sf::RenderTarget& target) override;

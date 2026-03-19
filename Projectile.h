@@ -15,7 +15,7 @@ class Projectile : public IPhysicsObject
 private:	
 	std::shared_ptr<ProjectileAttributes> m_ProjectileAttributes;
 
-	AnimatedGraphicsComponent m_GraphicsComponent;
+	AnimatedGraphicsComponent m_AnimatedGraphics;
 	//SoundEngine& m_SoundEngine;
 	//VelocityComponent m_VelocityComponent;
 
@@ -30,13 +30,13 @@ public:
 	const ProjectileAttributes* getAttributes() const;
 
 	void launch(float slingShotImpulseRatio, sf::Vector2f normalizedDirection);
+	void load();
+	bool isLoaded() const;
 
 	sf::Vector2f getSlingshotBeakPosition() const;
 	void setSlingShotBeakPosition(sf::Vector2f toPosition);
 
 	void update(float delta) override;
 	void render(sf::RenderTarget& target) override;
-
-	std::unique_ptr<Projectile> clone();
 };
 

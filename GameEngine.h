@@ -3,7 +3,6 @@
 #include "EventHandler.h"
 #include "IScreen.h"
 #include "BitmapStore.h"
-#include "Projectile.h"
 #include <SFML/System/Time.hpp>
 #include "PhysicsEngine.h"
 #include <SFML/Graphics/RectangleShape.hpp>
@@ -13,20 +12,24 @@
 #include <vector>
 #include <id.h>
 #include <SFML/Graphics/Rect.hpp>
+#include <memory>
+#include "ProjectilesFactory.h"
 
 class GameEngine
 {
 private:
 	sf::RenderWindow m_Window;
 	EventHandler	 m_EventHandler;
-	MouseDragHandler m_MouseDragHandler;
+	MouseDragHandler m_MouseDragHandler;	
 
 	BitmapStore	  m_BitmapStore;
 	PhysicsEngine m_PhysicsEngine;
 
 	IScreen* m_CurrentScreen;
+	
+	std::shared_ptr<Slingshot> m_Slingshot;
 
-	Slingshot  m_Slingshot;
+	ProjectilesFactory m_ProjectileFactory;
 
 	static bool Instantiated;
 

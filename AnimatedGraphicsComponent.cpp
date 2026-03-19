@@ -16,7 +16,7 @@ void AnimatedGraphicsComponent::nextFrame()
 		return;
 	}
 
-	if (m_CurrentFrame >= m_Attributes.Animation->FrameCount)
+	if (m_CurrentFrame >= m_Attributes.Animation.FrameCount)
 	{
 		m_EndedAnimation = true;
 		return;
@@ -42,21 +42,21 @@ void AnimatedGraphicsComponent::nextFrame()
 }
 
 AnimatedGraphicsComponent::AnimatedGraphicsComponent(BitmapStore& bitmapStore, GraphicsAttributes& attributes) :
-	GraphicsComponent(bitmapStore),
+	GraphicsComponent(bitmapStore, attributes.GraphicsId),
 	m_Attributes(attributes)
 {
 }
 
 void AnimatedGraphicsComponent::update(float delta)
 {
-	if (m_Attributes.Animation->Loop && m_EndedAnimation && GameEngine::GameTimeTotal.asSeconds() - m_TimeSinceLastAnimation >= m_Attributes.Animation->DelayBeforeAnimationStart)
+	if (m_Attributes.Animation.Loop && m_EndedAnimation && GameEngine::GameTimeTotal.asSeconds() - m_TimeSinceLastAnimation >= m_Attributes.Animation.DelayBeforeAnimationStart)
 	{
 		m_EndedAnimation = false;
 
 		m_CurrentFrame = 0;
 	}
 
-	if (!m_EndedAnimation && GameEngine::GameTimeTotal.asSeconds() - m_TimeSinceLastFrameUpdate >= m_Attributes.Animation->DelayBetweenFrames)
+	if (!m_EndedAnimation && GameEngine::GameTimeTotal.asSeconds() - m_TimeSinceLastFrameUpdate >= m_Attributes.Animation.DelayBetweenFrames)
 	{
 		nextFrame();
 

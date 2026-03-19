@@ -13,22 +13,17 @@
 #include <iostream>
 #include <format>
 #include <memory>
-#include <utility>
-#include <types.h>
 
 Projectile::Projectile(BitmapStore& store, b2WorldId worldId, b2BodyId body, std::shared_ptr<ProjectileAttributes> attributes) :
 	IPhysicsObject(worldId),
-	m_GraphicsComponent(store, attributes->Graphics),
+	m_AnimatedGraphics(store, attributes->Graphics),
 	m_ProjectileAttributes(attributes),
 	m_BitmapStore(store)
 {
 	m_BodyId = body;	
+	m_Position = converter::metersToPixels(b2Body_GetPosition(body));
 
-	m_GraphicsComponent.setOriginToCenter();
-
-	m_CurrentState = &ProjectileStates::Loaded;
-
-	m_CurrentState->enter(*this);
+	m_AnimatedGraphics.setOriginToCenter();	
 }
 
 const ProjectileAttributes* Projectile::getAttributes() const
@@ -50,6 +45,17 @@ void Projectile::launch(float slingShotImpulseRatio, sf::Vector2f normalizedDire
 	m_CurrentState->enter(*this);
 }
 
+void Projectile::load()
+{
+	m_CurrentState = &ProjectileStates::Loaded;
+	m_CurrentState->enter(*this);
+}
+
+bool Projectile::isLoaded() const
+{
+	return m_CurrentState == &ProjectileStates::Loaded;
+}
+
 sf::Vector2f Projectile::getSlingshotBeakPosition() const
 {
 	return m_SlingshotBeakPosition;
@@ -62,29 +68,23 @@ void Projectile::setSlingShotBeakPosition(sf::Vector2f toPosition)
 
 void Projectile::update(float delta)
 {
-	m_CurrentState->update(*this, delta);
-	m_GraphicsComponent.update(delta);
+	if (m_CurrentState) 
+	{
+		m_CurrentState->update(*this, delta);
+	}
+	m_AnimatedGraphics.update(delta);
 
 	if (b2Body_IsEnabled(m_BodyId))
 	{
 		m_Position = converter::metersToPixels(b2Body_GetPosition(m_BodyId));
 
-		m_GraphicsComponent.setRotation(converter::rotToAngle(b2Body_GetRotation(m_BodyId)));
+		m_AnimatedGraphics.setRotation(converter::rotToAngle(b2Body_GetRotation(m_BodyId)));
 	}
 
-	m_GraphicsComponent.setPosition(m_Position);
+	m_AnimatedGraphics.setPosition(m_Position);
 }
 
 void Projectile::render(sf::RenderTarget& target)
 {
-	m_GraphicsComponent.render(target);
-}
-
-std::unique_ptr<Projectile> Projectile::clone()
-{
-	b2BodyId bodyId = b2CreateBody(m_WorldId, m_ProjectileAttributes->Physics.BodyDefinition.get());
-
-	m_ProjectileAttributes->Shape->createShape(bodyId, *m_ProjectileAttributes->Physics.ShapeDefinition.get());
-
-	return std::make_unique<Projectile>(m_BitmapStore, m_WorldId, bodyId, m_ProjectileAttributes);
+	m_AnimatedGraphics.render(target);
 }
