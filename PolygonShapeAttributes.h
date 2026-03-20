@@ -29,33 +29,38 @@ struct PolygonShapeAttributes : public ShapeAttributes
 
 		return b2CreatePolygonShape(body, &shapeDef, &polygon);
 	}
-};
 
-void to_json(json& j, const PolygonShapeAttributes& psa)
-{
-	json pointsData = json::array();
-	for (const auto& p : psa.Points) {
-		pointsData.push_back({ {"x", p.x}, {"y", p.y} });
-	}
-
-	j = json {
-		{ "type", psa.Type},
-		{ "points", pointsData }
-	};
-}
-
-void from_json(const json& j, PolygonShapeAttributes& sa)
-{
-	j.at("type").get_to(sa.Type);
-
-	json pointsData = json::array();
-	j.at("points").get_to(pointsData);
-
-	sa.Points.clear();
-	sa.Points.resize(pointsData.size());
-	
-	for (const auto& p : pointsData) 
+	virtual void to_json(json& j, const ShapeAttributes& sa) override
 	{
-		sa.Points.push_back({ p.at("x").get<float>(), p.at("y").get<float>() });
+		ShapeAttributes::to_json(j, sa);
+
+		auto& psa = static_cast<const PolygonShapeAttributes&>(sa);
+
+		json pointsData = json::array();
+		for (const auto& p : psa.Points) {
+			pointsData.push_back({ {"x", p.x}, {"y", p.y} });
+		}
+
+		j.at("shape") += {
+			{ "points", pointsData }
+		};
 	}
-}
+
+	virtual void from_json(const json& j, ShapeAttributes& sa) override
+	{
+		ShapeAttributes::from_json(j, sa);
+
+		auto& psa = static_cast<PolygonShapeAttributes&>(sa);
+
+		json pointsData = json::array();
+		j.at("shape").at("points").get_to(pointsData);
+
+		psa.Points.clear();
+		psa.Points.resize(pointsData.size());
+	
+		for (const auto& p : pointsData) 
+		{
+			psa.Points.push_back({ p.at("x").get<float>(), p.at("y").get<float>() });
+		}
+	}
+};

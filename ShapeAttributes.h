@@ -10,16 +10,19 @@ struct ShapeAttributes
 	b2ShapeType Type;
 
 	virtual b2ShapeId createShape(b2BodyId body, const b2ShapeDef& shapeDef) = 0;
+
+	virtual void to_json(json& j, const ShapeAttributes& sa)
+	{
+		j += json { 
+			"shape", 
+			{
+				{ "type", sa.Type }
+			}
+		};
+	}
+
+	virtual void from_json(const json& j, ShapeAttributes& sa)
+	{
+		j.at("shape").at("type").get_to(sa.Type);
+	}
 };
-
-void to_json(json& j, const ShapeAttributes& sa)
-{
-	j = json { 
-		{ "type", sa.Type }
-	};
-}
-
-void from_json(const json& j, ShapeAttributes& sa)
-{
-	j.at("type").get_to(sa.Type);
-}

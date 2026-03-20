@@ -20,15 +20,25 @@ struct ProjectileAttributes
 
 void to_json(json& j, const ProjectileAttributes& pa)
 {
-	json shapeData = *pa.Shape;
-
-	j = json
+	j += json
 	{ 
 		{"id", pa.Id}, 
 		{"name", pa.Name},
 		{"max_speed", pa.MaxSpeed}, 
 		{"damage", pa.Damage},
-		{"shape", shapeData },
-
+		{"graphics", pa.Graphics}
 	};
+	
+	pa.Shape->to_json(j, *pa.Shape.get());
+}
+
+void from_json(json& j, ProjectileAttributes& pa)
+{
+	j.at("id").get_to(pa.Id);
+	j.at("name").get_to(pa.Name);
+	j.at("max_speed").get_to(pa.MaxSpeed);
+	j.at("damage").get_to(pa.Damage);
+	j.at("graphics").get_to(pa.Graphics);
+
+	pa.Shape->from_json(j, *pa.Shape.get());
 }
