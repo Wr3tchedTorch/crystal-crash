@@ -13,9 +13,10 @@ private:
 	std::unordered_map<ProjectileId, std::shared_ptr<ProjectileAttributes>> m_Data;
 
 	json getDefaultJsonForId(int id);
-	void createTemplateJsonFile(ProjectileId id);
+	void createTemplateJsonFile();
+
 public:
 	ProjectileAttributesDataHandler();
 
-	std::shared_ptr<ProjectileAttributes> getAttributeById(ProjectileId id);
+	std::shared_ptr<ProjectileAttributes> getById(ProjectileId id);
 };

@@ -13,6 +13,11 @@ struct PolygonShapeAttributes : public ShapeAttributes
 {
 	std::vector<b2Vec2> Points;
 	float Radius = 0.0f;
+
+	PolygonShapeAttributes()
+	{
+		Type = b2_polygonShape;
+	}
 	
 	b2ShapeId createShape(b2BodyId body, const b2ShapeDef& shapeDef) override
 	{

@@ -10,9 +10,9 @@ using json = nlohmann::json;
 struct ProjectileAttributes
 {	
 	int Id;
-	std::string Name;
-	float MaxSpeed;
-	float Damage;
+	std::string Name = "";
+	float MaxSpeed = 0;
+	float Damage = 0;
 
 	std::shared_ptr<ShapeAttributes> Shape;
 	GraphicsAttributes	  Graphics;
