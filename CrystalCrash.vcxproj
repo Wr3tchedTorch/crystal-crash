@@ -150,6 +150,7 @@
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="ProjectileData.cpp" />
     <ClCompile Include="ProjectileData.h" />
+    <ClCompile Include="ProjectileAttributesDataHandler.cpp" />
     <ClCompile Include="ProjectilesFactory.cpp" />
     <ClCompile Include="Slingshot.cpp" />
     <ClCompile Include="StateProjectileLaunched.cpp" />
@@ -162,6 +163,7 @@
   <ItemGroup>
     <ClInclude Include="AnimatedGraphicsComponent.h" />
     <ClInclude Include="BitmapStore.h" />
+    <ClInclude Include="DataHandlingConstants.h" />
     <ClInclude Include="DragSystem.h" />
     <ClInclude Include="IComponent.h" />
     <ClInclude Include="Converter.h" />
@@ -180,7 +182,10 @@
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="ProjectileAttributes.h" />
     <ClInclude Include="IScreen.h" />
+    <ClInclude Include="ProjectileAttributesDataHandler.h" />
+    <ClInclude Include="ProjectileId.h" />
     <ClInclude Include="ProjectilesFactory.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="ShapeAttributes.h" />
     <ClInclude Include="Slingshot.h" />
     <ClInclude Include="SlingshotConstants.h" />
@@ -191,7 +196,18 @@
     <ClInclude Include="StateSlingshotLoading.h" />
     <ClInclude Include="StateSlingshotShooting.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="projectile_attributes_data.json" />
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="packages\nlohmann.json.3.12.0\build\native\nlohmann.json.targets" Condition="Exists('packages\nlohmann.json.3.12.0\build\native\nlohmann.json.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\nlohmann.json.3.12.0\build\native\nlohmann.json.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\nlohmann.json.3.12.0\build\native\nlohmann.json.targets'))" />
+  </Target>
 </Project>

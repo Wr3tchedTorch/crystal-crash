@@ -3,7 +3,7 @@
 
 struct SlingshotConstants
 {
-	inline static const std::string  BaseGraphicsId = "Lamp Post 1 SHORT - Silver.png";
+	inline static const std::string  BaseGraphicsId  = "Lamp Post 1 SHORT - Silver.png";
 	inline static const std::string  ChainGraphicsId = "Chain - Bronze.png";
 
 	inline static const float MaxDragDistance = 150;

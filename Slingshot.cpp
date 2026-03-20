@@ -80,6 +80,12 @@ void Slingshot::loadProjectile(std::unique_ptr<Projectile> projectile)
 {
 	projectile->setSlingShotBeakPosition(m_BeakPosition);
 	m_LoadedProjectiles.push_back(std::move(projectile));
+
+	if (!m_LoadedProjectiles.front()->isLoaded())
+	{
+		m_LoadedProjectiles.front()->load();
+		m_LoadedProjectiles.front()->setRotation(sf::degrees(0));
+	}
 }
 
 void Slingshot::updateChainLength()

@@ -49,12 +49,17 @@ GameEngine::GameEngine() :
 	std::unique_ptr<Projectile> diamondProjectile = m_ProjectileFactory.createProjectile(ProjectileData::getDiamondAttributes(), 1);
 	std::unique_ptr<Projectile> diamondProjectile1 = m_ProjectileFactory.createProjectile(ProjectileData::getDiamondAttributes(), 2);
 	std::unique_ptr<Projectile> diamondProjectile2 = m_ProjectileFactory.createProjectile(ProjectileData::getDiamondAttributes(), 3);
+
+	std::unique_ptr<Projectile> diamondProjectile6 = m_ProjectileFactory.createProjectile(ProjectileData::getDiamondAttributes(), 5);
+	std::unique_ptr<Projectile> diamondProjectile7 = m_ProjectileFactory.createProjectile(ProjectileData::getDiamondAttributes(), 6);
 	
 	std::unique_ptr<Projectile> regularGem = m_ProjectileFactory.createProjectile(ProjectileData::getRegularGemAttributes(), 4);
 
 	m_Slingshot->loadProjectile(std::move(diamondProjectile));
 	m_Slingshot->loadProjectile(std::move(diamondProjectile1));
 	m_Slingshot->loadProjectile(std::move(diamondProjectile2));
+	m_Slingshot->loadProjectile(std::move(diamondProjectile6));
+	m_Slingshot->loadProjectile(std::move(diamondProjectile7));
 	m_Slingshot->loadProjectile(std::move(regularGem));
 }
 

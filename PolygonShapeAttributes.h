@@ -30,3 +30,32 @@ struct PolygonShapeAttributes : public ShapeAttributes
 		return b2CreatePolygonShape(body, &shapeDef, &polygon);
 	}
 };
+
+void to_json(json& j, const PolygonShapeAttributes& psa)
+{
+	json pointsData = json::array();
+	for (const auto& p : psa.Points) {
+		pointsData.push_back({ {"x", p.x}, {"y", p.y} });
+	}
+
+	j = json {
+		{ "type", psa.Type},
+		{ "points", pointsData }
+	};
+}
+
+void from_json(const json& j, PolygonShapeAttributes& sa)
+{
+	j.at("type").get_to(sa.Type);
+
+	json pointsData = json::array();
+	j.at("points").get_to(pointsData);
+
+	sa.Points.clear();
+	sa.Points.resize(pointsData.size());
+	
+	for (const auto& p : pointsData) 
+	{
+		sa.Points.push_back({ p.at("x").get<float>(), p.at("y").get<float>() });
+	}
+}

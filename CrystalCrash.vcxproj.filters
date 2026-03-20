@@ -9,10 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Source Files\Engine">
       <UniqueIdentifier>{212f0e7e-2421-4668-9837-a75d38c5dd8d}</UniqueIdentifier>
     </Filter>
@@ -72,6 +68,18 @@
     </Filter>
     <Filter Include="Header Files\States\Slingshot">
       <UniqueIdentifier>{8e5d223b-e695-4bd3-86ca-adf59745ca0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\FileIO">
+      <UniqueIdentifier>{efd58165-0cd9-45f4-946f-a36a64d81422}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FileIO">
+      <UniqueIdentifier>{83da032b-6f60-44e5-a445-b3228ad806bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Data">
+      <UniqueIdentifier>{e261c38c-0454-4775-bcdd-bfc65bb5b775}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Enums">
+      <UniqueIdentifier>{fd31597f-b0ac-40c1-8b0c-7129b9948a93}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -152,6 +160,9 @@
     </ClCompile>
     <ClCompile Include="StateSlingshotLoading.cpp">
       <Filter>Source Files\States\Slingshot</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectileAttributesDataHandler.cpp">
+      <Filter>Source Files\FileIO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -245,5 +256,23 @@
     <ClInclude Include="StateSlingshotLoading.h">
       <Filter>Header Files\States\Slingshot</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectileAttributesDataHandler.h">
+      <Filter>Header Files\FileIO</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectileId.h">
+      <Filter>Header Files\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="DataHandlingConstants.h">
+      <Filter>Header Files\Constants</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="projectile_attributes_data.json">
+      <Filter>Header Files\Data</Filter>
+    </None>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
