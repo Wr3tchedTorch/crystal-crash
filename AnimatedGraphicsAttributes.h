@@ -14,7 +14,7 @@ struct AnimatedGraphicsAttributes
 	float DelayBeforeAnimationStart = 0.0f;
 };
 
-void to_json(json& j, const AnimatedGraphicsAttributes& aga)
+inline void to_json(json& j, const AnimatedGraphicsAttributes& aga)
 {
 	j = json{
 		{ "frame_count", aga.FrameCount},
@@ -25,7 +25,7 @@ void to_json(json& j, const AnimatedGraphicsAttributes& aga)
 	};
 }
 
-void from_json(const json& j, AnimatedGraphicsAttributes& aga)
+inline void from_json(const json& j, AnimatedGraphicsAttributes& aga)
 {
 	j.at("frame_count").get_to(aga.FrameCount);
 	j.at("animation_count").get_to(  aga.AnimationCount );

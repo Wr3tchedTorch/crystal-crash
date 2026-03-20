@@ -9,6 +9,7 @@
 #include "IProjectileState.h"
 #include <memory>
 #include <SFML/System/Angle.hpp>
+#include <string>
 
 class Projectile : public IPhysicsObject
 {
@@ -42,5 +43,27 @@ public:
 
 	void update(float delta) override;
 	void render(sf::RenderTarget& target) override;
+
+public:
+	enum Id
+	{
+		Start,
+		Regular,
+		Diamond,
+		End
+	};
+
+	inline static std::string toString(Id id)
+	{
+		switch (id)
+		{
+		case Projectile::Regular:
+			return "Regular";
+		case Projectile::Diamond:
+			return "Diamond";
+		default:
+			return "Error: not found!";
+		}
+	};
 };
 

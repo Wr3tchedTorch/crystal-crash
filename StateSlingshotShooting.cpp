@@ -8,12 +8,9 @@
 #include "SlingshotConstants.h"
 #include <cmath>
 #include "StateSlingshotLoading.h"
-#include <iostream>
 
 void StateSlingshotShooting::enter(Slingshot& slingshot)
 {
-	std::cout << std::format("\nSlingshot shooting");
-
 	float length	   = std::min(DragSystem::get().getDragDistance(), SlingshotConstants::MaxDragDistance);
 	float impulseRatio = std::sqrt(length / SlingshotConstants::MaxDragDistance);
 

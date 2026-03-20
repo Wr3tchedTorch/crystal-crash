@@ -13,12 +13,7 @@ struct ShapeAttributes
 
 	virtual void to_json(json& j, const ShapeAttributes& sa)
 	{
-		j += json { 
-			"shape", 
-			{
-				{ "type", sa.Type }
-			}
-		};
+		j["shape"]["type"] = sa.Type;
 	}
 
 	virtual void from_json(const json& j, ShapeAttributes& sa)

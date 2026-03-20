@@ -173,6 +173,7 @@
     <ClInclude Include="GameScreen.h" />
     <ClInclude Include="GraphicsAttributes.h" />
     <ClInclude Include="GraphicsComponent.h" />
+    <ClInclude Include="InputFileHelper.h" />
     <ClInclude Include="IProjectileState.h" />
     <ClInclude Include="ISlingshotState.h" />
     <ClInclude Include="MouseDragHandler.h" />
@@ -183,7 +184,6 @@
     <ClInclude Include="ProjectileAttributes.h" />
     <ClInclude Include="IScreen.h" />
     <ClInclude Include="ProjectileAttributesDataHandler.h" />
-    <ClInclude Include="ProjectileId.h" />
     <ClInclude Include="ProjectilesFactory.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ShapeAttributes.h" />
@@ -197,8 +197,8 @@
     <ClInclude Include="StateSlingshotShooting.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="projectile_attributes_data.json" />
     <None Include="packages.config" />
+    <None Include="projectile_attributes_data.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

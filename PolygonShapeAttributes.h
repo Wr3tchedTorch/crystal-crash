@@ -42,13 +42,12 @@ struct PolygonShapeAttributes : public ShapeAttributes
 		auto& psa = static_cast<const PolygonShapeAttributes&>(sa);
 
 		json pointsData = json::array();
-		for (const auto& p : psa.Points) {
+		for (const auto& p : psa.Points) 
+		{
 			pointsData.push_back({ {"x", p.x}, {"y", p.y} });
 		}
 
-		j.at("shape") += {
-			{ "points", pointsData }
-		};
+		j["shape"]["points"] = pointsData;
 	}
 
 	virtual void from_json(const json& j, ShapeAttributes& sa) override

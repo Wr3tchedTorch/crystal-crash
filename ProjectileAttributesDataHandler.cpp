@@ -1,31 +1,34 @@
 #include "ProjectileAttributesDataHandler.h"
-#include "ProjectileId.h"
+#include "Projectile.h"
 #include <fstream>
 #include "DataHandlingConstants.h"
 #include "ProjectileAttributes.h"
 #include "PolygonShapeAttributes.h"
 #include <memory>
+#include "InputFileHelper.h"
 
 json ProjectileAttributesDataHandler::getDefaultJsonForId(int id)
 {
     ProjectileAttributes projectile;
-    projectile.Id = id;
+    projectile.Id    = id;
+    projectile.Name  = Projectile::toString(static_cast<Projectile::Id>(id));
     projectile.Shape = std::make_shared<PolygonShapeAttributes>();
     return projectile;
 }
 
 void ProjectileAttributesDataHandler::createTemplateJsonFile()
 {
-	std::ifstream inputFile(DataHandlingConstants::FilepathProjectileAttributes);
-	json data = json::parse(inputFile);
-    inputFile.close();
+    std::ifstream inputFile(DataHandlingConstants::FilepathProjectileAttributes);
 
-    if (!data.empty())
+    if (!InputFileHelper::is_empty(inputFile))
     {
         return;
     }
+    inputFile.close();
 
-    for (int i = static_cast<int>(ProjectileId::Start) + 1; i < static_cast<int>(ProjectileId::End); i++)
+    json data;
+
+    for (int i = static_cast<int>(Projectile::Id::Start) + 1; i < static_cast<int>(Projectile::Id::End); i++)
     {
         data += getDefaultJsonForId(i);
     }
@@ -40,7 +43,7 @@ ProjectileAttributesDataHandler::ProjectileAttributesDataHandler()
     createTemplateJsonFile();
 }
 
-std::shared_ptr<ProjectileAttributes> ProjectileAttributesDataHandler::getById(ProjectileId id)
+std::shared_ptr<ProjectileAttributes> ProjectileAttributesDataHandler::getById(Projectile::Id id)
 {
     return std::shared_ptr<ProjectileAttributes>();
 }

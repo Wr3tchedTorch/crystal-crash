@@ -15,12 +15,12 @@ struct ProjectileAttributes
 	float Damage = 0;
 
 	std::shared_ptr<ShapeAttributes> Shape;
-	GraphicsAttributes	  Graphics;
+	GraphicsAttributes Graphics;
 };
 
-void to_json(json& j, const ProjectileAttributes& pa)
+inline void to_json(json& j, const ProjectileAttributes& pa)
 {
-	j += json
+	j =
 	{ 
 		{"id", pa.Id}, 
 		{"name", pa.Name},
@@ -32,7 +32,7 @@ void to_json(json& j, const ProjectileAttributes& pa)
 	pa.Shape->to_json(j, *pa.Shape.get());
 }
 
-void from_json(json& j, ProjectileAttributes& pa)
+inline void from_json(json& j, ProjectileAttributes& pa)
 {
 	j.at("id").get_to(pa.Id);
 	j.at("name").get_to(pa.Name);

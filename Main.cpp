@@ -1,9 +1,13 @@
 #include "GameEngine.h"
+#include "ProjectileAttributesDataHandler.h"
+
 int main()
 {
-	GameEngine engine;
+	//GameEngine engine;
 
-	engine.run();
+	//engine.run();
+
+	ProjectileAttributesDataHandler dataHandler;
 
 	return 0;
 }

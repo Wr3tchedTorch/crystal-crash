@@ -14,7 +14,7 @@ struct GraphicsAttributes
 	AnimatedGraphicsAttributes Animation;
 };
 
-void to_json(json& j, const GraphicsAttributes& ga)
+inline void to_json(json& j, const GraphicsAttributes& ga)
 {	
 	json textureRectData =
 	{
@@ -43,7 +43,7 @@ void to_json(json& j, const GraphicsAttributes& ga)
 	};
 }
 
-void from_json(const json& j, GraphicsAttributes& ga)
+inline void from_json(const json& j, GraphicsAttributes& ga)
 {
 	j.at("image_filename").get_to(ga.GraphicsId);
 	

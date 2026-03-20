@@ -78,9 +78,6 @@
     <Filter Include="Header Files\Data">
       <UniqueIdentifier>{e261c38c-0454-4775-bcdd-bfc65bb5b775}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Enums">
-      <UniqueIdentifier>{fd31597f-b0ac-40c1-8b0c-7129b9948a93}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -262,17 +259,17 @@
     <ClInclude Include="ProjectileAttributesDataHandler.h">
       <Filter>Header Files\FileIO</Filter>
     </ClInclude>
-    <ClInclude Include="ProjectileId.h">
-      <Filter>Header Files\Enums</Filter>
-    </ClInclude>
     <ClInclude Include="DataHandlingConstants.h">
       <Filter>Header Files\Constants</Filter>
     </ClInclude>
+    <ClInclude Include="InputFileHelper.h">
+      <Filter>Header Files\FileIO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="projectile_attributes_data.json">
       <Filter>Header Files\Data</Filter>
     </None>
-    <None Include="packages.config" />
   </ItemGroup>
 </Project>

@@ -1,16 +1,16 @@
 #pragma once
 #include <memory>
 #include "ProjectileAttributes.h"
-#include "ProjectileId.h"
 #include <unordered_map>
 #include <nlohmann/json.hpp>
+#include "Projectile.h"
 
-using json = nlohmann::json;
+using ordered_json = nlohmann::ordered_json;
 
 class ProjectileAttributesDataHandler
 {
 private:
-	std::unordered_map<ProjectileId, std::shared_ptr<ProjectileAttributes>> m_Data;
+	std::unordered_map<Projectile::Id, std::shared_ptr<ProjectileAttributes>> m_Data;
 
 	json getDefaultJsonForId(int id);
 	void createTemplateJsonFile();
@@ -18,5 +18,5 @@ private:
 public:
 	ProjectileAttributesDataHandler();
 
-	std::shared_ptr<ProjectileAttributes> getById(ProjectileId id);
+	std::shared_ptr<ProjectileAttributes> getById(Projectile::Id id);
 };
