@@ -2,22 +2,59 @@
 #include <types.h>
 #include <id.h>
 #include "nlohmann/json.hpp"
+#include <string>
+#include "ShapeAttributesConstants.h"
 
 using json = nlohmann::json;
 
 struct ShapeAttributes
 {
+	int Id;
 	b2ShapeType Type;
 
 	virtual b2ShapeId createShape(b2BodyId body, const b2ShapeDef& shapeDef) = 0;
 
 	virtual void to_json(json& j, const ShapeAttributes& sa)
 	{
-		j["shape"]["type"] = sa.Type;
+		j["shape"]["type"] = ShapeAttributes::typeToString(sa.Type);
 	}
 
 	virtual void from_json(const json& j, ShapeAttributes& sa)
 	{
-		j.at("shape").at("type").get_to(sa.Type);
+		json type;
+		j.at("shape").at("type").get_to(type);
+
+		sa.Type = ShapeAttributes::stringToType(type);
+	}	
+
+	static std::string typeToString(b2ShapeType type)
+	{
+		switch (type)
+		{
+		case b2_circleShape:
+			return ShapeAttributesConstants::CircleShapeName;
+		case b2_capsuleShape:
+			return ShapeAttributesConstants::CapsuleShapeName;
+		case b2_polygonShape:
+			return ShapeAttributesConstants::PolygonShapeName;
+		default:
+			return "error: not found!";
+		}
+	}
+
+	static b2ShapeType stringToType(std::string type)
+	{
+		if (type == ShapeAttributesConstants::CircleShapeName)
+		{
+			return b2_circleShape;
+		}
+		if (type == ShapeAttributesConstants::CapsuleShapeName)
+		{
+			return b2_capsuleShape;
+		}
+		if (type == ShapeAttributesConstants::PolygonShapeName)
+		{
+			return b2_polygonShape;
+		}
 	}
 };

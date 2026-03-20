@@ -1,5 +1,8 @@
-#include "GameEngine.h"
-#include "ProjectileAttributesDataHandler.h"
+#include "DataHandler.h"
+#include "ProjectileAttributes.h"
+#include "DataHandlingConstants.h"
+#include <iostream>
+#include <memory>
 
 int main()
 {
@@ -7,7 +10,7 @@ int main()
 
 	//engine.run();
 
-	ProjectileAttributesDataHandler dataHandler;
+	DataHandler<ProjectileAttributes> dataHandler(DataHandlingConstants::FilepathProjectileAttributes);
 
 	return 0;
 }

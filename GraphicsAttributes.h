@@ -8,6 +8,7 @@ using json = nlohmann::json;
 
 struct GraphicsAttributes
 {
+	int Id = 0;
 	std::string GraphicsId  = "";
 	sf::IntRect TextureRect = sf::IntRect({0, 0}, {0, 0});
 

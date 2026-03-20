@@ -135,6 +135,9 @@
     <ClCompile Include="AnimatedGraphicsAttributes.h" />
     <ClCompile Include="AnimatedGraphicsComponent.cpp" />
     <ClCompile Include="BitmapStore.cpp" />
+    <None Include="DataHandler.inl">
+      <FileType>Document</FileType>
+    </None>
     <ClCompile Include="DragSystem.cpp" />
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="GameEngine.cpp" />
@@ -150,7 +153,6 @@
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="ProjectileData.cpp" />
     <ClCompile Include="ProjectileData.h" />
-    <ClCompile Include="ProjectileAttributesDataHandler.cpp" />
     <ClCompile Include="ProjectilesFactory.cpp" />
     <ClCompile Include="Slingshot.cpp" />
     <ClCompile Include="StateProjectileLaunched.cpp" />
@@ -163,6 +165,7 @@
   <ItemGroup>
     <ClInclude Include="AnimatedGraphicsComponent.h" />
     <ClInclude Include="BitmapStore.h" />
+    <ClInclude Include="DataHandler.h" />
     <ClInclude Include="DataHandlingConstants.h" />
     <ClInclude Include="DragSystem.h" />
     <ClInclude Include="IComponent.h" />
@@ -183,10 +186,10 @@
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="ProjectileAttributes.h" />
     <ClInclude Include="IScreen.h" />
-    <ClInclude Include="ProjectileAttributesDataHandler.h" />
     <ClInclude Include="ProjectilesFactory.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ShapeAttributes.h" />
+    <ClInclude Include="ShapeAttributesConstants.h" />
     <ClInclude Include="Slingshot.h" />
     <ClInclude Include="SlingshotConstants.h" />
     <ClInclude Include="StateProjectileLaunched.h" />
@@ -197,8 +200,10 @@
     <ClInclude Include="StateSlingshotShooting.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="graphics_attributes_data.json" />
     <None Include="packages.config" />
     <None Include="projectile_attributes_data.json" />
+    <None Include="shape_attributes_data.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

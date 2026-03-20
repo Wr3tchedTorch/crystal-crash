@@ -158,9 +158,6 @@
     <ClCompile Include="StateSlingshotLoading.cpp">
       <Filter>Source Files\States\Slingshot</Filter>
     </ClCompile>
-    <ClCompile Include="ProjectileAttributesDataHandler.cpp">
-      <Filter>Source Files\FileIO</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine.h">
@@ -256,13 +253,16 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ProjectileAttributesDataHandler.h">
-      <Filter>Header Files\FileIO</Filter>
-    </ClInclude>
     <ClInclude Include="DataHandlingConstants.h">
       <Filter>Header Files\Constants</Filter>
     </ClInclude>
     <ClInclude Include="InputFileHelper.h">
+      <Filter>Header Files\FileIO</Filter>
+    </ClInclude>
+    <ClInclude Include="ShapeAttributesConstants.h">
+      <Filter>Header Files\Constants</Filter>
+    </ClInclude>
+    <ClInclude Include="DataHandler.h">
       <Filter>Header Files\FileIO</Filter>
     </ClInclude>
   </ItemGroup>
@@ -270,6 +270,15 @@
     <None Include="packages.config" />
     <None Include="projectile_attributes_data.json">
       <Filter>Header Files\Data</Filter>
+    </None>
+    <None Include="shape_attributes_data.json">
+      <Filter>Header Files\Data</Filter>
+    </None>
+    <None Include="graphics_attributes_data.json">
+      <Filter>Header Files\Data</Filter>
+    </None>
+    <None Include="DataHandler.inl">
+      <Filter>Source Files\FileIO</Filter>
     </None>
   </ItemGroup>
 </Project>

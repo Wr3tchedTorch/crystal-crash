@@ -26,19 +26,23 @@ inline void to_json(json& j, const ProjectileAttributes& pa)
 		{"name", pa.Name},
 		{"max_speed", pa.MaxSpeed}, 
 		{"damage", pa.Damage},
-		{"graphics", pa.Graphics}
+		{"graphics_id", pa.Graphics.Id},
 	};
-	
-	pa.Shape->to_json(j, *pa.Shape.get());
+
+	if (pa.Shape)
+	{
+		j["shape_id"] = { pa.Shape->Id };
+	}
+	else
+	{
+		j["shape_id"] = { "error: not found!" };
+	}
 }
 
-inline void from_json(json& j, ProjectileAttributes& pa)
+inline void from_json(const json& j, ProjectileAttributes& pa)
 {
 	j.at("id").get_to(pa.Id);
 	j.at("name").get_to(pa.Name);
 	j.at("max_speed").get_to(pa.MaxSpeed);
 	j.at("damage").get_to(pa.Damage);
-	j.at("graphics").get_to(pa.Graphics);
-
-	pa.Shape->from_json(j, *pa.Shape.get());
 }
