@@ -1,12 +1,4 @@
 {
-    "0": {
-        "damage": 0.0,
-        "graphics_id": 0,
-        "id": 0,
-        "max_speed": 0.0,
-        "name": "",
-        "shape_id": 0
-    },
     "1": {
         "damage": 100.0,
         "graphics_id": 1,
