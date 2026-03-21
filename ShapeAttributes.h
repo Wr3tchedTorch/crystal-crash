@@ -11,12 +11,14 @@ struct ShapeAttributes
 {
 	int Id;
 	b2ShapeType Type;
+	std::string Name = "";
 
 	virtual b2ShapeId createShape(b2BodyId body, const b2ShapeDef& shapeDef) = 0;
 
 	virtual void parentToJson(json& j, const ShapeAttributes& sa) const
 	{
 		j["type"] = ShapeAttributes::typeToString(sa.Type);
+		j["name"] = sa.Name;
 	}
 
 	virtual void parentFromJson(const json& j, ShapeAttributes& sa)
@@ -25,6 +27,8 @@ struct ShapeAttributes
 		j.at("type").get_to(type);
 
 		sa.Type = ShapeAttributes::stringToType(type);
+
+		j.at("name").get_to(sa.Name);
 	}	
 
 	static std::string typeToString(b2ShapeType type)

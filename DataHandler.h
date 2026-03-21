@@ -30,11 +30,13 @@ private:
 
     void createTemplateJsonFile();
 	
-    void saveToFile(json data);
+    void saveToFile(const json& data);
 
     json readFromFile();
 
-    int getNextId(json data);
+    int getNextId(const json& data);
+
+    json resolvePrototype(json& item, json& data);
 
 public:
     DataHandler(std::string filepath);
@@ -67,7 +69,7 @@ inline void DataHandler<T>::createTemplateJsonFile()
 }
 
 template<serializable T>
-void DataHandler<T>::saveToFile(json data)
+void DataHandler<T>::saveToFile(const json& data)
 {
     std::ofstream outputFile(m_Filepath);
     outputFile << data.dump(DataHandlingConstants::IndentAmount);
@@ -90,7 +92,7 @@ json DataHandler<T>::readFromFile()
 }
 
 template<serializable T>
-inline int DataHandler<T>::getNextId(json data)
+inline int DataHandler<T>::getNextId(const json& data)
 {
     int nextId = 0;
     for (auto& [id, val] : data.items()) 
@@ -101,9 +103,39 @@ inline int DataHandler<T>::getNextId(json data)
 }
 
 template<serializable T>
+inline json DataHandler<T>::resolvePrototype(json& item, json& data)
+{
+    std::string prototypeId = item[DataHandlingConstants::PrototypeFieldKey];
+    if (!data.contains(prototypeId))
+    {
+#ifdef _DEBUG
+        std::cout << std::format("prototype id `{}` not found!", prototypeId);
+#endif // _DEBUG
+        return json();
+    }
+
+    json resolved = data[prototypeId];
+    for (auto& [key, value] : item.items())
+    {
+        if (key == DataHandlingConstants::PrototypeFieldKey)
+        {
+            continue;
+        }
+        resolved[key] = value;
+    }
+
+    return resolved;
+}
+
+template<serializable T>
 inline DataHandler<T>::DataHandler(std::string filepath) : m_Filepath(filepath)
 {
     createTemplateJsonFile();
+}
+
+
+std::string json_dump(nlohmann::json& j) {
+    return j.dump(4);
 }
 
 template<serializable T>
@@ -122,10 +154,13 @@ std::shared_ptr<T> DataHandler<T>::getById(int id)
         return nullptr;
     }
 
-    T item = data[std::to_string(id)];
+    json item = data[std::to_string(id)];
 
-    m_Data[id] = std::make_shared<T>(item);
+    bool isPrototype = item.contains(DataHandlingConstants::PrototypeFieldKey);
+    T entity = isPrototype ? resolvePrototype(item, data) : item;
+    entity.Id = id;
 
+    m_Data[id] = std::make_shared<T>(entity);
     return m_Data[id];
 }
 

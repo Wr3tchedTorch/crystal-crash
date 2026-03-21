@@ -8,6 +8,7 @@
 #include <format>
 #include <box2d.h>
 #include <types.h>
+#include <string>
 
 struct PolygonShapeAttributes : public ShapeAttributes
 {

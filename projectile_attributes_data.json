@@ -8,27 +8,10 @@
         "shape_id": 0
     },
     "1": {
-        "damage": 0.0,
-        "graphics_id": 0,
+        "damage": 100.0,
+        "graphics_id": 1,
         "id": 1,
-        "max_speed": 0.0,
-        "name": "Projetil!",
-        "shape_id": 0
-    },
-    "2": {
-        "damage": 88.0,
-        "graphics_id": 0,
-        "id": 2,
-        "max_speed": 0.0,
-        "name": "lelolelo",
-        "shape_id": 0
-    },
-    "4": {
-        "damage": 0.0,
-        "graphics_id": 0,
-        "id": 4,
-        "max_speed": 0.0,
-        "name": "Projetil!",
-        "shape_id": 0
+        "max_speed": 40.0,
+        "name": "Diamante"
     }
 }

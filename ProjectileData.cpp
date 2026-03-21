@@ -21,7 +21,7 @@ std::shared_ptr<ProjectileAttributes> ProjectileData::getDiamondAttributes()
     m_Diamond->MaxSpeed = 40;
     m_Diamond->Damage   = 100;
 
-    m_Diamond->getGraphics()->GraphicsId = "GEM 3 - DARK BLUE.png";
+    m_Diamond->getGraphics()->ImageId = "GEM 3 - DARK BLUE.png";
     m_Diamond->getGraphics()->TextureRect = { {0, 0}, {28, 28} };
 
     m_Diamond->getGraphics()->Animation.FrameCount = 11;
@@ -48,8 +48,6 @@ std::shared_ptr<ProjectileAttributes> ProjectileData::getDiamondAttributes()
     for (auto& p : polygon->Points)
         p = b2Vec2(p.x - center.x, p.y - center.y);
 
-    m_Diamond->setShape(polygon);
-
     return m_Diamond;
 }
 
@@ -66,7 +64,7 @@ std::shared_ptr<ProjectileAttributes> ProjectileData::getRegularGemAttributes()
     m_RegularGem->MaxSpeed = 100;
     m_RegularGem->Damage = 35;
 
-    m_RegularGem->getGraphics()->GraphicsId = "GEM 2 - LIGHT GREEN.png";
+    m_RegularGem->getGraphics()->ImageId = "GEM 2 - LIGHT GREEN.png";
     m_RegularGem->getGraphics()->TextureRect = { {0, 0}, {23, 27} };
 
     m_RegularGem->getGraphics()->Animation.FrameCount = 10;
@@ -92,8 +90,6 @@ std::shared_ptr<ProjectileAttributes> ProjectileData::getRegularGemAttributes()
 
     for (auto& p : polygon->Points)
         p = b2Vec2(p.x - center.x, p.y - center.y);
-
-    m_RegularGem->setShape(polygon);
 
     return m_RegularGem;
 }

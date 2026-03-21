@@ -41,7 +41,7 @@ void AnimatedGraphicsComponent::nextFrame()
 }
 
 AnimatedGraphicsComponent::AnimatedGraphicsComponent(BitmapStore& bitmapStore, const std::shared_ptr<GraphicsAttributes> attributes) :
-	GraphicsComponent(bitmapStore, attributes->GraphicsId),
+	GraphicsComponent(bitmapStore, attributes->ImageId),
 	m_Attributes(attributes)
 {
 }
