@@ -1,0 +1,22 @@
+{
+    "0": {
+        "animation": {
+            "animation_count": 0,
+            "delay_before_animation_start": 0.0,
+            "delay_between_frames": 0.0,
+            "frame_count": 0,
+            "loop_enabled": false
+        },
+        "frame_rect": {
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "size": {
+                "height": 0,
+                "width": 0
+            }
+        },
+        "image_filename": ""
+    }
+}

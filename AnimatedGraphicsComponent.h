@@ -8,7 +8,7 @@
 class AnimatedGraphicsComponent : public GraphicsComponent
 {
 private:
-	const GraphicsAttributes& m_Attributes;
+	const std::shared_ptr<GraphicsAttributes> m_Attributes;
 
 	int m_CurrentFrame	   = 0;
 	int m_CurrentAnimation = 0;
@@ -21,7 +21,7 @@ private:
 	void nextFrame();
 
 public:
-	AnimatedGraphicsComponent(BitmapStore& bitmapStore, GraphicsAttributes& attributes);
+	AnimatedGraphicsComponent(BitmapStore& bitmapStore, const std::shared_ptr<GraphicsAttributes> attributes);
 
 	void update(float delta) override;
 	void render(sf::RenderTarget& target) override;

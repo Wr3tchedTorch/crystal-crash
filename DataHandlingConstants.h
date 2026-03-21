@@ -7,4 +7,5 @@ struct DataHandlingConstants
 
 	inline static const std::string FilepathProjectileAttributes = "./projectile_attributes_data.json";
 	inline static const std::string FilepathGraphicsAttributes   = "./graphics_attributes_data.json";
+	inline static const std::string FilepathShapeAttributes		 = "./shape_attributes_data.json";
 };

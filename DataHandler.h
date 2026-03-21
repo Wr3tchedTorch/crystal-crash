@@ -9,6 +9,8 @@
 #include "InputFileHelper.h"
 #include <utility>
 #include <algorithm>
+#include <format>
+#include <iostream>
 
 using json = nlohmann::json;
 
@@ -37,7 +39,10 @@ private:
 public:
     DataHandler(std::string filepath);
     std::shared_ptr<T> getById(int id);
-    void create(T newItem);
+    
+    void create(T& newItem);
+    void deleteById(int id);
+    void updateById(const T& toItem);
 };
 
 template<serializable T>
@@ -125,14 +130,53 @@ std::shared_ptr<T> DataHandler<T>::getById(int id)
 }
 
 template<serializable T>
-void DataHandler<T>::create(T newItem)
+void DataHandler<T>::create(T& newItem)
 {
     json oldData = readFromFile();
 
-    newItem.Id = getNextId(oldData);
+    newItem.Id = getNextId(oldData);    
+
+    m_Data[newItem.Id] = std::make_shared<T>(newItem);
 
     json data = newItem;
     oldData[std::to_string(newItem.Id)] = data;
 
     saveToFile(oldData);
+}
+
+template<serializable T>
+inline void DataHandler<T>::deleteById(int id)
+{
+    json data = readFromFile();
+
+    std::string key = std::to_string(id);
+    if (data.contains(key))
+    {
+        data.erase(key);
+        saveToFile(data);  
+        return;
+    }
+
+#ifdef _DEBUG
+    std::cout << std::format("{}: entity with id `{}` not found for delete!", m_Filepath, id);
+#endif // _DEBUG
+
+}
+
+template<serializable T>
+inline void DataHandler<T>::updateById(const T& toItem)
+{
+    json data = readFromFile();
+
+    std::string key = std::to_string(toItem.Id);
+    if (data.contains(key))
+    {
+        data[key] = toItem;
+        saveToFile(data);
+        return;
+    }
+
+#ifdef _DEBUG
+    std::cout << std::format("{}: entity with id `{}` not found for update!", m_Filepath, toItem.Id);
+#endif // _DEBUG
 }

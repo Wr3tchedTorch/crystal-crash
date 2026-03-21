@@ -17,7 +17,7 @@
 
 Projectile::Projectile(BitmapStore& store, b2WorldId worldId, b2BodyId body, std::shared_ptr<ProjectileAttributes> attributes) :
 	IPhysicsObject(worldId),
-	m_AnimatedGraphics(store, attributes->Graphics),
+	m_AnimatedGraphics(store, attributes->getGraphics()),
 	m_ProjectileAttributes(attributes),
 	m_BitmapStore(store)
 {

@@ -38,7 +38,7 @@ std::unique_ptr<Projectile> ProjectilesFactory::createProjectile(std::shared_ptr
 
 	b2BodyId bodyId = b2CreateBody(m_WorldId, m_ProjectileBodyDef.get());
 
-	attributes->Shape->createShape(bodyId, *m_ProjectileShapeDef);
+	attributes->getShape()->createShape(bodyId, *m_ProjectileShapeDef);
 
 	return std::make_unique<Projectile>(m_BitmapStore, m_WorldId, bodyId, attributes);
 }

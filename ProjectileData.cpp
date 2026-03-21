@@ -21,14 +21,14 @@ std::shared_ptr<ProjectileAttributes> ProjectileData::getDiamondAttributes()
     m_Diamond->MaxSpeed = 40;
     m_Diamond->Damage   = 100;
 
-    m_Diamond->Graphics.GraphicsId = "GEM 3 - DARK BLUE.png";
-    m_Diamond->Graphics.TextureRect = { {0, 0}, {28, 28} };
-    
-    m_Diamond->Graphics.Animation.FrameCount = 11;
-    m_Diamond->Graphics.Animation.AnimationCount = 1;
-    m_Diamond->Graphics.Animation.DelayBeforeAnimationStart = 1;
-    m_Diamond->Graphics.Animation.DelayBetweenFrames = 0.100f;
-    m_Diamond->Graphics.Animation.Loop = true;
+    m_Diamond->getGraphics()->GraphicsId = "GEM 3 - DARK BLUE.png";
+    m_Diamond->getGraphics()->TextureRect = { {0, 0}, {28, 28} };
+
+    m_Diamond->getGraphics()->Animation.FrameCount = 11;
+    m_Diamond->getGraphics()->Animation.AnimationCount = 1;
+    m_Diamond->getGraphics()->Animation.DelayBeforeAnimationStart = 1;
+    m_Diamond->getGraphics()->Animation.DelayBetweenFrames = 0.100f;
+    m_Diamond->getGraphics()->Animation.Loop = true;
 
     std::shared_ptr<PolygonShapeAttributes> polygon = std::make_shared<PolygonShapeAttributes>();
     polygon->Points.push_back(b2Vec2(converter::pixelsToMeters({ 12, 0 })));
@@ -48,7 +48,7 @@ std::shared_ptr<ProjectileAttributes> ProjectileData::getDiamondAttributes()
     for (auto& p : polygon->Points)
         p = b2Vec2(p.x - center.x, p.y - center.y);
 
-    m_Diamond->Shape = polygon;    
+    m_Diamond->setShape(polygon);
 
     return m_Diamond;
 }
@@ -66,14 +66,14 @@ std::shared_ptr<ProjectileAttributes> ProjectileData::getRegularGemAttributes()
     m_RegularGem->MaxSpeed = 100;
     m_RegularGem->Damage = 35;
 
-    m_RegularGem->Graphics.GraphicsId = "GEM 2 - LIGHT GREEN.png";
-    m_RegularGem->Graphics.TextureRect = { {0, 0}, {23, 27} };
+    m_RegularGem->getGraphics()->GraphicsId = "GEM 2 - LIGHT GREEN.png";
+    m_RegularGem->getGraphics()->TextureRect = { {0, 0}, {23, 27} };
 
-    m_RegularGem->Graphics.Animation.FrameCount = 10;
-    m_RegularGem->Graphics.Animation.AnimationCount = 1;
-    m_RegularGem->Graphics.Animation.DelayBeforeAnimationStart = 1;
-    m_RegularGem->Graphics.Animation.DelayBetweenFrames = 0.100f;
-    m_RegularGem->Graphics.Animation.Loop = true;
+    m_RegularGem->getGraphics()->Animation.FrameCount = 10;
+    m_RegularGem->getGraphics()->Animation.AnimationCount = 1;
+    m_RegularGem->getGraphics()->Animation.DelayBeforeAnimationStart = 1;
+    m_RegularGem->getGraphics()->Animation.DelayBetweenFrames = 0.100f;
+    m_RegularGem->getGraphics()->Animation.Loop = true;
 
     std::shared_ptr<PolygonShapeAttributes> polygon = std::make_shared<PolygonShapeAttributes>();
     polygon->Points.push_back(b2Vec2(converter::pixelsToMeters({ 0, 12 })));
@@ -93,7 +93,7 @@ std::shared_ptr<ProjectileAttributes> ProjectileData::getRegularGemAttributes()
     for (auto& p : polygon->Points)
         p = b2Vec2(p.x - center.x, p.y - center.y);
 
-    m_RegularGem->Shape = polygon;
+    m_RegularGem->setShape(polygon);
 
     return m_RegularGem;
 }

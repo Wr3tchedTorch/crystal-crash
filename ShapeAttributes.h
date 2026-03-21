@@ -14,15 +14,15 @@ struct ShapeAttributes
 
 	virtual b2ShapeId createShape(b2BodyId body, const b2ShapeDef& shapeDef) = 0;
 
-	virtual void to_json(json& j, const ShapeAttributes& sa)
+	virtual void parentToJson(json& j, const ShapeAttributes& sa) const
 	{
-		j["shape"]["type"] = ShapeAttributes::typeToString(sa.Type);
+		j["type"] = ShapeAttributes::typeToString(sa.Type);
 	}
 
-	virtual void from_json(const json& j, ShapeAttributes& sa)
+	virtual void parentFromJson(const json& j, ShapeAttributes& sa)
 	{
 		json type;
-		j.at("shape").at("type").get_to(type);
+		j.at("type").get_to(type);
 
 		sa.Type = ShapeAttributes::stringToType(type);
 	}	
