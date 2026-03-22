@@ -158,6 +158,9 @@
     <ClCompile Include="StateSlingshotLoading.cpp">
       <Filter>Source Files\States\Slingshot</Filter>
     </ClCompile>
+    <ClCompile Include="Tilemap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine.h">
@@ -265,6 +268,12 @@
     <ClInclude Include="DataHandler.h">
       <Filter>Header Files\FileIO</Filter>
     </ClInclude>
+    <ClInclude Include="Tilemap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Header Files\Attributes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -279,6 +288,9 @@
     </None>
     <None Include="DataHandler.inl">
       <Filter>Source Files\FileIO</Filter>
+    </None>
+    <None Include="maps\01\map.json">
+      <Filter>Header Files\Data</Filter>
     </None>
   </ItemGroup>
 </Project>

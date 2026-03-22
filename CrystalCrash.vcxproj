@@ -135,6 +135,7 @@
     <ClCompile Include="AnimatedGraphicsAttributes.h" />
     <ClCompile Include="AnimatedGraphicsComponent.cpp" />
     <ClCompile Include="BitmapStore.cpp" />
+    <ClCompile Include="Tilemap.cpp" />
     <None Include="DataHandler.inl">
       <FileType>Document</FileType>
     </None>
@@ -198,9 +199,12 @@
     <ClInclude Include="StateSlingshotIdle.h" />
     <ClInclude Include="StateSlingshotLoading.h" />
     <ClInclude Include="StateSlingshotShooting.h" />
+    <ClInclude Include="Tile.h" />
+    <ClInclude Include="Tilemap.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="graphics_attributes_data.json" />
+    <None Include="maps\01\map.json" />
     <None Include="packages.config" />
     <None Include="projectile_attributes_data.json" />
     <None Include="shape_attributes_data.json" />
