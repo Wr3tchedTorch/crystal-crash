@@ -36,7 +36,6 @@ inline void to_json(json& j, const ProjectileAttributes& pa)
 {
 	j =
 	{ 
-		{"id", pa.Id}, 
 		{"name", pa.Name},
 		{"max_speed", pa.MaxSpeed}, 
 		{"damage", pa.Damage},
@@ -46,7 +45,6 @@ inline void to_json(json& j, const ProjectileAttributes& pa)
 
 inline void from_json(const json& j, ProjectileAttributes& pa)
 {
-	j.at("id").get_to(pa.Id);
 	j.at("name").get_to(pa.Name);
 	j.at("max_speed").get_to(pa.MaxSpeed);
 	j.at("damage").get_to(pa.Damage);

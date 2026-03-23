@@ -23,5 +23,26 @@
   "2": {
     "image_filename": "GEM 3 - RED.png",
     "prototype": "1"
+  },
+  "3": {
+    "animation": {
+      "animation_count": 1,
+      "delay_before_animation_start": 1.0,
+      "delay_between_frames": 0.10000000149011612,
+      "frame_count": 10,
+      "loop_enabled": true
+    },
+    "frame_rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 27,
+        "width": 23
+      }
+    },
+    "image_filename": "GEM 2 - LIGHT GREEN.png",
+    "shape_id": 2
   }
 }

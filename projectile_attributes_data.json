@@ -1,9 +1,14 @@
 {
-    "1": {
-        "damage": 100.0,
-        "graphics_id": 1,
-        "id": 1,
-        "max_speed": 40.0,
-        "name": "Diamante"
-    }
+  "1": {
+    "damage": 100.0,
+    "graphics_id": 1,
+    "max_speed": 40.0,
+    "name": "Diamante"
+  },
+  "2": {
+    "damage": 35.0,
+    "graphics_id": 3,
+    "max_speed": 100.0,
+    "name": "Normal"
+  }
 }
