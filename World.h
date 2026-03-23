@@ -7,6 +7,8 @@
 #include "BitmapStore.h"
 #include <string>
 #include <unordered_map>
+#include "WorldData.h"
+#include "DataHandler.h"
 
 class IGameObject;
 
@@ -20,8 +22,11 @@ private:
 
 	std::unique_ptr<Tilemap> m_Tilemap;
 
+	std::shared_ptr<WorldData> m_WorldData;
+
 public:
-	World(int levelToLoad, BitmapStore& store);	
+	World(int levelToLoad, BitmapStore& store, DataHandler<WorldData>& dataHandler);
+
 
 	void update(float delta);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
