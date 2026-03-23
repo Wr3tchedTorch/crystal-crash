@@ -14,6 +14,16 @@ struct Layer
 	int Id;	
 	std::vector<Tile> Tiles;
 	bool Collider;
+
+	bool operator< (const Layer& other) const
+	{
+		return Id < other.Id;
+	}
+
+	bool operator> (const Layer& other) const
+	{
+		return Id > other.Id;
+	}
 };
 
 inline void to_json(json& j, const Layer& pa)

@@ -2,10 +2,7 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
-#include <vector>
 #include <SFML/Graphics/RenderTarget.hpp>
-#include <SFML/System/Vector2.hpp>
-#include "Layer.h"
 #include <SFML/Graphics/Texture.hpp>
 #include "TilemapAttributes.h"
 #include <memory>

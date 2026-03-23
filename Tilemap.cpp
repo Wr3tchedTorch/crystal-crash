@@ -9,6 +9,8 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <memory>
 #include "TilemapAttributes.h"
+#include <algorithm>
+#include "Layer.h"
 
 void Tilemap::updateVertices()
 {
@@ -48,11 +50,9 @@ Tilemap::Tilemap(sf::Texture& tilemapTexture, std::shared_ptr<TilemapAttributes>
 {
 	m_Vertices.setPrimitiveType(sf::PrimitiveType::Triangles);
 
-	updateVertices();
-}
+	std::sort(m_Attributes->Layers.begin(), m_Attributes->Layers.end(), std::greater<Layer>());
 
-Tilemap::Tilemap(sf::Texture& tilemapTexture, std::shared_ptr<TilemapAttributes> attributes)
-{
+	updateVertices();
 }
 
 void Tilemap::draw(sf::RenderTarget& target, sf::RenderStates states) const
