@@ -7,7 +7,6 @@
 #include <fstream>
 #include "DataHandlingConstants.h"
 #include "InputFileHelper.h"
-#include <utility>
 #include <algorithm>
 #include <format>
 #include <iostream>
@@ -24,7 +23,7 @@ template <serializable T>
 class DataHandler
 {
 private:
-	std::unordered_map<int, std::shared_ptr<T>> m_Data;
+    std::unordered_map<int, std::shared_ptr<T>> m_Data;
 
 	std::string m_Filepath;
 
@@ -42,6 +41,7 @@ public:
     DataHandler(std::string filepath);
     std::shared_ptr<T> getById(int id);
     
+    std::unordered_map<int, std::shared_ptr<T>> getAll();
     void create(T& newItem);
     void deleteById(int id);
     void updateById(const T& toItem);
@@ -162,6 +162,12 @@ std::shared_ptr<T> DataHandler<T>::getById(int id)
 
     m_Data[id] = std::make_shared<T>(entity);
     return m_Data[id];
+}
+
+template<serializable T>
+inline std::unordered_map<int, std::shared_ptr<T>> DataHandler<T>::getAll()
+{
+    return m_Data;
 }
 
 template<serializable T>

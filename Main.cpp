@@ -1,13 +1,9 @@
 #include "DataHandler.h"
-#include "ProjectileAttributes.h"
 #include "DataHandlingConstants.h"
-#include "PolygonShapeAttributes.h"
 #include "GraphicsAttributes.h"
 #include <memory>
-#include <math_functions.h>
 #include <iostream>
-
-
+#include "TilemapAttributes.h"
 
 int main()
 {
@@ -21,6 +17,10 @@ int main()
 	auto graph2 = graphicsDatahandler.getById(1);
 
 	std::cout << graph->ImageId;
+
+	DataHandler<TilemapAttributes> tilemapDatahandler("./maps/01/map.json");
+	
+	std::cout << tilemapDatahandler.getById(0); 
 
 	return 0;
 }
