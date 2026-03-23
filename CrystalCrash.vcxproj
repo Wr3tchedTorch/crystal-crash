@@ -137,6 +137,8 @@
     <ClCompile Include="BitmapStore.cpp" />
     <ClCompile Include="Layer.h" />
     <ClCompile Include="Tilemap.cpp" />
+    <ClCompile Include="World.cpp" />
+    <ClCompile Include="WorldData.h" />
     <None Include="DataHandler.inl">
       <FileType>Document</FileType>
     </None>
@@ -168,6 +170,7 @@
     <ClInclude Include="DataHandler.h" />
     <ClInclude Include="DataHandlingConstants.h" />
     <ClInclude Include="DragSystem.h" />
+    <ClInclude Include="GameObjectData.h" />
     <ClInclude Include="IComponent.h" />
     <ClInclude Include="Converter.h" />
     <ClInclude Include="EventHandler.h" />
@@ -201,6 +204,7 @@
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Tilemap.h" />
     <ClInclude Include="TilemapAttributes.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="graphics_attributes_data.json" />
