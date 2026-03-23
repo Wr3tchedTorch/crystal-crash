@@ -1,0 +1,15 @@
+{
+  "1": {
+    "gravity": 9.8,
+    "tilemap_id": 1,
+    "slingshot": {
+      "position": {
+        "x": 960,
+        "y": 540
+      },
+      "ammunition": [2, 1, 1, 2, 2]
+    },
+    "entities": [
+    ]
+  }
+}

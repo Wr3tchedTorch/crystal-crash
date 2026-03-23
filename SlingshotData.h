@@ -1,39 +1,35 @@
 #pragma once
-#include <memory>
 #include <nlohmann/json.hpp>
-#include <string>
+#include <vector>
 #include <SFML/System/Vector2.hpp>
 
 using json = nlohmann::json;
 
-struct GameObjectData
+struct SlingshotData
 {
-	int Id;
-	int VariationId;
 	sf::Vector2f Position;
+	std::vector<int> LoadedProjectileIds;
 };
 
-inline void to_json(json& j, const GameObjectData& pa)
+inline void to_json(json& j, const SlingshotData& pa)
 {
 	j =
 	{
-		{"id", pa.Id},
-		{"variation_id", pa.VariationId},
+		{"ammunition", pa.LoadedProjectileIds},
 		{
 			"position",
 			{
 				{"x", pa.Position.x},
 				{"y", pa.Position.y}
 			}
-		},
+		}
 	};
 }
 
-inline void from_json(const json& j, GameObjectData& pa)
+inline void from_json(const json& j, SlingshotData& pa)
 {
-	j.at("id").get_to(pa.Id);
-	j.at("variation_id").get_to(pa.VariationId);
-	
+	j.at("ammunition").get_to(pa.LoadedProjectileIds);
+
 	pa.Position.x = j.at("position").at("x").get<float>();
 	pa.Position.y = j.at("position").at("y").get<float>();
 }

@@ -133,11 +133,6 @@ inline DataHandler<T>::DataHandler(std::string filepath) : m_Filepath(filepath)
     createTemplateJsonFile();
 }
 
-
-std::string json_dump(nlohmann::json& j) {
-    return j.dump(4);
-}
-
 template<serializable T>
 std::shared_ptr<T> DataHandler<T>::getById(int id)
 {

@@ -5,28 +5,25 @@
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include "BitmapStore.h"
-#include <string>
-#include <unordered_map>
 #include "WorldData.h"
 #include "DataHandler.h"
+#include <vector>
 
 class IGameObject;
 
-using GameObjectsMap = std::unordered_map<std::string, std::unique_ptr<IGameObject>>;
+using GameObjects = std::vector<std::unique_ptr<IGameObject>>;
 
 class World : public sf::Drawable
 {
 private:
-	GameObjectsMap m_ActiveEntities;
-	GameObjectsMap m_InactiveEntities;
+	GameObjects m_Entities;
 
-	std::unique_ptr<Tilemap> m_Tilemap;
+	std::unique_ptr<Tilemap>   m_Tilemap;
 
 	std::shared_ptr<WorldData> m_WorldData;
 
 public:
 	World(int levelToLoad, BitmapStore& store, DataHandler<WorldData>& dataHandler);
-
 
 	void update(float delta);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

@@ -135,6 +135,7 @@
     <ClCompile Include="AnimatedGraphicsAttributes.h" />
     <ClCompile Include="AnimatedGraphicsComponent.cpp" />
     <ClCompile Include="BitmapStore.cpp" />
+    <ClCompile Include="DataHandlerStore.cpp" />
     <ClCompile Include="Layer.h" />
     <ClCompile Include="Tilemap.cpp" />
     <ClCompile Include="World.cpp" />
@@ -163,11 +164,14 @@
     <ClCompile Include="StateSlingshotIdle.cpp" />
     <ClCompile Include="StateSlingshotLoading.cpp" />
     <ClCompile Include="StateSlingshotShooting.cpp" />
+    <None Include="maps\1\map.json" />
+    <None Include="world_data.json" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedGraphicsComponent.h" />
     <ClInclude Include="BitmapStore.h" />
     <ClInclude Include="DataHandler.h" />
+    <ClInclude Include="DataHandlerStore.h" />
     <ClInclude Include="DataHandlingConstants.h" />
     <ClInclude Include="DragSystem.h" />
     <ClInclude Include="GameObjectData.h" />
@@ -195,6 +199,7 @@
     <ClInclude Include="ShapeAttributesConstants.h" />
     <ClInclude Include="Slingshot.h" />
     <ClInclude Include="SlingshotConstants.h" />
+    <ClInclude Include="SlingshotData.h" />
     <ClInclude Include="StateProjectileLaunched.h" />
     <ClInclude Include="StateProjectileLoaded.h" />
     <ClInclude Include="StateSlingshotAiming.h" />
@@ -208,7 +213,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="graphics_attributes_data.json" />
-    <None Include="maps\01\map.json" />
     <None Include="packages.config" />
     <None Include="projectile_attributes_data.json" />
     <None Include="shape_attributes_data.json" />

@@ -1,42 +1,41 @@
 #pragma once
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "EventHandler.h"
-#include "IScreen.h"
 #include "BitmapStore.h"
 #include <SFML/System/Time.hpp>
 #include "PhysicsEngine.h"
 #include <SFML/Graphics/RectangleShape.hpp>
 #include "MouseDragHandler.h"
-#include "Slingshot.h"
 #include <SFML/System/Vector2.hpp>
 #include <vector>
 #include <id.h>
 #include <SFML/Graphics/Rect.hpp>
+#include "WorldData.h"
+#include "DataHandler.h"
 #include <memory>
-#include "ProjectilesFactory.h"
+#include "World.h"
+#include "ProjectileAttributes.h"
 
 class GameEngine
 {
 private:
 	sf::RenderWindow m_Window;
 	EventHandler	 m_EventHandler;
-	MouseDragHandler m_MouseDragHandler;	
+	MouseDragHandler m_MouseDragHandler;
 
 	BitmapStore	  m_BitmapStore;
 	PhysicsEngine m_PhysicsEngine;
 
-	IScreen* m_CurrentScreen;
-	
-	std::shared_ptr<Slingshot> m_Slingshot;
+	std::unique_ptr<DataHandler<WorldData>> m_WorldDataHandler;
+	std::unique_ptr<DataHandler<ProjectileAttributes>> m_ProjectileDataHandler;
 
-	ProjectilesFactory m_ProjectileFactory;
 
-	static bool Instantiated;
-
-	sf::RectangleShape m_DebugGround;
+	std::unique_ptr<World> m_World;
 
 	std::vector<sf::RectangleShape> m_DebugBoxes;
 	std::vector<b2BodyId> m_DebugBoxesIds;
+
+	static bool Instantiated;
 
 public:
 	static sf::Time GameTimeTotal;
@@ -47,7 +46,6 @@ public:
 	
 	void run();	
 
-	void spawnGround();
 	void spawnBox(sf::FloatRect transform);
 	void spawnBoxes();
 };

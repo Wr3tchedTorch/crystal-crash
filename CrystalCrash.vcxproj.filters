@@ -164,6 +164,9 @@
     <ClCompile Include="WorldData.h">
       <Filter>Header Files\Attributes</Filter>
     </ClCompile>
+    <ClCompile Include="DataHandlerStore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine.h">
@@ -286,6 +289,12 @@
     <ClInclude Include="GameObjectData.h">
       <Filter>Header Files\Attributes</Filter>
     </ClInclude>
+    <ClInclude Include="SlingshotData.h">
+      <Filter>Header Files\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="DataHandlerStore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -301,7 +310,10 @@
     <None Include="DataHandler.inl">
       <Filter>Source Files\FileIO</Filter>
     </None>
-    <None Include="maps\01\map.json">
+    <None Include="world_data.json">
+      <Filter>Header Files\Data</Filter>
+    </None>
+    <None Include="maps\1\map.json">
       <Filter>Header Files\Data</Filter>
     </None>
   </ItemGroup>

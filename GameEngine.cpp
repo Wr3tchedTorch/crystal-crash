@@ -3,7 +3,6 @@
 #include <SFML/System/Clock.hpp>
 #include <SFML/System/Time.hpp>
 #include <cassert>
-#include "GameScreen.h"
 #include <box2d.h>
 #include <types.h>
 #include <collision.h>
@@ -16,20 +15,17 @@
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <random>
-#include "Slingshot.h"
 #include <memory>
-#include "ProjectileData.h"
-#include "Projectile.h"
-#include <utility>
+#include "DataHandler.h"
+#include "WorldData.h"
+#include "World.h"
 
 bool GameEngine::Instantiated = false;
 sf::Time GameEngine::GameTimeTotal = sf::Time();
 sf::Vector2f GameEngine::MousePositionInGameCoords = sf::Vector2f();
 
 GameEngine::GameEngine() : 	
-	m_EventHandler(m_Window, m_MouseDragHandler),	
-	m_Slingshot(std::make_shared<Slingshot>(m_BitmapStore, sf::Vector2f({ 300, 800 - 199 / 2 }))),
-	m_ProjectileFactory(m_BitmapStore, m_PhysicsEngine.getWorldId(), m_Slingshot)
+	m_EventHandler(m_Window, m_MouseDragHandler)
 {
 	assert(!Instantiated);
 	Instantiated = true;
@@ -39,26 +35,10 @@ GameEngine::GameEngine() :
 	m_Window.create(sf::VideoMode::getDesktopMode(), "Crystal Crash by Eric");
 	m_Window.setFramerateLimit(60);
 
-	m_CurrentScreen = new GameScreen;
+	m_WorldDataHandler = std::make_unique<DataHandler<WorldData>>("world_data.json");
+	m_World = std::make_unique<World>(1, m_BitmapStore, *m_WorldDataHandler.get());
 
-	spawnGround();
 	spawnBoxes();
-
-	std::unique_ptr<Projectile> diamondProjectile = m_ProjectileFactory.createProjectile(ProjectileData::getDiamondAttributes(), 1);
-	std::unique_ptr<Projectile> diamondProjectile1 = m_ProjectileFactory.createProjectile(ProjectileData::getDiamondAttributes(), 2);
-	std::unique_ptr<Projectile> diamondProjectile2 = m_ProjectileFactory.createProjectile(ProjectileData::getDiamondAttributes(), 3);
-
-	std::unique_ptr<Projectile> diamondProjectile6 = m_ProjectileFactory.createProjectile(ProjectileData::getDiamondAttributes(), 5);
-	std::unique_ptr<Projectile> diamondProjectile7 = m_ProjectileFactory.createProjectile(ProjectileData::getDiamondAttributes(), 6);
-	
-	std::unique_ptr<Projectile> regularGem = m_ProjectileFactory.createProjectile(ProjectileData::getRegularGemAttributes(), 4);
-
-	m_Slingshot->loadProjectile(std::move(diamondProjectile));
-	m_Slingshot->loadProjectile(std::move(diamondProjectile1));
-	m_Slingshot->loadProjectile(std::move(diamondProjectile2));
-	m_Slingshot->loadProjectile(std::move(diamondProjectile6));
-	m_Slingshot->loadProjectile(std::move(diamondProjectile7));
-	m_Slingshot->loadProjectile(std::move(regularGem));
 }
 
 GameEngine::~GameEngine()
@@ -81,7 +61,7 @@ void GameEngine::run()
 		MousePositionInGameCoords = m_Window.mapPixelToCoords(sf::Mouse::getPosition());
 
 		m_PhysicsEngine.update(delta);
-		m_Slingshot->update(delta);
+		m_World->update(delta);
 
 		for (int i = 0; i < m_DebugBoxes.size(); i++)
 		{			
@@ -94,48 +74,14 @@ void GameEngine::run()
 
 		m_Window.clear(sf::Color(135, 206, 250));
 
-		m_Slingshot->render(m_Window);
-		m_Window.draw(m_DebugGround);		
-		
+		m_Window.draw(*m_World.get());
 		for (auto& box : m_DebugBoxes)
 		{
 			m_Window.draw(box);
 		}
 
-		//if (m_CurrentScreen)
-		//{
-		//	m_CurrentScreen->render(m_Window);
-		//}
-
 		m_Window.display();
 	}
-}
-
-void GameEngine::spawnGround()
-{
-	sf::FloatRect bounds({
-		{1920.0f/2.0f, 900.0f},
-		{1920.0f, 200.0f}
-	});
-	m_DebugGround.setOrigin({ bounds.size.x / 2.0f, bounds.size.y / 2.0f });
-	m_DebugGround.setPosition(bounds.position);
-	m_DebugGround.setSize(bounds.size);
-	m_DebugGround.setFillColor(sf::Color::White);
-
-	bounds.size /= 2.0f;
-
-	b2BodyDef bodyDef = b2DefaultBodyDef();
-	bodyDef.type = b2_staticBody;
-	bodyDef.position = converter::pixelsToMeters(bounds.position);
-
-	auto bodyId = b2CreateBody(m_PhysicsEngine.getWorldId(), &bodyDef);
-
-	b2Vec2 sizeInMeters = converter::pixelsToMeters(bounds.size);
-	b2Polygon  polygon = b2MakeBox(sizeInMeters.x, sizeInMeters.y);
-
-	b2ShapeDef shapeDef = b2DefaultShapeDef();	
-
-	b2CreatePolygonShape(bodyId, &shapeDef, &polygon);
 }
 
 void GameEngine::spawnBox(sf::FloatRect transform)
