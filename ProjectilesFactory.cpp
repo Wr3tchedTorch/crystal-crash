@@ -1,19 +1,23 @@
 #include "ProjectilesFactory.h"
+
 #include <id.h>
-#include <cassert>
-#include <memory>
 #include <types.h>
 #include <box2d.h>
+
+#include <cassert>
+#include <memory>
+#include <vector>
+#include <utility>
+
 #include "Converter.h"
 #include "ProjectileAttributes.h"
 #include "BitmapStore.h"
 #include "Slingshot.h"
 #include "Projectile.h"
 
-ProjectilesFactory::ProjectilesFactory(BitmapStore& store, b2WorldId worldId, std::shared_ptr<Slingshot> slingshot) :
+ProjectilesFactory::ProjectilesFactory(BitmapStore& store, b2WorldId worldId) :
 	m_BitmapStore(store),
-	m_WorldId(worldId),
-	m_Slingshot(slingshot)
+	m_WorldId(worldId)
 {
 	assert(!m_Instantiated);
 	m_Instantiated = true;
@@ -32,13 +36,25 @@ ProjectilesFactory::ProjectilesFactory(BitmapStore& store, b2WorldId worldId, st
 	m_ProjectileShapeDef->enableHitEvents = true;
 }
 
-std::unique_ptr<Projectile> ProjectilesFactory::createProjectile(std::shared_ptr<ProjectileAttributes> attributes, int projectileOrder)
+std::unique_ptr<Projectile> ProjectilesFactory::createProjectile(std::shared_ptr<ProjectileAttributes> attributes, int projectileOrder, Slingshot& slingshot)
 {	
-	m_ProjectileBodyDef->position = converter::pixelsToMeters(m_Slingshot->getIdlePosition(projectileOrder));
+	m_ProjectileBodyDef->position = converter::pixelsToMeters(slingshot.getIdlePosition(projectileOrder));
 
 	b2BodyId bodyId = b2CreateBody(m_WorldId, m_ProjectileBodyDef.get());
 
 	attributes->getGraphics()->getShape()->createShape(bodyId, *m_ProjectileShapeDef);
 
 	return std::make_unique<Projectile>(m_BitmapStore, m_WorldId, bodyId, attributes);
+}
+
+std::vector<std::unique_ptr<Projectile>> ProjectilesFactory::createProjectiles(std::vector<std::shared_ptr<ProjectileAttributes>> attributes, Slingshot& slingshot)
+{
+	std::vector<std::unique_ptr<Projectile>> projectiles;
+
+	for (int i = 0; i < attributes.size(); ++i)	
+	{
+		projectiles.push_back(std::move(createProjectile(attributes[i], i, slingshot)));
+	}
+
+	return projectiles;
 }

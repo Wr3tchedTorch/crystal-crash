@@ -135,8 +135,10 @@
     <ClCompile Include="AnimatedGraphicsAttributes.h" />
     <ClCompile Include="AnimatedGraphicsComponent.cpp" />
     <ClCompile Include="BitmapStore.cpp" />
+    <ClCompile Include="DataHandlerManager.cpp" />
     <ClCompile Include="DataHandlerStore.cpp" />
     <ClCompile Include="Layer.h" />
+    <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="Tilemap.cpp" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="WorldData.h" />
@@ -171,6 +173,7 @@
     <ClInclude Include="AnimatedGraphicsComponent.h" />
     <ClInclude Include="BitmapStore.h" />
     <ClInclude Include="DataHandler.h" />
+    <ClInclude Include="DataHandlerManager.h" />
     <ClInclude Include="DataHandlerStore.h" />
     <ClInclude Include="DataHandlingConstants.h" />
     <ClInclude Include="DragSystem.h" />
@@ -186,6 +189,7 @@
     <ClInclude Include="InputFileHelper.h" />
     <ClInclude Include="IProjectileState.h" />
     <ClInclude Include="ISlingshotState.h" />
+    <ClInclude Include="LevelManager.h" />
     <ClInclude Include="MouseDragHandler.h" />
     <ClInclude Include="PhysicsBodyAttributes.h" />
     <ClInclude Include="PhysicsEngine.h" />

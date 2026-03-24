@@ -1,24 +1,28 @@
 #include "GameEngine.h"
-#include <SFML/Window/VideoMode.hpp>
-#include <SFML/System/Clock.hpp>
-#include <SFML/System/Time.hpp>
-#include <cassert>
+
 #include <box2d.h>
 #include <types.h>
 #include <collision.h>
-#include "Converter.h"
+#include <math_functions.h>
+
+#include <cassert>
+#include <random>
+#include <memory>
+
+#include <SFML/Window/VideoMode.hpp>
+#include <SFML/System/Clock.hpp>
+#include <SFML/System/Time.hpp>
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
-#include <math_functions.h>
-#include "DragSystem.h"
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
-#include <random>
-#include <memory>
-#include "DataHandler.h"
-#include "WorldData.h"
+
+#include "Converter.h"
+#include "DragSystem.h"
 #include "World.h"
+#include "ProjectilesFactory.h"
+#include "LevelManager.h"
 
 bool GameEngine::Instantiated = false;
 sf::Time GameEngine::GameTimeTotal = sf::Time();
@@ -33,12 +37,13 @@ GameEngine::GameEngine() :
 	DragSystem::initialize(m_MouseDragHandler);
 
 	m_Window.create(sf::VideoMode::getDesktopMode(), "Crystal Crash by Eric");
-	m_Window.setFramerateLimit(60);
-
-	m_WorldDataHandler = std::make_unique<DataHandler<WorldData>>("world_data.json");
-	m_World = std::make_unique<World>(1, m_BitmapStore, *m_WorldDataHandler.get());
+	m_Window.setFramerateLimit(60);	
 
 	spawnBoxes();
+
+	m_ProjectileFactory = std::make_shared<ProjectilesFactory>(m_BitmapStore, m_PhysicsEngine.getWorldId());
+	m_LevelManager		= std::make_unique<LevelManager>(m_BitmapStore, m_ProjectileFactory, m_DataManager);
+	m_CurrentWorld		= m_LevelManager->loadLevel(1);
 }
 
 GameEngine::~GameEngine()
@@ -61,7 +66,10 @@ void GameEngine::run()
 		MousePositionInGameCoords = m_Window.mapPixelToCoords(sf::Mouse::getPosition());
 
 		m_PhysicsEngine.update(delta);
-		m_World->update(delta);
+		if (m_CurrentWorld)
+		{
+			m_CurrentWorld->update(delta);
+		}
 
 		for (int i = 0; i < m_DebugBoxes.size(); i++)
 		{			
@@ -74,7 +82,10 @@ void GameEngine::run()
 
 		m_Window.clear(sf::Color(135, 206, 250));
 
-		m_Window.draw(*m_World.get());
+		if (m_CurrentWorld)
+		{
+			m_Window.draw(*m_CurrentWorld.get());
+		}
 		for (auto& box : m_DebugBoxes)
 		{
 			m_Window.draw(box);
