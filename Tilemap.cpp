@@ -73,7 +73,7 @@ void Tilemap::createCollision()
 
 	for (int i = 0; i < GameEngine::Resolution.x; i += GameEngine::Resolution.x / 8)
 	{
-		b2Vec2 position = { converter::pixelsToMeters(i), converter::pixelsToMeters(GameEngine::Resolution.y / 2.0f) };
+		b2Vec2 position = { converter::pixelsToMeters(i), converter::pixelsToMeters(GameEngine::Resolution.y / 2.0f + 200.0f) };
 		chain.push_back(position);
 	}
 

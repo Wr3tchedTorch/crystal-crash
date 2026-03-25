@@ -58,7 +58,6 @@ inline void from_json(const json& j, PolygonShapeAttributes& psa)
 	j.at("points").get_to(pointsData);
 
 	psa.Points.clear();
-	psa.Points.resize(pointsData.size());
 
 	for (const auto& p : pointsData)
 	{
