@@ -59,8 +59,6 @@ World::World(
 	m_WorldData(data),
 	m_ProjectileFactory(projectileFactory)	
 {
-	m_Tilemap = std::make_unique<Tilemap>(store.getTexture(std::format("./maps/{}/spritesheet.png", m_WorldData->TilemapId)), m_WorldData->getTilemapAttributes(), worldId);
-
 	sf::Vector2f mapSize(
 		{
 			static_cast<float>(m_WorldData->getTilemapAttributes()->MapWidth)  * m_WorldData->getTilemapAttributes()->TileSize,
@@ -74,7 +72,7 @@ World::World(
 	tilemapPosition.y -= mapSize.y;
 	tilemapPosition.y += m_WorldData->getTilemapAttributes()->TileSize;
 
-	m_Tilemap->setPosition(tilemapPosition);
+	m_Tilemap = std::make_unique<Tilemap>(store.getTexture(std::format("./maps/{}/spritesheet.png", m_WorldData->TilemapId)), m_WorldData->getTilemapAttributes(), worldId, tilemapPosition);
 
 	GameEngine::Resolution;
 

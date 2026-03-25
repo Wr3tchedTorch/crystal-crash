@@ -19,8 +19,8 @@
 #include "TilemapAttributes.h"
 #include "Tile.h"
 #include "Layer.h"
-#include "GameEngine.h"
 #include "Converter.h"
+#include <SFML/Graphics/RectangleShape.hpp>
 
 void Tilemap::updateVertices()
 {
@@ -36,6 +36,8 @@ void Tilemap::updateVertices()
 			float left = m_Attributes->TileSize * tile.GridPosition.x;
 			float bottom = top  + m_Attributes->TileSize;
 			float right  = left + m_Attributes->TileSize;
+
+			m_TileGridCoordinates.insert({ tile.GridPosition.x, tile.GridPosition.y });
 
 			int uvX = tile.Id % spritesheetSize.x;
 			int uvY = tile.Id / spritesheetSize.x;
@@ -58,8 +60,79 @@ void Tilemap::updateVertices()
 	createCollision();
 }
 
-Tilemap::Tilemap(sf::Texture& tilemapTexture, std::shared_ptr<TilemapAttributes> attributes, b2WorldId worldId) : m_TilemapTexture(tilemapTexture), m_Attributes(attributes), m_WorldId(worldId)
+std::vector<b2Vec2> Tilemap::getVerticesOutline()
 {
+	float tileSizeMeters = converter::pixelsToMeters(m_Attributes->TileSize);
+	
+	std::vector<b2Vec2> outline;
+	for (auto& layer : m_Attributes->Layers)
+	{
+		if (!layer.Collider)
+		{
+			continue;
+		}
+		for (auto& tile : layer.Tiles)
+		{
+			float x = tile.GridPosition.x * tileSizeMeters + converter::pixelsToMeters(getPosition().x);
+			float y = tile.GridPosition.y * tileSizeMeters + converter::pixelsToMeters(getPosition().y);
+
+			int gx = tile.GridPosition.x;
+			int gy = tile.GridPosition.y;
+
+			sf::RectangleShape shape;
+			shape.setFillColor(sf::Color(255, 255, 0, 150));
+
+			float xP = converter::metersToPixels(x);
+			float yP = converter::metersToPixels(y);
+
+			float sP = m_Attributes->TileSize;
+
+			if (!m_TileGridCoordinates.contains({ gx, gy - 1 }))
+			{
+				outline.push_back(b2Vec2({ x, y }));
+				outline.push_back(b2Vec2({ x + tileSizeMeters, y }));
+
+				shape.setPosition({ xP, yP });
+				shape.setSize({ sP, 5 });
+				m_CollisionDebugLines.push_back(shape);
+			}
+			if (!m_TileGridCoordinates.contains({ gx, gy + 1 }))
+			{
+				outline.push_back(b2Vec2({ x, y + tileSizeMeters }));
+				outline.push_back(b2Vec2({ x + tileSizeMeters, y + tileSizeMeters }));
+
+				shape.setPosition({ xP, yP + sP });
+				shape.setSize({ sP, 5 });
+				m_CollisionDebugLines.push_back(shape);
+			}
+			if (!m_TileGridCoordinates.contains({ gx - 1, gy }))
+			{
+				outline.push_back(b2Vec2({ x, y }));
+				outline.push_back(b2Vec2({ x, y + tileSizeMeters }));
+
+				shape.setPosition({ xP, yP });
+				shape.setSize({ 5, sP });
+				m_CollisionDebugLines.push_back(shape);
+			}
+			if (!m_TileGridCoordinates.contains({ gx + 1, gy }))
+			{
+				outline.push_back(b2Vec2({ x + tileSizeMeters, y }));
+				outline.push_back(b2Vec2({ x + tileSizeMeters, y + tileSizeMeters }));
+
+				shape.setPosition({ xP + sP, yP });
+				shape.setSize({ 5, sP });
+				m_CollisionDebugLines.push_back(shape);
+			}
+		}
+	}
+
+	return outline;
+}
+
+Tilemap::Tilemap(sf::Texture& tilemapTexture, std::shared_ptr<TilemapAttributes> attributes, b2WorldId worldId, sf::Vector2f position) : m_TilemapTexture(tilemapTexture), m_Attributes(attributes), m_WorldId(worldId)
+{
+	setPosition(position);
+
 	m_Vertices.setPrimitiveType(sf::PrimitiveType::Triangles);
 
 	std::sort(m_Attributes->Layers.begin(), m_Attributes->Layers.end(), std::greater<Layer>());
@@ -69,12 +142,11 @@ Tilemap::Tilemap(sf::Texture& tilemapTexture, std::shared_ptr<TilemapAttributes>
 
 void Tilemap::createCollision()
 {
-	std::vector<b2Vec2> chain{};
+	std::vector<b2Vec2> chain = getVerticesOutline();
 
-	for (int i = 0; i < GameEngine::Resolution.x; i += GameEngine::Resolution.x / 8)
+	for (auto& outline : chain)
 	{
-		b2Vec2 position = { converter::pixelsToMeters(i), converter::pixelsToMeters(GameEngine::Resolution.y / 2.0f + 200.0f) };
-		chain.push_back(position);
+		chain.push_back(outline);
 	}
 
 	b2BodyDef bodyDef = b2DefaultBodyDef();
@@ -96,4 +168,9 @@ void Tilemap::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	states.texture   = &m_TilemapTexture;
 
 	target.draw(m_Vertices, states);
+
+	for (auto& shape : m_CollisionDebugLines)
+	{
+		target.draw(shape);
+	}
 }
