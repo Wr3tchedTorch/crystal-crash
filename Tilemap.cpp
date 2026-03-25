@@ -1,16 +1,26 @@
 #include "Tilemap.h"
+
+#include <math_functions.h>
+#include <id.h>
+#include <box2d.h>
+#include <types.h>
+
+#include <vector>
+#include <memory>
+#include <algorithm>
+
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
-#include <vector>
-#include "Tile.h"
 #include <SFML/Graphics/PrimitiveType.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Texture.hpp>
-#include <memory>
+
 #include "TilemapAttributes.h"
-#include <algorithm>
+#include "Tile.h"
 #include "Layer.h"
+#include "GameEngine.h"
+#include "Converter.h"
 
 void Tilemap::updateVertices()
 {
@@ -44,9 +54,11 @@ void Tilemap::updateVertices()
 			m_Vertices.append({ { right, bottom }, sf::Color::White, { uvRight, uvBottom } });
 		}
 	}
+
+	createCollision();
 }
 
-Tilemap::Tilemap(sf::Texture& tilemapTexture, std::shared_ptr<TilemapAttributes> attributes) : m_TilemapTexture(tilemapTexture), m_Attributes(attributes)
+Tilemap::Tilemap(sf::Texture& tilemapTexture, std::shared_ptr<TilemapAttributes> attributes, b2WorldId worldId) : m_TilemapTexture(tilemapTexture), m_Attributes(attributes), m_WorldId(worldId)
 {
 	m_Vertices.setPrimitiveType(sf::PrimitiveType::Triangles);
 
@@ -55,9 +67,33 @@ Tilemap::Tilemap(sf::Texture& tilemapTexture, std::shared_ptr<TilemapAttributes>
 	updateVertices();
 }
 
+void Tilemap::createCollision()
+{
+	std::vector<b2Vec2> chain{};
+
+	for (int i = 0; i < GameEngine::Resolution.x; i += GameEngine::Resolution.x / 8)
+	{
+		b2Vec2 position = { converter::pixelsToMeters(i), converter::pixelsToMeters(GameEngine::Resolution.y / 2.0f) };
+		chain.push_back(position);
+	}
+
+	b2BodyDef bodyDef = b2DefaultBodyDef();
+	bodyDef.type = b2_staticBody;
+
+	b2BodyId body = b2CreateBody(m_WorldId, &bodyDef);
+
+	b2ChainDef shape = b2DefaultChainDef();
+	shape.points = chain.data();
+	shape.count  = chain.size();
+	shape.isLoop = false;
+
+	b2CreateChain(body, &shape);
+}
+
 void Tilemap::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	states.texture = &m_TilemapTexture;
+	states.transform = getTransform();
+	states.texture   = &m_TilemapTexture;
 
 	target.draw(m_Vertices, states);
 }

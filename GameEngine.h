@@ -44,6 +44,7 @@ private:
 public:
 	static sf::Time GameTimeTotal;
 	static sf::Vector2f MousePositionInGameCoords;
+	static sf::Vector2u Resolution;
 
 	GameEngine();
 	~GameEngine();

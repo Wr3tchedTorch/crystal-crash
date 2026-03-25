@@ -1,5 +1,7 @@
 #pragma once
 
+#include <id.h>
+
 #include <memory>
 
 #include "World.h"
@@ -17,6 +19,6 @@ private:
 
 public:	
 	LevelManager(BitmapStore& store, std::shared_ptr<ProjectilesFactory> projectileFactory, DataHandlerManager& dataManager);
-	std::unique_ptr<World> loadLevel(int index);
+	std::unique_ptr<World> loadLevel(int index, b2WorldId worldId);
 };
 

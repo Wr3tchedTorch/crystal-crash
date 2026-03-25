@@ -1,5 +1,7 @@
 #include "LevelManager.h"
 
+#include <id.h>
+
 #include <format>
 #include <memory>
 
@@ -14,11 +16,11 @@
 LevelManager::LevelManager(BitmapStore& store, std::shared_ptr<ProjectilesFactory> projectileFactory, DataHandlerManager& dataManager) :
 	m_BitmapStore(store),
 	m_ProjectileFactory(projectileFactory),
-	m_DataHandler(dataManager)
+	m_DataHandler(dataManager)	
 {
 }
 
-std::unique_ptr<World> LevelManager::loadLevel(int index)
+std::unique_ptr<World> LevelManager::loadLevel(int index, b2WorldId worldId)
 {
 	std::shared_ptr<WorldData> worldData = m_DataHandler.WorldDataHandler->getById(index);
 
@@ -27,5 +29,5 @@ std::unique_ptr<World> LevelManager::loadLevel(int index)
 
 	worldData->SlingshotData.loadProjectileAttributes(*m_DataHandler.ProjectileDataHandler.get());
 
-	return std::make_unique<World>(m_BitmapStore, worldData, m_ProjectileFactory, m_DataHandler.GraphicsDataHandler, m_DataHandler.PolygonShapeDataHandler);
+	return std::make_unique<World>(m_BitmapStore, worldData, m_ProjectileFactory, m_DataHandler, worldId);
 }

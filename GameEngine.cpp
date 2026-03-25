@@ -27,6 +27,7 @@
 bool GameEngine::Instantiated = false;
 sf::Time GameEngine::GameTimeTotal = sf::Time();
 sf::Vector2f GameEngine::MousePositionInGameCoords = sf::Vector2f();
+sf::Vector2u GameEngine::Resolution = sf::Vector2u();
 
 GameEngine::GameEngine() : 	
 	m_EventHandler(m_Window, m_MouseDragHandler)
@@ -36,14 +37,17 @@ GameEngine::GameEngine() :
 
 	DragSystem::initialize(m_MouseDragHandler);
 
-	m_Window.create(sf::VideoMode::getDesktopMode(), "Crystal Crash by Eric");
+	sf::VideoMode mode = sf::VideoMode::getDesktopMode();
+	Resolution = mode.size;
+
+	m_Window.create(mode, "Crystal Crash by Eric");
 	m_Window.setFramerateLimit(60);	
 
 	spawnBoxes();
 
 	m_ProjectileFactory = std::make_shared<ProjectilesFactory>(m_BitmapStore, m_PhysicsEngine.getWorldId());
 	m_LevelManager		= std::make_unique<LevelManager>(m_BitmapStore, m_ProjectileFactory, m_DataManager);
-	m_CurrentWorld		= m_LevelManager->loadLevel(1);
+	m_CurrentWorld		= m_LevelManager->loadLevel(1, m_PhysicsEngine.getWorldId());
 }
 
 GameEngine::~GameEngine()

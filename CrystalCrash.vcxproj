@@ -139,6 +139,7 @@
     <ClCompile Include="DataHandlerStore.cpp" />
     <ClCompile Include="Layer.h" />
     <ClCompile Include="LevelManager.cpp" />
+    <ClCompile Include="ShapeFactory.cpp" />
     <ClCompile Include="Tilemap.cpp" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="WorldData.h" />
@@ -201,6 +202,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="ShapeAttributes.h" />
     <ClInclude Include="ShapeAttributesConstants.h" />
+    <ClInclude Include="ShapeFactory.h" />
     <ClInclude Include="Slingshot.h" />
     <ClInclude Include="SlingshotConstants.h" />
     <ClInclude Include="SlingshotData.h" />
