@@ -13,11 +13,11 @@ struct TilemapCollisionData
 	std::pair<sf::Vector2f, sf::Vector2f> CollisionCoordinates = {};
 };
 
-inline void to_json(json& j, const Tile& pa)
+inline void to_json(json& j, const TilemapCollisionData& pa)
 {
 	j =
 	{
-		{		
+		{
 			1,
 			{
 				{"x", pa.CollisionCoordinates.first.x},
@@ -34,7 +34,7 @@ inline void to_json(json& j, const Tile& pa)
 	};
 }
 
-inline void from_json(const json& j, Tile& pa)
+inline void from_json(const json& j, TilemapCollisionData& pa)
 {
 	j.at(1).at("x").get_to(pa.CollisionCoordinates.first.x);
 	j.at(1).at("y").get_to(pa.CollisionCoordinates.first.y);
