@@ -7,7 +7,7 @@
 
 using json = nlohmann::json;
 
-struct Tile
+struct TilemapCollisionData
 {
 	int Id = 0;	
 	std::pair<sf::Vector2f, sf::Vector2f> CollisionCoordinates = {};
