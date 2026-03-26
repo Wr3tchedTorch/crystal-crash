@@ -8,6 +8,8 @@
 #include <vector>
 #include <memory>
 #include <algorithm>
+#include <map>
+#include <utility>
 
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
@@ -15,12 +17,12 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 
 #include "TilemapAttributes.h"
 #include "Tile.h"
 #include "Layer.h"
 #include "Converter.h"
-#include <SFML/Graphics/RectangleShape.hpp>
 
 void Tilemap::updateVertices()
 {
@@ -60,11 +62,11 @@ void Tilemap::updateVertices()
 	createCollision();
 }
 
-std::vector<b2Vec2> Tilemap::getVerticesOutline()
+std::map<std::pair<float, float>, std::pair<float, float>> Tilemap::getVerticesOutline()
 {
 	float tileSizeMeters = converter::pixelsToMeters(m_Attributes->TileSize);
 	
-	std::vector<b2Vec2> outline;
+	std::map<std::pair<float, float>, std::pair<float, float>> outline;
 	for (auto& layer : m_Attributes->Layers)
 	{
 		if (!layer.Collider)
@@ -89,8 +91,7 @@ std::vector<b2Vec2> Tilemap::getVerticesOutline()
 
 			if (!m_TileGridCoordinates.contains({ gx, gy - 1 }))
 			{
-				outline.push_back(b2Vec2({ x, y }));
-				outline.push_back(b2Vec2({ x + tileSizeMeters, y }));
+				outline[{ x, y }] = { x + tileSizeMeters, y };
 
 				shape.setPosition({ xP, yP });
 				shape.setSize({ sP, 5 });
@@ -98,8 +99,7 @@ std::vector<b2Vec2> Tilemap::getVerticesOutline()
 			}
 			if (!m_TileGridCoordinates.contains({ gx, gy + 1 }))
 			{
-				outline.push_back(b2Vec2({ x, y + tileSizeMeters }));
-				outline.push_back(b2Vec2({ x + tileSizeMeters, y + tileSizeMeters }));
+				outline[{ x + tileSizeMeters, y + tileSizeMeters }] = { x, y + tileSizeMeters };
 
 				shape.setPosition({ xP, yP + sP });
 				shape.setSize({ sP, 5 });
@@ -107,8 +107,7 @@ std::vector<b2Vec2> Tilemap::getVerticesOutline()
 			}
 			if (!m_TileGridCoordinates.contains({ gx - 1, gy }))
 			{
-				outline.push_back(b2Vec2({ x, y }));
-				outline.push_back(b2Vec2({ x, y + tileSizeMeters }));
+				outline[{ x, y + tileSizeMeters }] = { x, y };
 
 				shape.setPosition({ xP, yP });
 				shape.setSize({ 5, sP });
@@ -116,8 +115,7 @@ std::vector<b2Vec2> Tilemap::getVerticesOutline()
 			}
 			if (!m_TileGridCoordinates.contains({ gx + 1, gy }))
 			{
-				outline.push_back(b2Vec2({ x + tileSizeMeters, y }));
-				outline.push_back(b2Vec2({ x + tileSizeMeters, y + tileSizeMeters }));
+				outline[{ x + tileSizeMeters, y }] = { x + tileSizeMeters, y + tileSizeMeters };
 
 				shape.setPosition({ xP + sP, yP });
 				shape.setSize({ 5, sP });
@@ -127,6 +125,35 @@ std::vector<b2Vec2> Tilemap::getVerticesOutline()
 	}
 
 	return outline;
+}
+
+std::vector<std::vector<b2Vec2>> Tilemap::getCollisionLoops()
+{
+	std::vector<std::vector<b2Vec2>> loops;
+
+	auto outline = getVerticesOutline();
+
+	while (!outline.empty())
+	{
+		std::pair<float, float> startingPoint = outline.begin()->first;
+		std::pair<float, float> currentPoint  = startingPoint;
+
+		std::vector<b2Vec2> loop;
+
+		do 
+		{
+			loop.push_back({ currentPoint.first, currentPoint.second });
+
+			std::pair<float, float> nextPoint = outline[currentPoint];
+			outline.erase(currentPoint);
+			currentPoint = nextPoint;
+
+		} while (currentPoint != startingPoint);
+
+		loops.push_back(loop);
+	}
+
+	return loops;
 }
 
 Tilemap::Tilemap(sf::Texture& tilemapTexture, std::shared_ptr<TilemapAttributes> attributes, b2WorldId worldId, sf::Vector2f position) : m_TilemapTexture(tilemapTexture), m_Attributes(attributes), m_WorldId(worldId)
@@ -142,12 +169,7 @@ Tilemap::Tilemap(sf::Texture& tilemapTexture, std::shared_ptr<TilemapAttributes>
 
 void Tilemap::createCollision()
 {
-	std::vector<b2Vec2> chain = getVerticesOutline();
-
-	for (auto& outline : chain)
-	{
-		chain.push_back(outline);
-	}
+	std::vector<std::vector<b2Vec2>> loops = getCollisionLoops();
 
 	b2BodyDef bodyDef = b2DefaultBodyDef();
 	bodyDef.type = b2_staticBody;
@@ -155,11 +177,14 @@ void Tilemap::createCollision()
 	b2BodyId body = b2CreateBody(m_WorldId, &bodyDef);
 
 	b2ChainDef shape = b2DefaultChainDef();
-	shape.points = chain.data();
-	shape.count  = chain.size();
-	shape.isLoop = false;
+	for (auto& loop : loops)
+	{		
+		shape.points = loop.data();
+		shape.count  = loop.size();
+		shape.isLoop = false;
 
-	b2CreateChain(body, &shape);
+		b2CreateChain(body, &shape);
+	}
 }
 
 void Tilemap::draw(sf::RenderTarget& target, sf::RenderStates states) const

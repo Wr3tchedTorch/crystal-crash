@@ -7,6 +7,7 @@
 #include <memory>
 #include <set>
 #include <utility>
+#include <map>
 
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Transformable.hpp>
@@ -35,7 +36,8 @@ private:
 	b2WorldId m_WorldId;
 
 	void updateVertices();
-	std::vector<b2Vec2> getVerticesOutline();
+	std::map<std::pair<float, float>, std::pair<float, float>> getVerticesOutline();
+	std::vector<std::vector<b2Vec2>> getCollisionLoops();
 
 public:
 	Tilemap(sf::Texture& tilemapTexture, std::shared_ptr<TilemapAttributes> attributes, b2WorldId worldId, sf::Vector2f position);
