@@ -168,6 +168,7 @@
     <ClCompile Include="StateSlingshotLoading.cpp" />
     <ClCompile Include="StateSlingshotShooting.cpp" />
     <None Include="maps\1\map.json" />
+    <None Include="tilemap_collision_data.json" />
     <None Include="world_data.json" />
   </ItemGroup>
   <ItemGroup>
@@ -215,6 +216,7 @@
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Tilemap.h" />
     <ClInclude Include="TilemapAttributes.h" />
+    <ClInclude Include="TilemapCollisionData.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>

@@ -313,6 +313,9 @@
     <ClInclude Include="ShapeFactory.h">
       <Filter>Header Files\Factories</Filter>
     </ClInclude>
+    <ClInclude Include="TilemapCollisionData.h">
+      <Filter>Header Files\Attributes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -332,6 +335,9 @@
       <Filter>Header Files\Data</Filter>
     </None>
     <None Include="maps\1\map.json">
+      <Filter>Header Files\Data</Filter>
+    </None>
+    <None Include="tilemap_collision_data.json">
       <Filter>Header Files\Data</Filter>
     </None>
   </ItemGroup>

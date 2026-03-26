@@ -1,9 +1,11 @@
 #pragma once
+
 #include <string>
-#include "GraphicsAttributes.h"
-#include "ShapeAttributes.h"
 #include <memory>
+
 #include <nlohmann/json.hpp>
+
+#include "GraphicsAttributes.h"
 
 using json = nlohmann::json;
 

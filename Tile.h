@@ -1,14 +1,16 @@
 #pragma once
+
 #include <SFML/System/Vector2.hpp>
 #include <nlohmann/json.hpp>
+
 #include <string>
 
 using json = nlohmann::json;
 
 struct Tile
 {
-	int Id;
-	sf::Vector2i GridPosition;
+	int Id = 0;
+	sf::Vector2i GridPosition = {};
 };
 
 inline void to_json(json& j, const Tile& pa)
@@ -17,7 +19,7 @@ inline void to_json(json& j, const Tile& pa)
 	{
 		{"id", pa.Id},
 		{"x", pa.GridPosition.x},
-		{"y", pa.GridPosition.y},
+		{"y", pa.GridPosition.y}
 	};
 }
 
