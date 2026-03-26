@@ -23,6 +23,8 @@
 #include "Tile.h"
 #include "Layer.h"
 #include "Converter.h"
+#include "DataHandler.h"
+#include "TilemapCollisionData.h"
 
 void Tilemap::updateVertices()
 {
@@ -156,8 +158,14 @@ std::vector<std::vector<b2Vec2>> Tilemap::getCollisionLoops()
 	return loops;
 }
 
-Tilemap::Tilemap(sf::Texture& tilemapTexture, std::shared_ptr<TilemapAttributes> attributes, b2WorldId worldId, sf::Vector2f position) : m_TilemapTexture(tilemapTexture), m_Attributes(attributes), m_WorldId(worldId)
-{
+Tilemap::Tilemap(
+	sf::Texture& tilemapTexture, 
+	std::shared_ptr<TilemapAttributes> attributes, 
+	b2WorldId worldId, 
+	sf::Vector2f position,
+	std::shared_ptr<DataHandler<TilemapCollisionData>> collisionDataHandler
+) : m_TilemapTexture(tilemapTexture), m_Attributes(attributes), m_WorldId(worldId), m_TilemapCollisionDataHandler(collisionDataHandler)
+{	
 	setPosition(position);
 
 	m_Vertices.setPrimitiveType(sf::PrimitiveType::Triangles);

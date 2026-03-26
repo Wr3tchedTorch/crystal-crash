@@ -9,6 +9,7 @@
 #include "GraphicsAttributes.h"
 #include "PolygonShapeAttributes.h"
 #include "ShapeAttributes.h"
+#include "TilemapCollisionData.h"
 
 struct DataHandlerManager
 {
@@ -17,9 +18,9 @@ struct DataHandlerManager
 	std::shared_ptr<DataHandler<WorldData>>			     WorldDataHandler;
 	std::shared_ptr<DataHandler<ProjectileAttributes>>   ProjectileDataHandler;
 	std::shared_ptr<DataHandler<GraphicsAttributes>>     GraphicsDataHandler;
-
-	std::shared_ptr<DataHandler<ShapeAttributes>> ShapeDataHandler;
+	std::shared_ptr<DataHandler<ShapeAttributes>>		 ShapeDataHandler;
 	std::shared_ptr<DataHandler<PolygonShapeAttributes>> PolygonShapeDataHandler;
+	std::shared_ptr<DataHandler<TilemapCollisionData>>	 TilemapCollisionDataHandler;
 
 	std::shared_ptr<ShapeAttributes> getShapeAttributes(std::string type, int id) const
 	{

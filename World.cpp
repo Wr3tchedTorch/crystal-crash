@@ -72,7 +72,7 @@ World::World(
 	tilemapPosition.y -= mapSize.y;
 	tilemapPosition.y += m_WorldData->getTilemapAttributes()->TileSize;
 
-	m_Tilemap = std::make_unique<Tilemap>(store.getTexture(std::format("./maps/{}/spritesheet.png", m_WorldData->TilemapId)), m_WorldData->getTilemapAttributes(), worldId, tilemapPosition);
+	m_Tilemap = std::make_unique<Tilemap>(store.getTexture(std::format("./maps/{}/spritesheet.png", m_WorldData->TilemapId)), m_WorldData->getTilemapAttributes(), worldId, tilemapPosition, handlerManager.TilemapCollisionDataHandler);
 
 	GameEngine::Resolution;
 

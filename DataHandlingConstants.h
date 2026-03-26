@@ -10,4 +10,5 @@ struct DataHandlingConstants
 	inline static const std::string FilepathShapeAttributes		 = "./shape_attributes_data.json";
 	inline static const std::string FilepathWorldData = "./world_data.json";
 	inline static const std::string PrototypeFieldKey = "prototype";
+	inline static const std::string FilepathTilemapCollisionData = "./tilemap_collision_data.json";
 };

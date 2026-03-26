@@ -19,6 +19,8 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 
 #include "TilemapAttributes.h"
+#include "DataHandler.h"
+#include "TilemapCollisionData.h"
 
 class Tilemap : public sf::Drawable, private sf::Transformable
 {
@@ -33,6 +35,8 @@ private:
 
 	std::vector<sf::RectangleShape> m_CollisionDebugLines;
 
+	std::shared_ptr<DataHandler<TilemapCollisionData>> m_TilemapCollisionDataHandler;
+
 	b2WorldId m_WorldId;
 
 	void updateVertices();
@@ -40,7 +44,13 @@ private:
 	std::vector<std::vector<b2Vec2>> getCollisionLoops();
 
 public:
-	Tilemap(sf::Texture& tilemapTexture, std::shared_ptr<TilemapAttributes> attributes, b2WorldId worldId, sf::Vector2f position);
+	Tilemap(
+		sf::Texture& tilemapTexture, 
+		std::shared_ptr<TilemapAttributes> attributes, 
+		b2WorldId worldId, 
+		sf::Vector2f position,
+		std::shared_ptr<DataHandler<TilemapCollisionData>> collisionDataHandler
+	);
 
 	void createCollision();
 

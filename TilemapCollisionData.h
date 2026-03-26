@@ -1,6 +1,8 @@
 #pragma once
 
 #include <utility>
+#include <map>
+#include <string>
 
 #include <SFML/System/Vector2.hpp>
 #include <nlohmann/json.hpp>
@@ -10,35 +12,51 @@ using json = nlohmann::json;
 struct TilemapCollisionData
 {
 	int Id = 0;	
-	std::pair<sf::Vector2f, sf::Vector2f> CollisionCoordinates = {};
+	std::map<std::string, std::pair<sf::Vector2f, sf::Vector2f>> CollisionCoordinates = 
+	{
+		{ "top", {{0, 0}, {0, 0}} },
+		{ "bottom", {{0, 0}, {0, 0}} },
+		{ "left", {{0, 0}, {0, 0}} },
+		{ "right", {{0, 0}, {0, 0}} },
+	};
+
+	inline static const std::string Sides[] = { "top", "bottom", "left", "right" };
 };
 
 inline void to_json(json& j, const TilemapCollisionData& pa)
-{
-	j =
+{	
+	json data = json();
+	for (auto& side : TilemapCollisionData::Sides)
 	{
+		auto pointA = pa.CollisionCoordinates.at(side).first;
+		auto pointB = pa.CollisionCoordinates.at(side).second;
+
+		data[side] =
 		{
-			1,
 			{
-				{"x", pa.CollisionCoordinates.first.x},
-				{"y", pa.CollisionCoordinates.first.y}
-			}
-		},
-		{
-			2,
+				pointA.x,
+				pointA.y
+			},
 			{
-				{"x", pa.CollisionCoordinates.second.x},
-				{"y", pa.CollisionCoordinates.second.y}
-			}
-		}
-	};
+				pointB.x,
+				pointB.y
+			},
+		};
+	}
+
+	j["collision_data"] = data;
 }
 
 inline void from_json(const json& j, TilemapCollisionData& pa)
-{
-	j.at(1).at("x").get_to(pa.CollisionCoordinates.first.x);
-	j.at(1).at("y").get_to(pa.CollisionCoordinates.first.y);
+{	
+	json data = j.at("collision_data");	
 
-	j.at(2).at("x").get_to(pa.CollisionCoordinates.second.x);
-	j.at(2).at("y").get_to(pa.CollisionCoordinates.second.y);
+	for (auto& side : TilemapCollisionData::Sides)
+	{
+		pa.CollisionCoordinates[side].first.x = data.at(side)[0][0];
+		pa.CollisionCoordinates[side].first.y = data.at(side)[0][1];
+
+		pa.CollisionCoordinates[side].second.x = data.at(side)[1][0];
+		pa.CollisionCoordinates[side].second.y = data.at(side)[1][1];
+	}
 }
