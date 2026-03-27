@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <map>
 #include <utility>
+#include <string>
 
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
@@ -25,6 +26,49 @@
 #include "Converter.h"
 #include "DataHandler.h"
 #include "TilemapCollisionData.h"
+
+std::pair<sf::Vector2f, sf::Vector2f> Tilemap::getTileCollisionOutline(sf::Vector2i direction, int tileId)
+{
+	float tileSizeMeters = converter::pixelsToMeters(m_Attributes->TileSize);
+
+	std::string side;
+	if (direction.x == 1 && direction.y == 0)
+	{
+		side = "right";
+	}
+	else if (direction.x == -1 && direction.y == 0)
+	{
+		side = "left";
+	}
+	else if (direction.x == 0 && direction.y == 1)
+	{
+		side = "bottom";
+	}
+	else if (direction.x == 0 && direction.y == -1)
+	{
+		side = "top";
+	}
+
+	auto data = m_TilemapCollisionDataHandler->getById(tileId);
+
+	bool isCollisionDataValid =
+		(data->CollisionCoordinates.at(side).first.x != 0 ||
+		 data->CollisionCoordinates.at(side).first.y != 0) ||
+
+		(data->CollisionCoordinates.at(side).second.x != 0 || 
+		 data->CollisionCoordinates.at(side).second.y != 0);
+
+	if (isCollisionDataValid)
+	{		
+		return data->CollisionCoordinates.at(side);
+	}
+
+	sf::Vector2f result = { tileSizeMeters * direction.x, tileSizeMeters * direction.y };
+
+	std::pair<sf::Vector2f, sf::Vector2f> final = { {0, 0}, result };	
+
+	return final;
+}
 
 void Tilemap::updateVertices()
 {

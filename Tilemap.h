@@ -8,6 +8,7 @@
 #include <set>
 #include <utility>
 #include <map>
+#include <string>
 
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Transformable.hpp>
@@ -39,6 +40,7 @@ private:
 
 	b2WorldId m_WorldId;
 
+	std::pair<sf::Vector2f, sf::Vector2f> getTileCollisionOutline(sf::Vector2i direction, int tileId);
 	void updateVertices();
 	std::map<std::pair<float, float>, std::pair<float, float>> getVerticesOutline();
 	std::vector<std::vector<b2Vec2>> getCollisionLoops();
